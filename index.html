@@ -1,1173 +1,957 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Ukubona LLC — To See</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
-<style>
-
-/* ════════════════════════════════════════════
-   TOKENS
-════════════════════════════════════════════ */
-:root {
-  --white:   #f7f7f5;
-  --off:     #efefec;
-  --rule:    #d8d8d2;
-  --muted:   #888880;
-  --ink:     #111110;
-  --deep:    #0a0a09;
-
-  /* ROYGBIV — the only color */
-  --r: #f72b1a;
-  --o: #ff7200;
-  --y: #f5cc00;
-  --g: #1ec94a;
-  --b: #1a8fff;
-  --i: #6c35ff;
-  --v: #b800cc;
-
-  --roygbiv: linear-gradient(90deg,
-    var(--r) 0%,
-    var(--o) 16%,
-    var(--y) 32%,
-    var(--g) 48%,
-    var(--b) 64%,
-    var(--i) 82%,
-    var(--v) 100%
-  );
-
-  --syne: 'Syne', sans-serif;
-  --serif: 'DM Serif Display', serif;
-  --mono:  'IBM Plex Mono', monospace;
-}
-
-/* ════════════════════════════════════════════
-   RESET
-════════════════════════════════════════════ */
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-html { font-size: 16px; scroll-behavior: smooth; }
-
-body {
-  background: var(--white);
-  color: var(--ink);
-  font-family: var(--syne);
-  overflow-x: hidden;
-  cursor: none;
-}
-
-/* ════════════════════════════════════════════
-   CUSTOM CURSOR
-════════════════════════════════════════════ */
-.cursor {
-  position: fixed;
-  width: 10px; height: 10px;
-  border-radius: 50%;
-  background: var(--roygbiv);
-  background-size: 200% 100%;
-  animation: cursorShift 3s linear infinite;
-  pointer-events: none;
-  z-index: 9999;
-  transform: translate(-50%, -50%);
-  transition: width 0.2s, height 0.2s, opacity 0.2s;
-  mix-blend-mode: multiply;
-}
-.cursor.large { width: 32px; height: 32px; }
-@keyframes cursorShift {
-  0%   { background-position: 0% 50%; }
-  100% { background-position: 200% 50%; }
-}
-
-/* ════════════════════════════════════════════
-   NAV
-════════════════════════════════════════════ */
-nav {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  z-index: 100;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  padding: 1.2rem 3rem;
-  background: rgba(247,247,245,0.92);
-  backdrop-filter: blur(12px);
-  border-bottom: 1px solid var(--rule);
-}
-
-.nav-logo {
-  font-family: var(--syne);
-  font-weight: 800;
-  font-size: 1rem;
-  letter-spacing: -0.01em;
-  text-decoration: none;
-  color: var(--ink);
-  position: relative;
-}
-
-.nav-logo span {
-  background: var(--roygbiv);
-  background-size: 300% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: shimmer 4s linear infinite;
-}
-@keyframes shimmer {
-  0%   { background-position: 0% 50%; }
-  100% { background-position: 300% 50%; }
-}
-
-.nav-links {
-  display: flex;
-  gap: 2.5rem;
-  list-style: none;
-}
-
-.nav-links a {
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.nav-links a:hover { color: var(--ink); }
-
-.nav-cta {
-  font-family: var(--mono);
-  font-size: 0.65rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  padding: 0.5rem 1.2rem;
-  border: 1px solid var(--ink);
-  color: var(--ink);
-  text-decoration: none;
-  transition: background 0.2s, color 0.2s;
-}
-.nav-cta:hover { background: var(--ink); color: var(--white); }
-
-/* ════════════════════════════════════════════
-   ROYGBIV STRIP (top of page under nav)
-════════════════════════════════════════════ */
-.spectrum-strip {
-  position: fixed;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  background: var(--roygbiv);
-  background-size: 200% 100%;
-  animation: shimmer 3s linear infinite;
-  z-index: 101;
-}
-
-/* ════════════════════════════════════════════
-   SECTION WRAPPERS
-════════════════════════════════════════════ */
-section {
-  min-height: 100vh;
-  padding: 0 3rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  position: relative;
-}
-
-.section-marker {
-  position: absolute;
-  left: 3rem;
-  top: 50%;
-  transform: translateY(-50%) rotate(-90deg);
-  transform-origin: left center;
-  font-family: var(--mono);
-  font-size: 0.55rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--rule);
-  white-space: nowrap;
-  pointer-events: none;
-}
-
-/* ════════════════════════════════════════════
-   §1 — θ  HERO
-════════════════════════════════════════════ */
-#theta {
-  padding-top: 8rem;
-  padding-left: 8rem;
-  padding-right: 3rem;
-  min-height: 100vh;
-  justify-content: center;
-}
-
-.hero-eyebrow {
-  font-family: var(--mono);
-  font-size: 0.62rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 2rem;
-  opacity: 0;
-  animation: up 0.7s 0.1s ease forwards;
-}
-
-.hero-title {
-  font-family: var(--syne);
-  font-weight: 800;
-  font-size: clamp(4rem, 9vw, 9rem);
-  line-height: 0.9;
-  letter-spacing: -0.03em;
-  margin-bottom: 2.5rem;
-  opacity: 0;
-  animation: up 0.8s 0.2s ease forwards;
-}
-
-.hero-title .gradient-word {
-  background: var(--roygbiv);
-  background-size: 300% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: shimmer 5s linear infinite;
-}
-
-.hero-sub {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: clamp(1.1rem, 2vw, 1.5rem);
-  color: var(--muted);
-  max-width: 600px;
-  line-height: 1.5;
-  margin-bottom: 3rem;
-  opacity: 0;
-  animation: up 0.8s 0.35s ease forwards;
-}
-
-.hero-pentad {
-  font-family: var(--mono);
-  font-size: clamp(0.7rem, 1.2vw, 0.9rem);
-  color: var(--ink);
-  letter-spacing: 0.05em;
-  opacity: 0;
-  animation: up 0.8s 0.5s ease forwards;
-  display: flex;
-  align-items: center;
-  gap: 0;
-  flex-wrap: wrap;
-}
-
-.pentad-step {
-  display: inline-flex;
-  align-items: center;
-}
-
-.pentad-step .sym {
-  padding: 0.3rem 0.6rem;
-  border: 1px solid var(--rule);
-  transition: border-color 0.2s, background 0.2s;
-}
-.pentad-step .sym:hover { background: var(--ink); color: var(--white); border-color: var(--ink); }
-
-.pentad-step .sym.theta { border-color: var(--r); color: var(--r); }
-.pentad-step .sym.loss  { border-color: var(--o); color: var(--o); }
-.pentad-step .sym.grad  { border-color: var(--y); color: var(--y); background: rgba(245,204,0,0.04); }
-.pentad-step .sym.step  { border-color: var(--g); color: var(--g); }
-.pentad-step .sym.new   { border-color: var(--b); color: var(--b); }
-
-.pentad-arrow {
-  padding: 0 0.4rem;
-  color: var(--rule);
-  font-size: 0.8rem;
-}
-
-.hero-scroll-hint {
-  position: absolute;
-  bottom: 2.5rem;
-  left: 8rem;
-  font-family: var(--mono);
-  font-size: 0.55rem;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  color: var(--rule);
-  display: flex;
-  align-items: center;
-  gap: 0.8rem;
-  opacity: 0;
-  animation: up 0.8s 0.9s ease forwards;
-}
-.hero-scroll-hint::before {
-  content: '';
-  display: block;
-  width: 40px;
-  height: 1px;
-  background: var(--rule);
-}
-
-@keyframes up {
-  from { opacity: 0; transform: translateY(20px); }
-  to   { opacity: 1; transform: translateY(0); }
-}
-
-/* ════════════════════════════════════════════
-   DIVIDER
-════════════════════════════════════════════ */
-.h-rule {
-  height: 1px;
-  background: var(--roygbiv);
-  margin: 0;
-  opacity: 0.4;
-}
-
-/* ════════════════════════════════════════════
-   §2 — L(θ)  LOSS IS VISIBLE
-════════════════════════════════════════════ */
-#loss {
-  padding-left: 8rem;
-  background: var(--off);
-}
-
-.loss-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 6rem;
-  align-items: center;
-  max-width: 1200px;
-}
-
-.loss-text {}
-
-.loss-label {
-  font-family: var(--mono);
-  font-size: 0.58rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 1rem;
-}
-
-.loss-heading {
-  font-family: var(--syne);
-  font-weight: 800;
-  font-size: clamp(2.5rem, 4vw, 4.5rem);
-  line-height: 0.92;
-  letter-spacing: -0.02em;
-  margin-bottom: 1.8rem;
-}
-
-.loss-body {
-  font-family: var(--serif);
-  font-size: 1.05rem;
-  line-height: 1.7;
-  color: #444440;
-  max-width: 460px;
-}
-
-.loss-body em { font-style: italic; }
-
-/* ROYGBIV HEATMAP DEMO */
-.heatmap-demo {
-  display: grid;
-  grid-template-columns: repeat(10, 1fr);
-  grid-template-rows: repeat(10, 1fr);
-  gap: 3px;
-  aspect-ratio: 1;
-  max-width: 360px;
-}
-
-.hcell {
-  border-radius: 2px;
-  transition: transform 0.3s, filter 0.3s;
-  animation: pulse-cell var(--dur, 3s) var(--delay, 0s) ease-in-out infinite alternate;
-}
-.hcell:hover { transform: scale(1.3); filter: brightness(1.3); z-index: 10; }
-
-@keyframes pulse-cell {
-  from { opacity: 0.6; }
-  to   { opacity: 1; }
-}
-
-/* ════════════════════════════════════════════
-   §3 — ∇L  GRADIENT: THE PRODUCTS
-════════════════════════════════════════════ */
-#gradient {
-  padding-left: 8rem;
-  padding-top: 6rem;
-  padding-bottom: 6rem;
-  min-height: auto;
-}
-
-.grad-header {
-  margin-bottom: 4rem;
-  max-width: 700px;
-}
-
-.grad-label {
-  font-family: var(--mono);
-  font-size: 0.58rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 1rem;
-}
-
-.grad-heading {
-  font-family: var(--syne);
-  font-weight: 800;
-  font-size: clamp(2.5rem, 4vw, 4rem);
-  line-height: 0.92;
-  letter-spacing: -0.02em;
-}
-
-.twins-grid {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  gap: 1px;
-  background: var(--rule);
-  border: 1px solid var(--rule);
-  max-width: 1200px;
-}
-
-.twin-card {
-  background: var(--white);
-  padding: 2.5rem 2rem;
-  position: relative;
-  overflow: hidden;
-  text-decoration: none;
-  color: inherit;
-  display: block;
-  transition: background 0.25s;
-}
-.twin-card:hover { background: var(--ink); }
-.twin-card:hover .twin-name,
-.twin-card:hover .twin-desc,
-.twin-card:hover .twin-links a { color: var(--white) !important; }
-.twin-card:hover .twin-index { color: rgba(255,255,255,0.2); }
-.twin-card:hover .twin-bar { opacity: 1; }
-
-.twin-bar {
-  position: absolute;
-  top: 0; left: 0; right: 0;
-  height: 3px;
-  opacity: 0.5;
-  transition: opacity 0.25s;
-}
-
-.twin-index {
-  font-family: var(--mono);
-  font-size: 0.6rem;
-  color: var(--rule);
-  margin-bottom: 2rem;
-  letter-spacing: 0.1em;
-  transition: color 0.25s;
-}
-
-.twin-scale {
-  font-family: var(--syne);
-  font-size: 0.55rem;
-  font-weight: 600;
-  letter-spacing: 0.2em;
-  text-transform: uppercase;
-  margin-bottom: 0.6rem;
-}
-
-.twin-name {
-  font-family: var(--syne);
-  font-weight: 800;
-  font-size: 1.5rem;
-  line-height: 1;
-  letter-spacing: -0.02em;
-  margin-bottom: 1.2rem;
-  transition: color 0.25s;
-}
-
-.twin-desc {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 0.88rem;
-  line-height: 1.6;
-  color: var(--muted);
-  margin-bottom: 1.5rem;
-  transition: color 0.25s;
-}
-
-.twin-links {
-  display: flex;
-  flex-direction: column;
-  gap: 0.3rem;
-}
-.twin-links a {
-  font-family: var(--mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.1em;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.25s;
-}
-.twin-links a::before { content: '→ '; }
-.twin-links a:hover { color: var(--b) !important; }
-
-/* ════════════════════════════════════════════
-   §4 — −η∇L  ACTION: THE WORK
-════════════════════════════════════════════ */
-#action {
-  padding-left: 8rem;
-  background: var(--ink);
-  color: var(--white);
-}
-
-.action-grid {
-  display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 8rem;
-  align-items: center;
-  max-width: 1200px;
-}
-
-.action-label {
-  font-family: var(--mono);
-  font-size: 0.58rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: rgba(255,255,255,0.3);
-  margin-bottom: 1rem;
-}
-
-.action-heading {
-  font-family: var(--syne);
-  font-weight: 800;
-  font-size: clamp(2.5rem, 4vw, 4rem);
-  line-height: 0.92;
-  letter-spacing: -0.02em;
-  color: var(--white);
-  margin-bottom: 2rem;
-}
-
-.action-body {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 1.05rem;
-  line-height: 1.7;
-  color: rgba(255,255,255,0.6);
-  margin-bottom: 2.5rem;
-}
-
-.action-pillars {
-  display: flex;
-  flex-direction: column;
-  gap: 0;
-  border-top: 1px solid rgba(255,255,255,0.1);
-}
-
-.pillar {
-  display: flex;
-  gap: 1.5rem;
-  align-items: flex-start;
-  padding: 1.2rem 0;
-  border-bottom: 1px solid rgba(255,255,255,0.07);
-}
-
-.pillar-num {
-  font-family: var(--mono);
-  font-size: 0.6rem;
-  color: rgba(255,255,255,0.2);
-  padding-top: 0.15rem;
-  min-width: 2rem;
-}
-
-.pillar-text {}
-.pillar-title {
-  font-family: var(--syne);
-  font-weight: 700;
-  font-size: 0.88rem;
-  margin-bottom: 0.2rem;
-  color: var(--white);
-}
-.pillar-desc {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 0.82rem;
-  color: rgba(255,255,255,0.45);
-  line-height: 1.5;
-}
-
-/* Right side: contact block */
-.contact-block {
-  background: rgba(255,255,255,0.04);
-  border: 1px solid rgba(255,255,255,0.1);
-  padding: 3rem;
-}
-
-.contact-heading {
-  font-family: var(--syne);
-  font-weight: 800;
-  font-size: 1.8rem;
-  margin-bottom: 0.5rem;
-  line-height: 1.1;
-}
-
-.contact-sub {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 0.9rem;
-  color: rgba(255,255,255,0.4);
-  margin-bottom: 2rem;
-}
-
-.contact-fields {
-  display: flex;
-  flex-direction: column;
-  gap: 0.8rem;
-  margin-bottom: 1.5rem;
-}
-
-.contact-fields input,
-.contact-fields select,
-.contact-fields textarea {
-  background: rgba(255,255,255,0.06);
-  border: 1px solid rgba(255,255,255,0.12);
-  padding: 0.8rem 1rem;
-  font-family: var(--mono);
-  font-size: 0.72rem;
-  color: var(--white);
-  outline: none;
-  transition: border-color 0.2s;
-  resize: none;
-}
-.contact-fields input::placeholder,
-.contact-fields textarea::placeholder { color: rgba(255,255,255,0.25); }
-.contact-fields input:focus,
-.contact-fields textarea:focus { border-color: var(--b); }
-.contact-fields select option { background: var(--ink); }
-
-.contact-btn {
-  display: inline-block;
-  padding: 0.9rem 2.2rem;
-  background: var(--white);
-  color: var(--ink);
-  font-family: var(--mono);
-  font-size: 0.68rem;
-  letter-spacing: 0.12em;
-  text-transform: uppercase;
-  border: none;
-  cursor: pointer;
-  transition: background 0.2s, color 0.2s;
-  width: 100%;
-}
-.contact-btn:hover {
-  background: var(--roygbiv);
-  background-size: 200% 100%;
-  animation: shimmer 2s linear infinite;
-  color: var(--white);
-}
-
-/* ════════════════════════════════════════════
-   §5 — θ′  WHAT BECOMES
-════════════════════════════════════════════ */
-#theta-prime {
-  padding-left: 8rem;
-  background: var(--white);
-  position: relative;
-  overflow: hidden;
-  min-height: 80vh;
-}
-
-.prime-bg {
-  position: absolute;
-  top: 0; right: -10%;
-  width: 60%;
-  height: 100%;
-  background: var(--roygbiv);
-  opacity: 0.04;
-  clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
-}
-
-.prime-label {
-  font-family: var(--mono);
-  font-size: 0.58rem;
-  letter-spacing: 0.25em;
-  text-transform: uppercase;
-  color: var(--muted);
-  margin-bottom: 1rem;
-}
-
-.prime-heading {
-  font-family: var(--syne);
-  font-weight: 800;
-  font-size: clamp(3rem, 6vw, 6.5rem);
-  line-height: 0.9;
-  letter-spacing: -0.03em;
-  max-width: 800px;
-  margin-bottom: 2.5rem;
-}
-
-.prime-heading .gradient-word {
-  background: var(--roygbiv);
-  background-size: 300% 100%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  background-clip: text;
-  animation: shimmer 5s linear infinite;
-}
-
-.prime-loop {
-  display: flex;
-  align-items: center;
-  gap: 0;
-  font-family: var(--mono);
-  font-size: 0.75rem;
-  flex-wrap: wrap;
-  max-width: 900px;
-}
-
-.loop-step {
-  display: flex;
-  align-items: center;
-}
-
-.loop-sym {
-  padding: 0.5rem 0.9rem;
-  border-bottom: 2px solid transparent;
-  color: var(--muted);
-  transition: color 0.3s, border-color 0.3s;
-}
-.loop-sym:hover { color: var(--ink); }
-.loop-sym.r { border-color: var(--r); }
-.loop-sym.o { border-color: var(--o); }
-.loop-sym.y { border-color: var(--y); }
-.loop-sym.g { border-color: var(--g); }
-.loop-sym.b { border-color: var(--b); }
-
-.loop-arrow { color: var(--rule); padding: 0 0.3rem; }
-
-.prime-tagline {
-  font-family: var(--serif);
-  font-style: italic;
-  font-size: 1.1rem;
-  color: var(--muted);
-  margin-top: 2rem;
-  max-width: 500px;
-  line-height: 1.6;
-}
-
-/* ════════════════════════════════════════════
-   FOOTER
-════════════════════════════════════════════ */
-footer {
-  padding: 2rem 3rem 2rem 8rem;
-  border-top: 1px solid var(--rule);
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-wrap: wrap;
-  gap: 1rem;
-  background: var(--off);
-}
-
-.footer-logo {
-  font-family: var(--syne);
-  font-weight: 800;
-  font-size: 0.9rem;
-  color: var(--ink);
-}
-
-.footer-links {
-  display: flex;
-  gap: 2rem;
-  list-style: none;
-}
-.footer-links a {
-  font-family: var(--mono);
-  font-size: 0.6rem;
-  letter-spacing: 0.1em;
-  text-transform: uppercase;
-  color: var(--muted);
-  text-decoration: none;
-  transition: color 0.2s;
-}
-.footer-links a:hover { color: var(--ink); }
-
-.footer-copy {
-  font-family: var(--mono);
-  font-size: 0.58rem;
-  color: var(--rule);
-  letter-spacing: 0.08em;
-}
-
-/* ════════════════════════════════════════════
-   SCROLL ANIMATIONS
-════════════════════════════════════════════ */
-.reveal {
-  opacity: 0;
-  transform: translateY(30px);
-  transition: opacity 0.7s ease, transform 0.7s ease;
-}
-.reveal.visible {
-  opacity: 1;
-  transform: translateY(0);
-}
-.reveal-delay-1 { transition-delay: 0.1s; }
-.reveal-delay-2 { transition-delay: 0.2s; }
-.reveal-delay-3 { transition-delay: 0.3s; }
-.reveal-delay-4 { transition-delay: 0.4s; }
-
-/* ════════════════════════════════════════════
-   MOBILE
-════════════════════════════════════════════ */
-@media (max-width: 768px) {
-  nav { padding: 1rem 1.5rem; }
-  .nav-links { display: none; }
-  section { padding-left: 1.5rem !important; padding-right: 1.5rem; }
-  .section-marker { display: none; }
-  .loss-grid, .action-grid { grid-template-columns: 1fr; gap: 3rem; }
-  .twins-grid { grid-template-columns: 1fr 1fr; }
-  footer { padding-left: 1.5rem; }
-  .hero-scroll-hint { left: 1.5rem; }
-}
-
-</style>
-</head>
-<body>
-
-<!-- Custom cursor -->
-<div class="cursor" id="cursor"></div>
-
-<!-- Spectrum strip -->
-<div class="spectrum-strip"></div>
-
-<!-- ═══════════════════════════════════ NAV -->
-<nav>
-  <a href="#" class="nav-logo"><span>Ukubona</span> LLC</a>
-  <ul class="nav-links">
-    <li><a href="#loss">The Problem</a></li>
-    <li><a href="#gradient">Twins</a></li>
-    <li><a href="#action">Work With Us</a></li>
-    <li><a href="assets/html/ukhona.html">Framework</a></li>
-  </ul>
-  <a href="#action" class="nav-cta">Start</a>
-</nav>
-
-<!-- ═══════════════════════════════════ §1 θ HERO -->
-<section id="theta">
-  <div class="section-marker">θ — current state</div>
-
-  <p class="hero-eyebrow">Digital Twins · At Every Scale</p>
-
-  <h1 class="hero-title">
-    To<br>
-    <span class="gradient-word">See</span><br>
-    Is to<br>Learn.
-  </h1>
-
-  <p class="hero-sub">
-    Most systems fly blind. Ukubona makes the loss landscape visible — from a single patient to a nation of forty million.
-  </p>
-
-  <div class="hero-pentad">
-    <span class="pentad-step">
-      <span class="sym theta">θ</span>
-    </span>
-    <span class="pentad-arrow">→</span>
-    <span class="pentad-step">
-      <span class="sym loss">L(θ)</span>
-    </span>
-    <span class="pentad-arrow">→</span>
-    <span class="pentad-step">
-      <span class="sym grad">∇L(θ)</span>
-    </span>
-    <span class="pentad-arrow">→</span>
-    <span class="pentad-step">
-      <span class="sym step">−η∇L</span>
-    </span>
-    <span class="pentad-arrow">→</span>
-    <span class="pentad-step">
-      <span class="sym new">θ′</span>
-    </span>
-  </div>
-
-  <div class="hero-scroll-hint">Scroll to descend</div>
-</section>
-
-<div class="h-rule"></div>
-
-<!-- ═══════════════════════════════════ §2 L(θ) LOSS -->
-<section id="loss">
-  <div class="section-marker">L(θ) — the loss</div>
-  <div class="loss-grid">
-    <div class="loss-text">
-      <div class="loss-label reveal">02 — Loss Function</div>
-      <h2 class="loss-heading reveal reveal-delay-1">
-        Flying<br>blind<br>is a<br>choice.
-      </h2>
-      <p class="loss-body reveal reveal-delay-2">
-        Governments call districts. Clinicians read printouts. Planners wait for reports. The data exists — it just isn't <em>computed</em>. Every district, every patient, every supply chain already has a loss value. We make it visible.
-      </p>
-      <p class="loss-body reveal reveal-delay-3" style="margin-top:1rem;">
-        The ROYGBIV heatmap is not decoration. Red is suffering. Violet is optimized. Any planner — any minister, any fisherman — immediately understands what they are looking at.
-      </p>
-    </div>
-    <div class="reveal reveal-delay-2">
-      <div class="heatmap-demo" id="heatmap"></div>
-    </div>
-  </div>
-</section>
-
-<div class="h-rule"></div>
-
-<!-- ═══════════════════════════════════ §3 ∇L GRADIENT: PRODUCTS -->
-<section id="gradient">
-  <div class="section-marker">∇L — the gradient</div>
-  <div class="grad-header reveal">
-    <div class="grad-label">03 — Digital Twin Suite</div>
-    <h2 class="grad-heading">Four scales.<br>One architecture.</h2>
-  </div>
-
-  <div class="twins-grid">
-
-    <!-- Personalized -->
-    <a class="twin-card reveal" href="assets/html/dt-001.html">
-      <div class="twin-bar" style="background: var(--r);"></div>
-      <div class="twin-index">01 / 04</div>
-      <div class="twin-scale" style="color:var(--r);">Personalized</div>
-      <div class="twin-name">You</div>
-      <p class="twin-desc">The original and hardest problem. A digital twin of a single human being — metabolic state, health trajectory, interventions.</p>
-      <div class="twin-links">
-        <a href="assets/html/dt-001.html">Personalized twin</a>
-        <a href="assets/html/nhanes.html">NHANES model</a>
-        <a href="assets/html/pairs-jh.html">Pairs</a>
-      </div>
-    </a>
-
-    <!-- Enterprise -->
-    <a class="twin-card reveal reveal-delay-1" href="assets/html/hr.html">
-      <div class="twin-bar" style="background: var(--o);"></div>
-      <div class="twin-index">02 / 04</div>
-      <div class="twin-scale" style="color:var(--o);">Enterprise</div>
-      <div class="twin-name">Your<br>Org</div>
-      <p class="twin-desc">Stewards, payloads, performance. A living ledger of competence — the Steward Transcript as objective evidence of governance.</p>
-      <div class="twin-links">
-        <a href="assets/html/hr.html">HR twin</a>
-        <a href="assets/html/steward-dashboard.html">Steward dashboard</a>
-        <a href="assets/html/steward-transcript.html">Transcript</a>
-      </div>
-    </a>
-
-    <!-- Government -->
-    <a class="twin-card reveal reveal-delay-2" href="assets/html/gov.html">
-      <div class="twin-bar" style="background: var(--g);"></div>
-      <div class="twin-index">03 / 04</div>
-      <div class="twin-scale" style="color:var(--g);">Government</div>
-      <div class="twin-name">Your<br>Nation</div>
-      <p class="twin-desc">Synthetic data rehearsal. District-level loss gradients. A national MRI before the Prime Minister's office ever asks "where did you get that number?"</p>
-      <div class="twin-links">
-        <a href="assets/html/gov.html">Government twin</a>
-        <a href="assets/html/dt-h-001.html">Health model</a>
-        <a href="assets/html/cartography-256.html">Cartography</a>
-      </div>
-    </a>
-
-    <!-- Civilization -->
-    <a class="twin-card reveal reveal-delay-3" href="assets/html/ukhona.html">
-      <div class="twin-bar" style="background: var(--v);"></div>
-      <div class="twin-index">04 / 04</div>
-      <div class="twin-scale" style="color:var(--v);">Civilization</div>
-      <div class="twin-name">The<br>World</div>
-      <p class="twin-desc">Stratigraphic civilization. Gradient descent on suffering — from abolition to public health to institutions. The pentad as universal learning loop.</p>
-      <div class="twin-links">
-        <a href="assets/html/ukhona.html">Framework</a>
-        <a href="assets/html/philosophy.html">Philosophy</a>
-        <a href="assets/html/stratigraphic-civilization.html">Strata</a>
-      </div>
-    </a>
-
-  </div>
-</section>
-
-<div class="h-rule"></div>
-
-<!-- ═══════════════════════════════════ §4 −η∇L ACTION -->
-<section id="action">
-  <div class="section-marker" style="color:rgba(255,255,255,0.15);">−η∇L — the step</div>
-  <div class="action-grid">
-    <div>
-      <div class="action-label reveal">04 — The Intervention</div>
-      <h2 class="action-heading reveal reveal-delay-1">
-        Stop flying<br>blind.
-      </h2>
-      <p class="action-body reveal reveal-delay-2">
-        We build the data plane for the authority — not the political ministry above it. You walk into any room backed by defensible reasoning, not phone-call data.
-      </p>
-
-      <div class="action-pillars reveal reveal-delay-3">
-        <div class="pillar">
-          <div class="pillar-num">01</div>
-          <div class="pillar-text">
-            <div class="pillar-title">Synthetic Data Rehearsal</div>
-            <div class="pillar-desc">We generate parameters. You rehearse the update rhythm before real data arrives. Bayesian replacement when ready.</div>
-          </div>
-        </div>
-        <div class="pillar">
-          <div class="pillar-num">02</div>
-          <div class="pillar-text">
-            <div class="pillar-title">ROYGBIV Heatmaps</div>
-            <div class="pillar-desc">High-dimensional loss landscapes compressed into a single color gradient any stakeholder understands.</div>
-          </div>
-        </div>
-        <div class="pillar">
-          <div class="pillar-num">03</div>
-          <div class="pillar-text">
-            <div class="pillar-title">Steward Transcripts</div>
-            <div class="pillar-desc">Every intervention that shifts a district from Red toward Green is permanently ledgered. Dignity through efficiency.</div>
-          </div>
-        </div>
-        <div class="pillar">
-          <div class="pillar-num">04</div>
-          <div class="pillar-text">
-            <div class="pillar-title">Diaspora Contribution</div>
-            <div class="pillar-desc">Ugandans abroad modeling without leaving their positions. Brain drain reversed through remote gradient computation.</div>
-          </div>
-        </div>
-      </div>
-    </div>
-
-    <div class="contact-block reveal reveal-delay-2">
-      <h3 class="contact-heading">Let's close<br>the loop.</h3>
-      <p class="contact-sub">Government, enterprise, or individual — tell us your scale.</p>
-      <div class="contact-fields">
-        <input type="text" placeholder="Name">
-        <input type="email" placeholder="Email">
-        <select>
-          <option value="" disabled selected>Scale of twin</option>
-          <option>Personalized</option>
-          <option>Enterprise</option>
-          <option>Government</option>
-          <option>Civilization-level research</option>
-        </select>
-        <textarea rows="4" placeholder="What are you flying blind about?"></textarea>
-      </div>
-      <button class="contact-btn">Send ∇L</button>
-    </div>
-  </div>
-</section>
-
-<div class="h-rule"></div>
-
-<!-- ═══════════════════════════════════ §5 θ′ WHAT BECOMES -->
-<section id="theta-prime">
-  <div class="prime-bg"></div>
-  <div class="section-marker">θ′ — new state</div>
-
-  <div class="prime-label reveal">05 — The Updated State</div>
-  <h2 class="prime-heading reveal reveal-delay-1">
-    Once a system<br>can <span class="gradient-word">see</span>,<br>it can learn.
-  </h2>
-
-  <div class="prime-loop reveal reveal-delay-2">
-    <span class="loop-step"><span class="loop-sym r">θ</span><span class="loop-arrow">→</span></span>
-    <span class="loop-step"><span class="loop-sym o">L(θ)</span><span class="loop-arrow">→</span></span>
-    <span class="loop-step"><span class="loop-sym y">∇L(θ)</span><span class="loop-arrow">→</span></span>
-    <span class="loop-step"><span class="loop-sym g">−η∇L</span><span class="loop-arrow">→</span></span>
-    <span class="loop-step"><span class="loop-sym b">θ′</span><span class="loop-arrow">→</span></span>
-    <span class="loop-step"><span class="loop-sym r" style="opacity:0.4">θ</span></span>
-  </div>
-
-  <p class="prime-tagline reveal reveal-delay-3">
-    The pentad is not a framework. It is what happens when any system — a body, an institution, a civilization — begins to adapt. We make it computable.
-  </p>
-</section>
-
-<!-- ═══════════════════════════════════ FOOTER -->
-<footer>
-  <div class="footer-logo">Ukubona LLC</div>
-  <ul class="footer-links">
-    <li><a href="assets/html/ukhona.html">Framework</a></li>
-    <li><a href="assets/html/philosophy.html">Philosophy</a></li>
-    <li><a href="assets/html/contact.html">Contact</a></li>
-    <li><a href="assets/html/team.html">Team</a></li>
-    <li><a href="assets/html/pitch.html">Pitch</a></li>
-  </ul>
-  <div class="footer-copy">© 2026 Ukubona LLC · θ → L → ∇L → −η∇L → θ′</div>
-</footer>
-
-<script>
-/* ─── CURSOR ─── */
-const cur = document.getElementById('cursor');
-document.addEventListener('mousemove', e => {
-  cur.style.left = e.clientX + 'px';
-  cur.style.top  = e.clientY + 'px';
-});
-document.querySelectorAll('a, button, .hcell, .twin-card').forEach(el => {
-  el.addEventListener('mouseenter', () => cur.classList.add('large'));
-  el.addEventListener('mouseleave', () => cur.classList.remove('large'));
-});
-
-/* ─── HEATMAP GENERATOR ─── */
-(function buildHeatmap() {
-  const container = document.getElementById('heatmap');
-  const colors = [
-    '#f72b1a','#f72b1a','#ff4020',   // reds — high loss
-    '#ff7200','#ff8800','#ffa020',   // oranges
-    '#f5cc00','#e8b800',             // yellows
-    '#60d040','#1ec94a',             // greens
-    '#1a8fff','#2090ff',             // blues
-    '#6c35ff','#8050ff',             // indigo
-    '#b800cc','#9800aa',             // violet — optimized
-  ];
-
-  // Build a Uganda-ish loss map: north high, south lower
-  const cells = [];
-  for (let r = 0; r < 10; r++) {
-    for (let c = 0; c < 10; c++) {
-      // noise + north-south gradient
-      const base = (r / 9) * 0.6;           // south = lower loss
-      const noise = Math.random() * 0.4;
-      const val = Math.min(1, base + noise);
-      const idx = Math.floor(val * (colors.length - 1));
-      cells.push({ color: colors[idx], delay: Math.random() * 2, dur: 2 + Math.random() * 2 });
-    }
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+
+  <title>Ukubona LLC — To See Is to Learn</title>
+  <meta name="description" content="Ukubona builds digital twins for customized care — from a single patient to a nation of forty million.">
+  <link rel="canonical" href="https://ukubona-llc.github.io/">
+  <meta name="robots" content="index,follow">
+  <meta name="color-scheme" content="dark light">
+  <meta name="theme-color" content="#0a0a0f">
+
+  <!-- Open Graph / Twitter -->
+  <meta property="og:site_name"        content="Ukubona LLC">
+  <meta property="og:title"            content="Ukubona — To See Is to Learn">
+  <meta property="og:description"      content="Digital twins at every scale. Making the loss landscape visible — from a single patient to a nation.">
+  <meta property="og:type"             content="website">
+  <meta property="og:url"              content="https://ukubona-llc.github.io/">
+  <meta property="og:image"            content="https://abikesa.github.io/logos/assets/ukubona-light.png">
+  <meta property="og:image:width"      content="1200">
+  <meta property="og:image:height"     content="630">
+  <meta name="twitter:card"            content="summary_large_image">
+  <meta name="twitter:title"           content="Ukubona — To See Is to Learn">
+  <meta name="twitter:description"     content="θ → L(θ) → ∇L(θ) → −η∇L(θ) → θ′  ·  Digital twins at every scale.">
+  <meta name="twitter:image"           content="https://abikesa.github.io/logos/assets/ukubona-light.png">
+
+  <!-- Icons -->
+  <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" type="image/x-icon">
+  <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-light.ico" media="(prefers-color-scheme: light)">
+  <link rel="icon" href="https://abikesa.github.io/favicon/assets/favicon-dark.ico"  media="(prefers-color-scheme: dark)">
+  <link rel="preload" href="https://abikesa.github.io/logos/assets/ukubona-light.png" as="image">
+  <link rel="preload" href="https://abikesa.github.io/logos/assets/ukubona-dark.png"  as="image">
+
+  <!-- Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" crossorigin>
+  <link rel="preconnect" href="https://fonts.gstatic.com"    crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Serif+Display:ital@0;1&family=IBM+Plex+Mono:wght@300;400&display=swap" rel="stylesheet">
+
+  <!-- Shared foundation (never touched) -->
+  <link rel="stylesheet" href="assets/css/main.css">
+  <link rel="stylesheet" href="assets/css/index.css">
+
+  <!-- ═══════════════════════════════════════════════════════════════
+       LANDING VIBE LAYER — index.css
+       ─────────────────────────────────────────────────────────────
+       ARCHITECTURE CONTRACT:
+       • This file ONLY adds visual identity on top of main.css/index.css
+       • Dark-mode toggling is owned by main.css + shared.js (data-theme)
+       • We NEVER override --bg / --surface / color with !important
+       • Instead we key off [data-theme] to stay in sync with the toggle
+       • Cursor, spectrum strip, heatmap, pentad bar, reveal animations
+         are purely additive — no shared-system vars are clobbered
+  ═══════════════════════════════════════════════════════════════ -->
+  <style>
+
+  /* ── DESIGN TOKENS (landing-scoped, theme-aware) ──────────────── */
+  :root {
+    /* ROYGBIV — the only color */
+    --r: #f72b1a;  --o: #ff7200;  --y: #f5cc00;
+    --g: #1ec94a;  --b: #1a8fff;  --i: #6c35ff;  --v: #b800cc;
+
+    --roy: linear-gradient(90deg,
+      var(--r) 0%, var(--o) 16%, var(--y) 32%,
+      var(--g) 48%, var(--b) 64%, var(--i) 82%, var(--v) 100%);
+
+    /* Landing display typefaces */
+    --ldisp: 'Syne', sans-serif;
+    --lser:  'DM Serif Display', serif;
+    --lmono: 'IBM Plex Mono', monospace;
+
+    /* Light-mode surface tokens */
+    --l-bg:   #f7f7f5;
+    --l-off:  #efefec;
+    --l-rule: #d8d8d2;
+    --l-mute: #888880;
+    --l-ink:  #111110;
   }
 
-  cells.forEach(({ color, delay, dur }) => {
-    const div = document.createElement('div');
-    div.className = 'hcell';
-    div.style.background = color;
-    div.style.setProperty('--delay', delay + 's');
-    div.style.setProperty('--dur', dur + 's');
-    container.appendChild(div);
-  });
-})();
+  /* Dark-mode surface tokens — mirrors what main.css likely sets */
+  [data-theme="dark"] {
+    --l-bg:   #0a0a0f;
+    --l-off:  #13131a;
+    --l-rule: #2a2a35;
+    --l-mute: #888898;
+    --l-ink:  #f0f0f8;
+  }
 
-/* ─── SCROLL REVEALS ─── */
-const revealEls = document.querySelectorAll('.reveal');
-const observer = new IntersectionObserver(entries => {
-  entries.forEach(e => {
-    if (e.isIntersecting) {
-      e.target.classList.add('visible');
-      observer.unobserve(e.target);
+  /* ── CURSOR ───────────────────────────────────────────────────── */
+  body { cursor: none; }
+  .land-cur {
+    position: fixed;
+    width: 10px; height: 10px;
+    border-radius: 50%;
+    background: var(--roy);
+    background-size: 200% 100%;
+    animation: lShimmer 3s linear infinite;
+    pointer-events: none;
+    z-index: 10000;
+    transform: translate(-50%,-50%);
+    transition: width .18s, height .18s;
+    mix-blend-mode: difference;
+  }
+  .land-cur.xl { width: 28px; height: 28px; }
+
+  /* ── SPECTRUM STRIP ───────────────────────────────────────────── */
+  .land-strip {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--roy);
+    background-size: 200% 100%;
+    animation: lShimmer 3s linear infinite;
+    z-index: 10001;
+    pointer-events: none;
+  }
+
+  /* ── SCROLL PROGRESS: ROYGBIV ─────────────────────────────────── */
+  .scroll-progress {
+    background: var(--roy) !important;
+    background-size: 200% 100% !important;
+    animation: lShimmer 4s linear infinite !important;
+  }
+
+  /* ── HERO TYPOGRAPHY UPGRADE ──────────────────────────────────── */
+  /* Keyed on #hero so it only fires on this page's hero block */
+  #hero h1,
+  #hero .hero-title {
+    font-family: var(--ldisp) !important;
+    font-weight: 800 !important;
+    font-size: clamp(3.8rem, 9vw, 8.5rem) !important;
+    line-height: .9 !important;
+    letter-spacing: -.03em !important;
+  }
+
+  #hero p,
+  #hero .hero-subtitle {
+    font-family: var(--lser) !important;
+    font-style: italic !important;
+    font-size: clamp(1rem, 2vw, 1.4rem) !important;
+    line-height: 1.55 !important;
+    max-width: 560px !important;
+    margin-bottom: 2.5rem !important;
+  }
+
+  /* Gradient word in hero */
+  .gw {
+    background: var(--roy);
+    background-size: 300% 100%;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    animation: lShimmer 5s linear infinite;
+  }
+
+  /* ── PENTAD STRIP ─────────────────────────────────────────────── */
+  .land-pentad-bar {
+    background: var(--l-off);
+    border-top: 1px solid var(--l-rule);
+    border-bottom: 1px solid var(--l-rule);
+    padding: 1.4rem clamp(1.5rem, 6vw, 6rem);
+    display: flex;
+    align-items: center;
+    gap: 0;
+    overflow-x: auto;
+    scrollbar-width: none;
+    transition: background .3s, border-color .3s;
+  }
+  [data-theme="dark"] .land-pentad-bar {
+    background: var(--l-off);
+  }
+  .land-pentad-bar::-webkit-scrollbar { display: none; }
+
+  .lpb-sym {
+    font-family: var(--lmono);
+    font-size: .72rem;
+    padding: .3rem .65rem;
+    border: 1px solid var(--l-rule);
+    color: var(--l-mute);
+    white-space: nowrap;
+    transition: background .2s;
+  }
+  .lpb-sym.r { border-color: var(--r); color: var(--r); }
+  .lpb-sym.o { border-color: var(--o); color: var(--o); }
+  .lpb-sym.y { border-color: var(--y); color: var(--y); }
+  .lpb-sym.g { border-color: var(--g); color: var(--g); }
+  .lpb-sym.b { border-color: var(--b); color: var(--b); }
+  .lpb-arr { font-family: var(--lmono); color: var(--l-rule); padding: 0 .35rem; font-size: .8rem; }
+  .lpb-desc {
+    margin-left: 2.5rem;
+    font-family: var(--lmono);
+    font-size: .52rem;
+    letter-spacing: .14em;
+    color: var(--l-mute);
+    white-space: nowrap;
+    opacity: .6;
+  }
+
+  /* ── ROYGBIV RULE ─────────────────────────────────────────────── */
+  .land-rule {
+    height: 1px;
+    background: var(--roy);
+    opacity: .25;
+    border: none;
+    margin: 0;
+  }
+
+  /* ── HEATMAP BLOCK ────────────────────────────────────────────── */
+  .land-heatmap {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 6rem;
+    align-items: center;
+    padding: 7rem clamp(1.5rem, 6vw, 6rem);
+    background: var(--l-bg);
+    border-top: 1px solid var(--l-rule);
+    transition: background .3s;
+  }
+
+  .land-heatmap h2 {
+    font-family: var(--ldisp);
+    font-weight: 800;
+    font-size: clamp(2.2rem, 4vw, 4.2rem);
+    line-height: .92;
+    letter-spacing: -.02em;
+    color: var(--l-ink);
+    margin-bottom: 1.5rem;
+    transition: color .3s;
+  }
+
+  .land-heatmap p {
+    font-family: var(--lser);
+    font-style: italic;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--l-mute);
+    max-width: 440px;
+    transition: color .3s;
+  }
+
+  .hm-label {
+    font-family: var(--lmono);
+    font-size: .58rem;
+    letter-spacing: .22em;
+    text-transform: uppercase;
+    color: var(--l-mute);
+    margin-bottom: .9rem;
+  }
+
+  .hm-grid {
+    display: grid;
+    grid-template-columns: repeat(10, 1fr);
+    grid-template-rows: repeat(10, 1fr);
+    gap: 3px;
+    aspect-ratio: 1;
+    max-width: 320px;
+  }
+
+  .hm-cell {
+    border-radius: 2px;
+    transition: transform .3s, filter .3s;
+    cursor: crosshair;
+  }
+  .hm-cell:hover { transform: scale(1.4); filter: brightness(1.25); z-index: 5; }
+
+  /* ── FOUR-TWINS GRID ──────────────────────────────────────────── */
+  .land-twins-section {
+    padding: 5rem clamp(1.5rem, 6vw, 6rem);
+    background: var(--l-off);
+    border-top: 1px solid var(--l-rule);
+    transition: background .3s;
+  }
+
+  .land-twins-header {
+    margin-bottom: 3rem;
+  }
+
+  .land-twins-header .sect-label {
+    font-family: var(--lmono);
+    font-size: .58rem;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--l-mute);
+    margin-bottom: .8rem;
+  }
+
+  .land-twins-header h2 {
+    font-family: var(--ldisp);
+    font-weight: 800;
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    line-height: .92;
+    letter-spacing: -.02em;
+    color: var(--l-ink);
+    transition: color .3s;
+  }
+
+  .land-twins-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1px;
+    background: var(--l-rule);
+    border: 1px solid var(--l-rule);
+    max-width: 1200px;
+  }
+
+  .twin-card {
+    background: var(--l-bg);
+    padding: 2.5rem 2rem;
+    position: relative;
+    overflow: hidden;
+    text-decoration: none;
+    color: var(--l-ink);
+    display: block;
+    transition: background .25s, color .25s;
+  }
+  .twin-card:hover { background: var(--l-ink); color: var(--l-bg); }
+  .twin-card:hover .twin-desc  { color: rgba(247,247,245,.6); }
+  .twin-card:hover .twin-index { color: rgba(247,247,245,.15); }
+  .twin-card:hover .twin-bar   { opacity: 1; }
+  .twin-card:hover .twin-link  { color: rgba(247,247,245,.5); }
+
+  .twin-bar {
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    opacity: .55;
+    transition: opacity .25s;
+  }
+
+  .twin-index {
+    font-family: var(--lmono);
+    font-size: .6rem;
+    color: var(--l-rule);
+    margin-bottom: 2rem;
+    letter-spacing: .1em;
+    transition: color .25s;
+  }
+
+  .twin-scale {
+    font-family: var(--ldisp);
+    font-size: .55rem;
+    font-weight: 600;
+    letter-spacing: .2em;
+    text-transform: uppercase;
+    margin-bottom: .5rem;
+  }
+
+  .twin-name {
+    font-family: var(--ldisp);
+    font-weight: 800;
+    font-size: 1.5rem;
+    line-height: 1;
+    letter-spacing: -.02em;
+    margin-bottom: 1.2rem;
+    transition: color .25s;
+  }
+
+  .twin-desc {
+    font-family: var(--lser);
+    font-style: italic;
+    font-size: .88rem;
+    line-height: 1.6;
+    color: var(--l-mute);
+    margin-bottom: 1.5rem;
+    transition: color .25s;
+  }
+
+  .twin-links-list {
+    display: flex;
+    flex-direction: column;
+    gap: .3rem;
+    list-style: none;
+    padding: 0; margin: 0;
+  }
+  .twin-link {
+    font-family: var(--lmono);
+    font-size: .58rem;
+    letter-spacing: .1em;
+    color: var(--l-mute);
+    text-decoration: none;
+    transition: color .25s;
+  }
+  .twin-link::before { content: '→ '; }
+  .twin-link:hover { color: var(--b); }
+
+  /* ── INTERVENTION / PILLARS BLOCK ────────────────────────────── */
+  .land-pillars-section {
+    padding: 6rem clamp(1.5rem, 6vw, 6rem);
+    background: var(--l-bg);
+    border-top: 1px solid var(--l-rule);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 7rem;
+    align-items: start;
+    transition: background .3s;
+  }
+
+  .pillars-label {
+    font-family: var(--lmono);
+    font-size: .58rem;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--l-mute);
+    margin-bottom: 1rem;
+  }
+
+  .pillars-heading {
+    font-family: var(--ldisp);
+    font-weight: 800;
+    font-size: clamp(2.2rem, 4vw, 4rem);
+    line-height: .92;
+    letter-spacing: -.02em;
+    color: var(--l-ink);
+    margin-bottom: 1.5rem;
+    transition: color .3s;
+  }
+
+  .pillars-sub {
+    font-family: var(--lser);
+    font-style: italic;
+    font-size: 1rem;
+    line-height: 1.7;
+    color: var(--l-mute);
+    margin-bottom: 2.5rem;
+  }
+
+  .pillars-list {
+    border-top: 1px solid var(--l-rule);
+  }
+
+  .pillar-row {
+    display: flex;
+    gap: 1.5rem;
+    align-items: flex-start;
+    padding: 1.2rem 0;
+    border-bottom: 1px solid rgba(128,128,128,.12);
+  }
+
+  .pillar-num {
+    font-family: var(--lmono);
+    font-size: .6rem;
+    color: var(--l-mute);
+    opacity: .4;
+    padding-top: .15rem;
+    min-width: 2rem;
+  }
+
+  .pillar-title {
+    font-family: var(--ldisp);
+    font-weight: 700;
+    font-size: .9rem;
+    margin-bottom: .25rem;
+    color: var(--l-ink);
+    transition: color .3s;
+  }
+
+  .pillar-desc {
+    font-family: var(--lser);
+    font-style: italic;
+    font-size: .82rem;
+    color: var(--l-mute);
+    line-height: 1.5;
+  }
+
+  /* Contact side */
+  .contact-aside {
+    background: var(--l-off);
+    border: 1px solid var(--l-rule);
+    padding: 3rem;
+    transition: background .3s, border-color .3s;
+  }
+
+  [data-theme="dark"] .contact-aside {
+    background: rgba(255,255,255,.03);
+    border-color: rgba(255,255,255,.08);
+  }
+
+  .contact-aside h3 {
+    font-family: var(--ldisp);
+    font-weight: 800;
+    font-size: 1.8rem;
+    line-height: 1.1;
+    color: var(--l-ink);
+    margin-bottom: .4rem;
+    transition: color .3s;
+  }
+
+  .contact-aside .contact-sub {
+    font-family: var(--lser);
+    font-style: italic;
+    font-size: .88rem;
+    color: var(--l-mute);
+    margin-bottom: 1.8rem;
+  }
+
+  .contact-fields {
+    display: flex;
+    flex-direction: column;
+    gap: .75rem;
+    margin-bottom: 1.25rem;
+  }
+
+  .contact-fields input,
+  .contact-fields select,
+  .contact-fields textarea {
+    background: var(--l-bg);
+    border: 1px solid var(--l-rule);
+    padding: .75rem 1rem;
+    font-family: var(--lmono);
+    font-size: .7rem;
+    color: var(--l-ink);
+    outline: none;
+    transition: border-color .2s, background .3s, color .3s;
+    resize: none;
+    width: 100%;
+  }
+  .contact-fields input::placeholder,
+  .contact-fields textarea::placeholder { color: var(--l-mute); opacity: .5; }
+  .contact-fields input:focus,
+  .contact-fields textarea:focus { border-color: var(--b); }
+  .contact-fields select option { background: var(--l-bg); }
+
+  .contact-btn {
+    width: 100%;
+    padding: .9rem 2rem;
+    background: var(--l-ink);
+    color: var(--l-bg);
+    font-family: var(--lmono);
+    font-size: .68rem;
+    letter-spacing: .12em;
+    text-transform: uppercase;
+    border: none;
+    cursor: none;
+    transition: background .2s;
+  }
+  .contact-btn:hover {
+    background: var(--roy);
+    background-size: 200% 100%;
+    animation: lShimmer 2s linear infinite;
+  }
+
+  /* ── PENTAD LOOP / θ′ CLOSER ─────────────────────────────────── */
+  .land-closer {
+    padding: 6rem clamp(1.5rem, 6vw, 6rem) 5rem;
+    background: var(--l-off);
+    border-top: 1px solid var(--l-rule);
+    position: relative;
+    overflow: hidden;
+    transition: background .3s;
+  }
+
+  .land-closer::before {
+    content: '';
+    position: absolute;
+    top: 0; right: -10%;
+    width: 60%;
+    height: 100%;
+    background: var(--roy);
+    opacity: .03;
+    clip-path: polygon(20% 0%, 100% 0%, 100% 100%, 0% 100%);
+    pointer-events: none;
+  }
+
+  .closer-label {
+    font-family: var(--lmono);
+    font-size: .58rem;
+    letter-spacing: .25em;
+    text-transform: uppercase;
+    color: var(--l-mute);
+    margin-bottom: 1rem;
+  }
+
+  .closer-heading {
+    font-family: var(--ldisp);
+    font-weight: 800;
+    font-size: clamp(2.8rem, 6vw, 6rem);
+    line-height: .9;
+    letter-spacing: -.03em;
+    color: var(--l-ink);
+    max-width: 720px;
+    margin-bottom: 2.5rem;
+    transition: color .3s;
+  }
+
+  .closer-loop {
+    display: flex;
+    align-items: center;
+    gap: 0;
+    font-family: var(--lmono);
+    font-size: .75rem;
+    flex-wrap: wrap;
+    max-width: 820px;
+    margin-bottom: 2rem;
+  }
+
+  .loop-sym {
+    padding: .5rem .9rem;
+    border-bottom: 2px solid transparent;
+    color: var(--l-mute);
+    transition: color .3s, border-color .3s;
+  }
+  .loop-sym:hover { color: var(--l-ink); }
+  .loop-sym.r { border-color: var(--r); }
+  .loop-sym.o { border-color: var(--o); }
+  .loop-sym.y { border-color: var(--y); }
+  .loop-sym.g { border-color: var(--g); }
+  .loop-sym.b { border-color: var(--b); }
+  .loop-arr { color: var(--l-rule); padding: 0 .3rem; }
+
+  .closer-tagline {
+    font-family: var(--lser);
+    font-style: italic;
+    font-size: 1.05rem;
+    color: var(--l-mute);
+    max-width: 480px;
+    line-height: 1.6;
+  }
+
+  /* ── SCROLL REVEAL ────────────────────────────────────────────── */
+  .lrev {
+    opacity: 0;
+    transform: translateY(22px);
+    transition: opacity .7s ease, transform .7s ease;
+  }
+  .lrev.vis { opacity: 1; transform: translateY(0); }
+  .ld1 { transition-delay: .1s; }
+  .ld2 { transition-delay: .22s; }
+  .ld3 { transition-delay: .38s; }
+  .ld4 { transition-delay: .52s; }
+
+  /* ── KEYFRAMES ────────────────────────────────────────────────── */
+  @keyframes lShimmer {
+    0%   { background-position: 0% 50%; }
+    100% { background-position: 300% 50%; }
+  }
+
+  /* ── RESPONSIVE ───────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    .land-twins-grid { grid-template-columns: 1fr 1fr; }
+    .land-pillars-section { grid-template-columns: 1fr; gap: 3rem; }
+  }
+  @media (max-width: 640px) {
+    .land-heatmap { grid-template-columns: 1fr; gap: 2.5rem; }
+    .land-twins-grid { grid-template-columns: 1fr; }
+    .lpb-desc { display: none; }
+  }
+
+  </style>
+</head>
+
+<body>
+
+  <!-- ══ VIBE CHROME (purely additive) ══════════════════════════ -->
+  <div class="land-strip"  aria-hidden="true"></div>
+  <div class="land-cur" id="lc" aria-hidden="true"></div>
+
+  <!-- ══ SHARED INFRASTRUCTURE — original structure, untouched ══ -->
+  <div class="scroll-indicator"><div class="scroll-progress"></div></div>
+  <div class="bg-pattern"></div>
+
+  <header class="header" id="header"></header>
+
+  <!-- Hero populated by index.js / landing.js as before -->
+  <section class="hero" id="hero"></section>
+
+  <!-- ══ PENTAD STRIP — injected after hero, before services ══ -->
+  <div class="land-pentad-bar" aria-label="The Ukubona Pentad">
+    <span class="lpb-sym r">θ</span><span class="lpb-arr">→</span>
+    <span class="lpb-sym o">L(θ)</span><span class="lpb-arr">→</span>
+    <span class="lpb-sym y">∇L(θ)</span><span class="lpb-arr">→</span>
+    <span class="lpb-sym g">−η∇L(θ)</span><span class="lpb-arr">→</span>
+    <span class="lpb-sym b">θ′</span>
+    <span class="lpb-desc">
+      θ = current state &nbsp;·&nbsp; L = loss &nbsp;·&nbsp; ∇L = gradient &nbsp;·&nbsp; −η∇L = intervention &nbsp;·&nbsp; θ′ = new state
+    </span>
+  </div>
+
+  <hr class="land-rule">
+
+  <main class="main-content">
+
+    <!-- Services section populated by shared scripts -->
+    <section class="services-section" id="services-section"></section>
+
+    <!-- ══ HEATMAP INTERLUDE — L(θ) ══════════════════════════════ -->
+    <div class="land-heatmap">
+      <div>
+        <p class="hm-label lrev">L(θ) · Loss Function</p>
+        <h2 class="lrev ld1">Flying<br>blind<br>is a choice.</h2>
+        <p class="lrev ld2">
+          Governments call districts. Clinicians read printouts. Planners wait for reports.
+          The data exists — it just isn't <em>computed</em>. The ROYGBIV heatmap collapses
+          high-dimensional loss into one gradient any stakeholder immediately understands.
+        </p>
+        <p class="lrev ld3" style="margin-top:1rem; font-family:var(--lmono); font-size:.72rem; letter-spacing:.08em; color:var(--l-mute);">
+          <span style="color:var(--r)">■</span> Red = high loss &nbsp;&nbsp;
+          <span style="color:var(--g)">■</span> Green = improving &nbsp;&nbsp;
+          <span style="color:var(--v)">■</span> Violet = optimized
+        </p>
+      </div>
+      <div class="lrev ld2">
+        <p class="hm-label">Uganda · District Loss Simulation</p>
+        <div class="hm-grid" id="hmg"></div>
+      </div>
+    </div>
+
+    <hr class="land-rule">
+
+    <!-- ══ FOUR TWINS GRID — ∇L ══════════════════════════════════ -->
+    <div class="land-twins-section">
+      <div class="land-twins-header lrev">
+        <p class="sect-label">03 — Digital Twin Suite</p>
+        <h2>Four scales.<br>One architecture.</h2>
+      </div>
+
+      <div class="land-twins-grid">
+
+        <a class="twin-card lrev" href="assets/html/dt-001.html">
+          <div class="twin-bar" style="background:var(--r)"></div>
+          <div class="twin-index">01 / 04</div>
+          <div class="twin-scale" style="color:var(--r)">Personalized</div>
+          <div class="twin-name">You</div>
+          <p class="twin-desc">The original and hardest problem. A digital twin of a single human being — metabolic state, health trajectory, interventions.</p>
+          <ul class="twin-links-list">
+            <li><a class="twin-link" href="assets/html/dt-001.html">Personalized twin</a></li>
+            <li><a class="twin-link" href="assets/html/nhanes.html">NHANES model</a></li>
+            <li><a class="twin-link" href="assets/html/pairs-jh.html">Pairs</a></li>
+          </ul>
+        </a>
+
+        <a class="twin-card lrev ld1" href="assets/html/hr.html">
+          <div class="twin-bar" style="background:var(--o)"></div>
+          <div class="twin-index">02 / 04</div>
+          <div class="twin-scale" style="color:var(--o)">Enterprise</div>
+          <div class="twin-name">Your<br>Org</div>
+          <p class="twin-desc">Stewards, payloads, performance. A living ledger of competence — the Steward Transcript as objective evidence of governance.</p>
+          <ul class="twin-links-list">
+            <li><a class="twin-link" href="assets/html/hr.html">HR twin</a></li>
+            <li><a class="twin-link" href="assets/html/steward-dashboard.html">Steward dashboard</a></li>
+            <li><a class="twin-link" href="assets/html/steward-transcript.html">Transcript</a></li>
+          </ul>
+        </a>
+
+        <a class="twin-card lrev ld2" href="assets/html/gov.html">
+          <div class="twin-bar" style="background:var(--g)"></div>
+          <div class="twin-index">03 / 04</div>
+          <div class="twin-scale" style="color:var(--g)">Government</div>
+          <div class="twin-name">Your<br>Nation</div>
+          <p class="twin-desc">Synthetic data rehearsal. District-level loss gradients. A national MRI before the Prime Minister's office ever asks "where did you get that number?"</p>
+          <ul class="twin-links-list">
+            <li><a class="twin-link" href="assets/html/gov.html">Government twin</a></li>
+            <li><a class="twin-link" href="assets/html/dt-h-001.html">Health model</a></li>
+            <li><a class="twin-link" href="assets/html/cartography-256.html">Cartography</a></li>
+          </ul>
+        </a>
+
+        <a class="twin-card lrev ld3" href="assets/html/ukhona.html">
+          <div class="twin-bar" style="background:var(--v)"></div>
+          <div class="twin-index">04 / 04</div>
+          <div class="twin-scale" style="color:var(--v)">Civilization</div>
+          <div class="twin-name">The<br>World</div>
+          <p class="twin-desc">Stratigraphic civilization. Gradient descent on suffering — from abolition to public health to institutions. The pentad as universal learning loop.</p>
+          <ul class="twin-links-list">
+            <li><a class="twin-link" href="assets/html/ukhona.html">Framework</a></li>
+            <li><a class="twin-link" href="assets/html/philosophy.html">Philosophy</a></li>
+            <li><a class="twin-link" href="assets/html/stratigraphic-civilization.html">Strata</a></li>
+          </ul>
+        </a>
+
+      </div>
+    </div>
+
+    <hr class="land-rule">
+
+    <!-- Metrics populated by shared scripts -->
+    <section class="metrics-section" id="metrics-section"></section>
+
+    <hr class="land-rule">
+
+    <!-- ══ PILLARS / INTERVENTION — −η∇L ════════════════════════ -->
+    <div class="land-pillars-section">
+      <div>
+        <p class="pillars-label lrev">04 — The Intervention</p>
+        <h2 class="pillars-heading lrev ld1">Stop flying<br>blind.</h2>
+        <p class="pillars-sub lrev ld2">
+          We build the data plane for the authority — not the political ministry above it.
+          You walk into any room backed by defensible reasoning, not phone-call data.
+        </p>
+
+        <div class="pillars-list lrev ld3">
+          <div class="pillar-row">
+            <div class="pillar-num">01</div>
+            <div>
+              <div class="pillar-title">Synthetic Data Rehearsal</div>
+              <p class="pillar-desc">We generate parameters. You rehearse the update rhythm before real data arrives. Bayesian replacement when ready.</p>
+            </div>
+          </div>
+          <div class="pillar-row">
+            <div class="pillar-num">02</div>
+            <div>
+              <div class="pillar-title">ROYGBIV Heatmaps</div>
+              <p class="pillar-desc">High-dimensional loss landscapes compressed into a single color gradient any stakeholder understands immediately.</p>
+            </div>
+          </div>
+          <div class="pillar-row">
+            <div class="pillar-num">03</div>
+            <div>
+              <div class="pillar-title">Steward Transcripts</div>
+              <p class="pillar-desc">Every intervention that shifts a district from Red toward Green is permanently ledgered. Dignity through efficiency.</p>
+            </div>
+          </div>
+          <div class="pillar-row">
+            <div class="pillar-num">04</div>
+            <div>
+              <div class="pillar-title">Diaspora Contribution</div>
+              <p class="pillar-desc">Ugandans abroad modeling without leaving their positions. Brain drain reversed through remote gradient computation.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="contact-aside lrev ld2">
+        <h3>Let's close<br>the loop.</h3>
+        <p class="contact-sub">Government, enterprise, or individual — tell us your scale.</p>
+        <div class="contact-fields">
+          <input type="text"   placeholder="Name">
+          <input type="email"  placeholder="Email">
+          <select>
+            <option value="" disabled selected>Scale of twin</option>
+            <option>Personalized</option>
+            <option>Enterprise</option>
+            <option>Government</option>
+            <option>Civilization-level research</option>
+          </select>
+          <textarea rows="4" placeholder="What are you flying blind about?"></textarea>
+        </div>
+        <button class="contact-btn">Send ∇L</button>
+      </div>
+    </div>
+
+    <hr class="land-rule">
+
+    <!-- ══ CLOSER — θ′ ════════════════════════════════════════════ -->
+    <div class="land-closer">
+      <p class="closer-label lrev">05 — The Updated State</p>
+      <h2 class="closer-heading lrev ld1">
+        Once a system<br>can <span class="gw">see</span>,<br>it can learn.
+      </h2>
+
+      <div class="closer-loop lrev ld2">
+        <span class="loop-sym r">θ</span><span class="loop-arr">→</span>
+        <span class="loop-sym o">L(θ)</span><span class="loop-arr">→</span>
+        <span class="loop-sym y">∇L(θ)</span><span class="loop-arr">→</span>
+        <span class="loop-sym g">−η∇L</span><span class="loop-arr">→</span>
+        <span class="loop-sym b">θ′</span><span class="loop-arr">→</span>
+        <span class="loop-sym r" style="opacity:.35">θ</span>
+      </div>
+
+      <p class="closer-tagline lrev ld3">
+        The pentad is not a framework. It is what happens when any system — a body, an
+        institution, a civilization — begins to adapt. We make it computable.
+      </p>
+    </div>
+
+  </main>
+
+  <div class="modal-overlay" id="modal-overlay"></div>
+  <div id="footer-placeholder"></div>
+
+  <!-- ══ SCRIPTS — exact original order ══════════════════════════ -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/feather-icons/4.29.0/feather.min.js"></script>
+  <script src="assets/js/landing.js"></script>
+  <script src="assets/js/index.js"></script>
+  <script src="assets/js/shared.js"></script>
+  <script src="assets/js/tooltips.js"></script>
+
+  <!-- ══ LANDING VIBE SCRIPT
+       Purely additive. Never touches variables owned by
+       landing.js / index.js / shared.js.
+       Dark-mode is handled entirely by shared.js (data-theme toggle).
+       We only hook in to animate the heatmap, cursor, and reveals.
+  ══ -->
+  <script>
+  (function () {
+    'use strict';
+
+    /* ── Custom cursor ── */
+    var cur = document.getElementById('lc');
+    if (cur) {
+      document.addEventListener('mousemove', function (e) {
+        cur.style.left = e.clientX + 'px';
+        cur.style.top  = e.clientY + 'px';
+      }, { passive: true });
+      document.addEventListener('mouseover', function (e) {
+        var t = e.target;
+        cur.classList.toggle('xl',
+          !!(t && t.closest('a, button, .twin-card, .hm-cell, [role="button"]')));
+      }, { passive: true });
     }
-  });
-}, { threshold: 0.12 });
-revealEls.forEach(el => observer.observe(el));
 
-/* ─── HEATMAP LIVE DRIFT ─── */
-setInterval(() => {
-  const cells = document.querySelectorAll('.hcell');
-  const colors = ['#f72b1a','#ff4020','#ff7200','#ff8800','#ffa020','#f5cc00','#e8b800','#60d040','#1ec94a','#1a8fff','#2090ff','#6c35ff','#8050ff','#b800cc'];
-  const idx = Math.floor(Math.random() * cells.length);
-  cells[idx].style.background = colors[Math.floor(Math.random() * colors.length)];
-  cells[idx].style.transition = 'background 1.5s ease';
-}, 400);
+    /* ── Heatmap ── */
+    var COLS = [
+      '#f72b1a','#f72b1a','#ff4422',
+      '#ff7200','#ff8a00','#ffa020',
+      '#f5cc00','#d4b000',
+      '#70d040','#1ec94a',
+      '#1a8fff','#2090ff',
+      '#6c35ff','#8855ff',
+      '#b800cc','#9900aa'
+    ];
 
-/* ─── ACTIVE NAV ─── */
-const sections = document.querySelectorAll('section[id]');
-const navLinks = document.querySelectorAll('.nav-links a');
-window.addEventListener('scroll', () => {
-  let current = '';
-  sections.forEach(s => {
-    if (window.scrollY >= s.offsetTop - 200) current = s.id;
-  });
-  navLinks.forEach(a => {
-    a.style.color = a.getAttribute('href') === '#' + current ? 'var(--ink)' : '';
-  });
-}, { passive: true });
-</script>
+    var grid = document.getElementById('hmg');
+    if (grid) {
+      var cells = [];
+      for (var r = 0; r < 10; r++) {
+        for (var c = 0; c < 10; c++) {
+          var base  = (r / 9) * 0.55;          // north = higher loss
+          var noise = Math.random() * 0.45;
+          var val   = Math.min(1, base + noise);
+          var idx   = Math.floor(val * (COLS.length - 1));
+          var div   = document.createElement('div');
+          div.className = 'hm-cell';
+          div.style.background = COLS[idx];
+          cells.push(div);
+          grid.appendChild(div);
+        }
+      }
+      /* Live drift — cells randomly walk toward optimization */
+      setInterval(function () {
+        var i = Math.floor(Math.random() * cells.length);
+        cells[i].style.transition  = 'background 1.4s ease';
+        cells[i].style.background  = COLS[Math.floor(Math.random() * COLS.length)];
+      }, 380);
+    }
+
+    /* ── Scroll reveals ── */
+    var revs = document.querySelectorAll('.lrev');
+    if ('IntersectionObserver' in window) {
+      var obs = new IntersectionObserver(function (entries) {
+        entries.forEach(function (e) {
+          if (e.isIntersecting) {
+            e.target.classList.add('vis');
+            obs.unobserve(e.target);
+          }
+        });
+      }, { threshold: 0.1 });
+      revs.forEach(function (el) { obs.observe(el); });
+    } else {
+      revs.forEach(function (el) { el.classList.add('vis'); });
+    }
+
+  }());
+  </script>
 
 </body>
-</html>      
+</html>
