@@ -1,0 +1,179 @@
+<!-- ════════════════════════════════════════════════════════════
+     assets/html/footer.html
+     Shared footer — injected by shared.js into every page.
+
+     STRUCTURE:
+       [⊙ rotating logo + wordmark]   [rotating chorus — one phrase at a time]   [© + links]
+════════════════════════════════════════════════════════════ -->
+
+<style>
+/* ── FOOTER ────────────────────────────────────────────────── */
+.footer {
+  border-top: 1px solid var(--rule, #2a2a35);
+  background: var(--surface, var(--off, #13131a));
+  transition: background .3s, border-color .3s;
+}
+
+.footer-wrap {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 1.8rem 2rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1.2rem;
+}
+
+/* ── Brand (mirrors the nav logo) ─────────────────────────── */
+.footer-brand {
+  display: flex;
+  align-items: center;
+  gap: .65rem;
+  text-decoration: none;
+  color: var(--muted, #888898);
+  flex-shrink: 0;
+}
+.footer-brand-img {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: block;
+  animation: footer-spin 30s linear infinite;  /* same pace as nav */
+}
+@keyframes footer-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+.footer-brand-text {
+  font-family: 'Syne', sans-serif;
+  font-weight: 700;
+  font-size: .82rem;
+  letter-spacing: .02em;
+  color: var(--muted, #888898);
+}
+
+/* ── Rotating chorus — one phrase at a time ───────────────── */
+.footer-chorus {
+  position: relative;
+  height: 2rem;
+  min-width: 280px;
+  display: flex;
+  align-items: center;
+}
+
+.chorus-chip {
+  position: absolute;
+  left: 0;
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .6rem;
+  letter-spacing: .1em;
+  padding: .3rem .75rem;
+  border: 1px solid var(--rule, #2a2a35);
+  color: var(--muted, #888898);
+  white-space: nowrap;
+  /* hidden by default */
+  opacity: 0;
+  transform: translateY(5px);
+  transition: opacity .7s ease, transform .7s ease;
+  pointer-events: none;
+}
+.chorus-chip.active {
+  opacity: 1;
+  transform: translateY(0);
+  pointer-events: auto;
+  border-color: transparent;
+  /* Static ROYGBIV — no shimmer animation */
+  background: linear-gradient(90deg,
+    #f72b1a 0%, #ff7200 16%, #f5cc00 32%,
+    #1ec94a 48%, #1a8fff 64%, #6c35ff 82%, #b800cc 100%);
+  color: #fff;
+}
+
+/* ── Micro copyright line ──────────────────────────────────── */
+.footer-micro {
+  font-family: 'IBM Plex Mono', monospace;
+  font-size: .58rem;
+  color: var(--muted, #888898);
+  letter-spacing: .08em;
+  white-space: nowrap;
+}
+.footer-micro a {
+  color: var(--muted, #888898);
+  text-decoration: none;
+  transition: color .2s;
+}
+.footer-micro a:hover { color: var(--ink, #f0f0f8); }
+
+/* ── Responsive ───────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .footer-wrap  { flex-direction: column; align-items: flex-start; gap: 1rem; }
+  .footer-chorus { min-width: 200px; }
+}
+</style>
+
+<footer class="footer">
+  <div class="footer-wrap">
+
+    <!-- Rotating logo + wordmark -->
+    <a href="assets/html/team.html" class="footer-brand" title="About Ukubona">
+      <img
+        id="footer-logo-img"
+        class="footer-brand-img"
+        src="https://abikesa.github.io/logos/assets/ukubona-dark.png"
+        alt="Ukubona LLC"
+      />
+      <span class="footer-brand-text">Ukubona LLC</span>
+    </a>
+
+    <!-- Rotating chorus — one phrase visible at a time, 15 s interval -->
+    <div class="footer-chorus" id="footer-chorus" role="status" aria-live="polite">
+      <span class="chorus-chip active">To see, blindly</span>
+      <span class="chorus-chip">To forage, stochastically</span>
+      <span class="chorus-chip">To rehearse, consequentially</span>
+      <span class="chorus-chip">To update, continuously</span>
+      <span class="chorus-chip">To become, θ′</span>
+    </div>
+
+    <!-- Copyright -->
+    <div class="footer-micro">
+      <p>
+        © 2026 Ukubona LLC &nbsp;·&nbsp;
+        <a href="assets/html/logo.html">⊙</a> &nbsp;·&nbsp;
+        <a href="assets/html/card.html">vCard</a>
+      </p>
+    </div>
+
+  </div>
+</footer>
+
+<!-- Footer script — chorus rotation + logo theme sync -->
+<script>
+(function () {
+
+  /* Logo theme sync */
+  function syncFooterLogo () {
+    var img   = document.getElementById('footer-logo-img');
+    var theme = document.documentElement.getAttribute('data-theme');
+    if (!img) return;
+    img.src = theme === 'dark'
+      ? 'https://abikesa.github.io/logos/assets/ukubona-dark.png'
+      : 'https://abikesa.github.io/logos/assets/ukubona-light.png';
+  }
+  syncFooterLogo();
+  var mo = new MutationObserver(syncFooterLogo);
+  mo.observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
+
+  /* Rotating chorus — 15 s per phrase, unhurried */
+  var chips = Array.from(document.querySelectorAll('#footer-chorus .chorus-chip'));
+  if (chips.length > 1) {
+    var idx = 0;
+    setInterval(function () {
+      chips[idx].classList.remove('active');
+      idx = (idx + 1) % chips.length;
+      chips[idx].classList.add('active');
+    }, 15000);
+  }
+
+}());
+</script>
