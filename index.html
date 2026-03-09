@@ -129,9 +129,18 @@
   #hero .hero-title {
     font-family: var(--ldisp) !important;
     font-weight: 800 !important;
-    font-size: clamp(3.8rem, 9vw, 8.5rem) !important;
-    line-height: .9 !important;
+    font-size: clamp(1.8rem, 3.5vw, 3.5rem) !important;
+    line-height: 1.05 !important;
     letter-spacing: -.03em !important;
+    white-space: normal !important;
+    overflow: visible !important;
+    word-break: normal !important;
+  max-width: none !important;
+  width: auto !important;
+  }
+
+  #hero, .hero {
+    overflow: visible !important;
   }
 
   #hero p,
@@ -679,9 +688,6 @@
   <hr class="land-rule">
 
   <main class="main-content">
-
-    <!-- Services section populated by shared scripts -->
-    <section class="services-section" id="services-section"></section>
 
     <!-- ══ HEATMAP INTERLUDE — L(θ) ══════════════════════════════ -->
     <div class="land-heatmap">
