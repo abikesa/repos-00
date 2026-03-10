@@ -183,7 +183,6 @@ section{min-height:100vh;padding:0 3rem;display:flex;flex-direction:column;justi
 
 /* ════════════════════════════════════
    APP-GRID — PENTAD OVERLAY
-   Injected by nav hamburger, full-screen
 ════════════════════════════════════ */
 .app-grid{
   display:none;
@@ -197,7 +196,6 @@ section{min-height:100vh;padding:0 3rem;display:flex;flex-direction:column;justi
 }
 .app-grid.open{ display:flex; }
 
-/* ── pentad spine ── */
 .ag-pentad{
   display:grid;
   grid-template-columns: repeat(5,1fr);
@@ -208,7 +206,6 @@ section{min-height:100vh;padding:0 3rem;display:flex;flex-direction:column;justi
   flex:1;
 }
 
-/* each column = one pentad step */
 .ag-col{
   display:flex;
   flex-direction:column;
@@ -218,7 +215,6 @@ section{min-height:100vh;padding:0 3rem;display:flex;flex-direction:column;justi
   transition:var(--T);
 }
 
-/* column header */
 .ag-col-head{
   padding:.9rem 1rem .7rem;
   border-bottom:1px solid var(--rule);
@@ -252,7 +248,6 @@ section{min-height:100vh;padding:0 3rem;display:flex;flex-direction:column;justi
   letter-spacing:.01em;
 }
 
-/* accent top bar per column */
 .ag-col:nth-child(1) .ag-col-head{ border-top:3px solid var(--r); }
 .ag-col:nth-child(2) .ag-col-head{ border-top:3px solid var(--o); }
 .ag-col:nth-child(3) .ag-col-head{ border-top:3px solid var(--y); }
@@ -265,7 +260,6 @@ section{min-height:100vh;padding:0 3rem;display:flex;flex-direction:column;justi
 .ag-col:nth-child(4) .ag-step-sym{ color:var(--g); }
 .ag-col:nth-child(5) .ag-step-sym{ color:var(--b); }
 
-/* items inside each column */
 .ag-items{
   display:flex;
   flex-direction:column;
@@ -307,9 +301,7 @@ section{min-height:100vh;padding:0 3rem;display:flex;flex-direction:column;justi
   flex-direction:column;
   gap:.05rem;
 }
-.ag-item-name{
-  line-height:1.1;
-}
+.ag-item-name{ line-height:1.1; }
 .ag-item-hint{
   font-family:var(--mono);
   font-size:.52rem;
@@ -320,7 +312,6 @@ section{min-height:100vh;padding:0 3rem;display:flex;flex-direction:column;justi
 }
 .ag-item:hover .ag-item-hint{ color:color-mix(in srgb,var(--bg) 60%,transparent); }
 
-/* placeholder items */
 .ag-item.placeholder{
   opacity:.28;
   pointer-events:none;
@@ -328,7 +319,6 @@ section{min-height:100vh;padding:0 3rem;display:flex;flex-direction:column;justi
 }
 .ag-item.placeholder .ag-icon{ filter:grayscale(1); }
 
-/* close button */
 .ag-close{
   position:fixed;
   top:1.4rem; right:2.5rem;
@@ -375,7 +365,6 @@ section{min-height:100vh;padding:0 3rem;display:flex;flex-direction:column;justi
 #gradient{padding-left:8rem;padding-top:6rem;padding-bottom:6rem;min-height:auto;background:var(--bg);transition:var(--T)}
 .grad-head{font-family:var(--syne);font-weight:800;font-size:clamp(2.5rem,4vw,4rem);line-height:.92;letter-spacing:-.02em;margin-bottom:4rem}
 .twins{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;background:var(--rule);border:1px solid var(--rule);max-width:1400px;transition:var(--T)}
-/* placeholder twin card */
 .tc.coming{opacity:.42;cursor:default;pointer-events:none;}
 .tc.coming .tc-name{color:var(--muted)}
 .tc-coming-badge{display:inline-block;font-family:var(--mono);font-size:.52rem;letter-spacing:.15em;text-transform:uppercase;padding:.2rem .5rem;border:1px solid var(--rule);color:var(--muted);margin-bottom:1rem}
@@ -438,7 +427,7 @@ section{min-height:100vh;padding:0 3rem;display:flex;flex-direction:column;justi
 .prime-tag{font-family:var(--serif);font-style:italic;font-size:1.1rem;color:var(--muted);margin-top:2rem;max-width:520px;line-height:1.6}
 
 /* ════════════════════════════════════
-   FOOTER — Ukubona standard
+   FOOTER
 ════════════════════════════════════ */
 .footer{border-top:1px solid var(--rule);background:var(--off);transition:var(--T)}
 .footer-wrap{max-width:1400px;margin:0 auto;padding:2.2rem 3rem 2.2rem 8rem;display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:1.2rem}
@@ -492,7 +481,6 @@ section{min-height:100vh;padding:0 3rem;display:flex;flex-direction:column;justi
     <li><a href="assets/html/ukhona.html">Framework</a></li>
     <li><button class="theme-btn" id="themeBtn" aria-label="Toggle theme">◐ theme</button></li>
   </ul>
-  <!-- hamburger opens app-grid -->
   <button class="theme-btn" id="gridBtn" aria-label="Open app grid" style="margin-left:.8rem;letter-spacing:.08em;">⊞ apps</button>
   <a href="#action" class="nav-cta">Start</a>
 </nav>
@@ -549,6 +537,13 @@ section{min-height:100vh;padding:0 3rem;display:flex;flex-direction:column;justi
             <span class="ag-item-hint">Stratigraphic thought</span>
           </span>
         </a>
+        <a class="ag-item" href="/assets/html/index-g.html">
+          <span class="ag-icon">🌐</span>
+          <span class="ag-item-text">
+            <span class="ag-item-name">Index G</span>
+            <span class="ag-item-hint">Alternate landing</span>
+          </span>
+        </a>
       </div>
     </div>
 
@@ -595,6 +590,13 @@ section{min-height:100vh;padding:0 3rem;display:flex;flex-direction:column;justi
             <span class="ag-item-hint">Signal vs. noise</span>
           </span>
         </a>
+        <a class="ag-item" href="/assets/html/metrics-section.html">
+          <span class="ag-icon">📐</span>
+          <span class="ag-item-text">
+            <span class="ag-item-name">Metrics</span>
+            <span class="ag-item-hint">Loss measurement section</span>
+          </span>
+        </a>
       </div>
     </div>
 
@@ -609,8 +611,120 @@ section{min-height:100vh;padding:0 3rem;display:flex;flex-direction:column;justi
         <a class="ag-item" href="/assets/html/dt-001.html">
           <span class="ag-icon">🧬</span>
           <span class="ag-item-text">
-            <span class="ag-item-name">Digital Twin</span>
-            <span class="ag-item-hint">Personalized · dt-001</span>
+            <span class="ag-item-name">Twin · 001</span>
+            <span class="ag-item-hint">Personalized · individual</span>
+          </span>
+        </a>
+        <a class="ag-item" href="/assets/html/dt-002.html">
+          <span class="ag-icon">🧬</span>
+          <span class="ag-item-text">
+            <span class="ag-item-name">Twin · 002</span>
+            <span class="ag-item-hint">dt-002 variant</span>
+          </span>
+        </a>
+        <a class="ag-item" href="/assets/html/dt-003.html">
+          <span class="ag-icon">🧬</span>
+          <span class="ag-item-text">
+            <span class="ag-item-name">Twin · 003</span>
+            <span class="ag-item-hint">dt-003 variant</span>
+          </span>
+        </a>
+        <a class="ag-item" href="/assets/html/dt-20260310.html">
+          <span class="ag-icon">📅</span>
+          <span class="ag-item-text">
+            <span class="ag-item-name">Twin · 2026-03-10</span>
+            <span class="ag-item-hint">Dated snapshot</span>
+          </span>
+        </a>
+        <a class="ag-item" href="/assets/html/dt-20260310-v1.html">
+          <span class="ag-icon">📅</span>
+          <span class="ag-item-text">
+            <span class="ag-item-name">Twin · 2026-03-10 v1</span>
+            <span class="ag-item-hint">Dated snapshot v1</span>
+          </span>
+        </a>
+        <a class="ag-item" href="/assets/html/dt-20260310-v2.html">
+          <span class="ag-icon">📅</span>
+          <span class="ag-item-text">
+            <span class="ag-item-name">Twin · 2026-03-10 v2</span>
+            <span class="ag-item-hint">Dated snapshot v2</span>
+          </span>
+        </a>
+        <a class="ag-item" href="/assets/html/dt-a-001.html">
+          <span class="ag-icon">📈</span>
+          <span class="ag-item-text">
+            <span class="ag-item-name">Twin · Analytics</span>
+            <span class="ag-item-hint">dt-a-001</span>
+          </span>
+        </a>
+        <a class="ag-item" href="/assets/html/dt-c-001.html">
+          <span class="ag-icon">❤️</span>
+          <span class="ag-item-text">
+            <span class="ag-item-name">Twin · Cardiac</span>
+            <span class="ag-item-hint">dt-c-001</span>
+          </span>
+        </a>
+        <a class="ag-item" href="/assets/html/dt-e-001.html">
+          <span class="ag-icon">🦠</span>
+          <span class="ag-item-text">
+            <span class="ag-item-name">Twin · Epi 001</span>
+            <span class="ag-item-hint">dt-e-001</span>
+          </span>
+        </a>
+        <a class="ag-item" href="/assets/html/dt-e-003.html">
+          <span class="ag-icon">🦠</span>
+          <span class="ag-item-text">
+            <span class="ag-item-name">Twin · Epi 003</span>
+            <span class="ag-item-hint">dt-e-003</span>
+          </span>
+        </a>
+        <a class="ag-item" href="/assets/html/dt-h-001.html">
+          <span class="ag-icon">🏥</span>
+          <span class="ag-item-text">
+            <span class="ag-item-name">Twin · Health</span>
+            <span class="ag-item-hint">dt-h-001</span>
+          </span>
+        </a>
+        <a class="ag-item" href="/assets/html/dt-m-001.html">
+          <span class="ag-icon">⚗️</span>
+          <span class="ag-item-text">
+            <span class="ag-item-name">Twin · Metabolic</span>
+            <span class="ag-item-hint">dt-m-001</span>
+          </span>
+        </a>
+        <a class="ag-item" href="/assets/html/dt-o-001.html">
+          <span class="ag-icon">🫁</span>
+          <span class="ag-item-text">
+            <span class="ag-item-name">Twin · Organ</span>
+            <span class="ag-item-hint">dt-o-001</span>
+          </span>
+        </a>
+        <a class="ag-item" href="/assets/html/dt-p-001.html">
+          <span class="ag-icon">👨‍👩‍👧‍👦</span>
+          <span class="ag-item-text">
+            <span class="ag-item-name">Twin · Population</span>
+            <span class="ag-item-hint">dt-p-001</span>
+          </span>
+        </a>
+        <a class="ag-item" href="/assets/html/dt-r-001.html">
+          <span class="ag-icon">⚠️</span>
+          <span class="ag-item-text">
+            <span class="ag-item-name">Twin · Risk</span>
+            <span class="ag-item-hint">dt-r-001</span>
+          </span>
+        </a>
+        <a class="ag-item" href="/assets/html/dt-s-001.html">
+          <span class="ag-icon">🏙️</span>
+          <span class="ag-item-text">
+            <span class="ag-item-name">Twin · Social</span>
+            <span class="ag-item-hint">dt-s-001</span>
+          </span>
+        </a>
+        <a class="ag-item" href="/assets/html/dt-t-001.html">
+          <span class="ag-icon">🔄</span>
+          <span class="ag-item-text">
+            <span class="ag-item-name">Twin · Transplant</span>
+            <span class="ag-item-hint">dt-t-001</span>
           </span>
         </a>
         <a class="ag-item" href="/assets/html/gov.html">
@@ -627,18 +741,25 @@ section{min-height:100vh;padding:0 3rem;display:flex;flex-direction:column;justi
             <span class="ag-item-hint">256-district heatmap</span>
           </span>
         </a>
-        <a class="ag-item" href="/assets/html/stratigraphic-civilization.html">
-          <span class="ag-icon">🪨</span>
-          <span class="ag-item-text">
-            <span class="ag-item-name">Strata</span>
-            <span class="ag-item-hint">Civilization layers</span>
-          </span>
-        </a>
         <a class="ag-item" href="/assets/html/ukhona.html">
           <span class="ag-icon">👁️</span>
           <span class="ag-item-text">
             <span class="ag-item-name">Ukhona</span>
             <span class="ag-item-hint">Framework · to witness</span>
+          </span>
+        </a>
+        <a class="ag-item" href="/assets/html/ukhona-orig.html">
+          <span class="ag-icon">🗂️</span>
+          <span class="ag-item-text">
+            <span class="ag-item-name">Ukhona · Orig</span>
+            <span class="ag-item-hint">Framework original</span>
+          </span>
+        </a>
+        <a class="ag-item" href="/assets/html/stratigraphic-civilization.html">
+          <span class="ag-icon">🪨</span>
+          <span class="ag-item-text">
+            <span class="ag-item-name">Strata</span>
+            <span class="ag-item-hint">Civilization layers</span>
           </span>
         </a>
       </div>
@@ -655,8 +776,15 @@ section{min-height:100vh;padding:0 3rem;display:flex;flex-direction:column;justi
         <a class="ag-item" href="/assets/html/game.html">
           <span class="ag-icon">🎮</span>
           <span class="ag-item-text">
-            <span class="ag-item-name">Games</span>
+            <span class="ag-item-name">Game</span>
             <span class="ag-item-hint">Stochastic foraging</span>
+          </span>
+        </a>
+        <a class="ag-item" href="/assets/html/game-x.html">
+          <span class="ag-icon">🕹️</span>
+          <span class="ag-item-text">
+            <span class="ag-item-name">Game X</span>
+            <span class="ag-item-hint">Extended foraging variant</span>
           </span>
         </a>
         <a class="ag-item" href="/assets/html/pitch.html">
@@ -664,6 +792,13 @@ section{min-height:100vh;padding:0 3rem;display:flex;flex-direction:column;justi
           <span class="ag-item-text">
             <span class="ag-item-name">Pitch</span>
             <span class="ag-item-hint">The ask · the step</span>
+          </span>
+        </a>
+        <a class="ag-item" href="/assets/html/services-section.html">
+          <span class="ag-icon">🛠️</span>
+          <span class="ag-item-text">
+            <span class="ag-item-name">Services</span>
+            <span class="ag-item-hint">What we offer</span>
           </span>
         </a>
         <a class="ag-item" href="/assets/html/ukb-i-000.html">
@@ -975,7 +1110,7 @@ section{min-height:100vh;padding:0 3rem;display:flex;flex-direction:column;justi
   </p>
 </section>
 
-<!-- FOOTER — Ukubona standard -->
+<!-- FOOTER -->
 <footer class="footer">
   <div class="footer-wrap">
     <div class="chorus" id="chorus" data-interval="60000">
@@ -1015,9 +1150,9 @@ btn.addEventListener('click', () => {
 });
 
 /* ── APP-GRID OPEN/CLOSE ── */
-const grid        = document.getElementById('appGrid');
-const gridBtn     = document.getElementById('gridBtn');
-const agClose     = document.getElementById('agClose');
+const grid         = document.getElementById('appGrid');
+const gridBtn      = document.getElementById('gridBtn');
+const agClose      = document.getElementById('agClose');
 const agCloseFixed = document.getElementById('agCloseFixed');
 
 function openGrid() {
@@ -1036,8 +1171,6 @@ function closeGrid() {
 gridBtn.addEventListener('click', openGrid);
 agClose.addEventListener('click', closeGrid);
 agCloseFixed.addEventListener('click', closeGrid);
-
-// close on Escape
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeGrid(); });
 
 /* ── HEATMAP ── */
@@ -1071,7 +1204,7 @@ const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
 }, { threshold: 0.12 });
 document.querySelectorAll('.rev').forEach(el => obs.observe(el));
-       
+
 /* ── ROTATING CHORUS ── */
 (function () {
   const chips = document.querySelectorAll('#chorus .chip');
