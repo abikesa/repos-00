@@ -903,20 +903,39 @@ section{min-height:100vh;padding:0 3rem;display:flex;flex-direction:column;justi
       </p>
       <div class="pillars rev d3">
         <div class="pillar">
-          <div class="p-num">01</div>
-          <div><div class="p-title">Synthetic Data Rehearsal</div><div class="p-desc">We generate parameters. You rehearse the update rhythm before real data arrives. Bayesian replacement when ready.</div></div>
+          <div class="p-num" style="color:var(--r)">θ</div>
+          <div>
+            <div class="p-title">Synthetic Data Rehearsal</div>
+            <div class="p-desc">We generate parameters. You rehearse the update rhythm before real data arrives. Bayesian replacement when ready.</div>
+          </div>
         </div>
         <div class="pillar">
-          <div class="p-num">02</div>
-          <div><div class="p-title">ROYGBIV Heatmaps</div><div class="p-desc">High-dimensional loss landscapes compressed into a single color gradient any stakeholder understands immediately.</div></div>
+          <div class="p-num" style="color:var(--o)">L</div>
+          <div>
+            <div class="p-title">ROYGBIV Heatmaps</div>
+            <div class="p-desc">High-dimensional loss landscapes compressed into a single color gradient any stakeholder understands immediately.</div>
+          </div>
         </div>
         <div class="pillar">
-          <div class="p-num">03</div>
-          <div><div class="p-title">Steward Transcripts</div><div class="p-desc">Every intervention that shifts a district from Red toward Green is permanently ledgered. Dignity through efficiency.</div></div>
+          <div class="p-num" style="color:var(--y)">∇L</div>
+          <div>
+            <div class="p-title">Gradient Computation</div>
+            <div class="p-desc">The heatmap shows <em>what</em> is broken. The gradient shows <em>why</em> and <em>where to push</em>. Causal inference on the loss surface — turning a color into a direction.</div>
+          </div>
         </div>
         <div class="pillar">
-          <div class="p-num">04</div>
-          <div><div class="p-title">Diaspora Contribution</div><div class="p-desc">Ugandans abroad modeling without leaving their positions. Brain drain reversed through remote gradient computation.</div></div>
+          <div class="p-num" style="color:var(--g)">−η∇L</div>
+          <div>
+            <div class="p-title">Steward Transcripts</div>
+            <div class="p-desc">Every intervention that shifts a system from Red toward Green is permanently ledgered. The descent step made auditable.</div>
+          </div>
+        </div>
+        <div class="pillar">
+          <div class="p-num" style="color:var(--b)">θ′</div>
+          <div>
+            <div class="p-title">The Updated State</div>
+            <div class="p-desc">Every intervention that closes the loop produces a new θ. Not a report. Not a recommendation. A measurably different system — legible, auditable, ready for the next descent.</div>
+          </div>
         </div>
       </div>
     </div>
@@ -926,7 +945,7 @@ section{min-height:100vh;padding:0 3rem;display:flex;flex-direction:column;justi
       <div class="cfields">
         <input type="text" placeholder="Name">
         <input type="email" placeholder="Email">
-        <select><option value="" disabled selected>Scale of twin</option><option>Personalized</option><option>Enterprise</option><option>Government</option><option>Civilization-level research</option></select>
+        <select><option value="" disabled selected>Scale of twin</option><option>Individual</option><option>Household</option><option>Firm</option><option>Government</option><option>Civilization</option></select>
         <textarea rows="4" placeholder="What are you flying blind about?"></textarea>
       </div>
       <button class="cbtn">Send ∇L</button>
@@ -1052,7 +1071,7 @@ const obs = new IntersectionObserver(entries => {
   entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vis'); obs.unobserve(e.target); } });
 }, { threshold: 0.12 });
 document.querySelectorAll('.rev').forEach(el => obs.observe(el));
-
+       
 /* ── ROTATING CHORUS ── */
 (function () {
   const chips = document.querySelectorAll('#chorus .chip');
