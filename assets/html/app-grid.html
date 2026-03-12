@@ -75,21 +75,33 @@ nav {
 .nav-logo {
   font-family: var(--syne); font-weight: 800; font-size: .95rem;
   letter-spacing: -.01em; text-decoration: none; color: var(--ink);
+  flex-shrink: 0;
 }
 .gw {
   background: var(--roy); background-size: 300% 100%;
   -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text; animation: sh 4s linear infinite;
 }
-.nav-right { display: flex; gap: .8rem; align-items: center; }
+.nav-right {
+  display: flex; gap: .8rem; align-items: center;
+  flex-shrink: 0; white-space: nowrap;
+}
 .nav-btn {
   background: none; border: 1px solid var(--rule); color: var(--muted);
   font-family: var(--mono); font-size: .62rem; letter-spacing: .1em;
   padding: .4rem .8rem; cursor: none;
   transition: border-color .2s, color .2s;
   text-decoration: none; display: inline-block;
+  white-space: nowrap;
 }
 .nav-btn:hover { border-color: var(--ink); color: var(--ink); }
+
+/* suppress any externally-injected fixed close buttons */
+body > a[style*="position: fixed"],
+body > button[style*="position: fixed"],
+body > div[style*="position: fixed"]:not(.cursor):not(.strip) {
+  display: none !important;
+}
 
 /* ── GRID LAYOUT ── */
 .grid-wrap {
@@ -201,7 +213,7 @@ nav {
   <a href="../../index.html" class="nav-logo"><span class="gw">Ukubona</span> LLC</a>
   <div class="nav-right">
     <button class="nav-btn" id="themeBtn">◐ theme</button>
-    <a href="../../index.html" class="nav-btn">← home</a>
+    <a href="../../index.html" class="nav-btn">✕ close</a>
   </div>
 </nav>
 
@@ -324,6 +336,9 @@ nav {
         <a class="ag-item" href="ukhona.html"><span class="ag-icon">👁️</span><span class="ag-item-text"><span class="ag-item-name">Ukhona</span><span class="ag-item-hint">Framework · to witness</span></span></a>
         <a class="ag-item" href="ukhona-orig.html"><span class="ag-icon">🗂️</span><span class="ag-item-text"><span class="ag-item-name">Ukhona · Orig</span><span class="ag-item-hint">Framework original</span></span></a>
         <a class="ag-item" href="stratigraphic-civilization.html"><span class="ag-icon">🪨</span><span class="ag-item-text"><span class="ag-item-name">Strata</span><span class="ag-item-hint">Civilization layers</span></span></a>
+        <a class="ag-item" href="hr.html"><span class="ag-icon">👥</span><span class="ag-item-text"><span class="ag-item-name">Twin · HR</span><span class="ag-item-hint">Firm · human resources</span></span></a>
+        <a class="ag-item" href="steward-dashboard.html"><span class="ag-icon">📋</span><span class="ag-item-text"><span class="ag-item-name">Steward Dashboard</span><span class="ag-item-hint">Governance ledger</span></span></a>
+        <a class="ag-item" href="steward-transcript.html"><span class="ag-icon">📜</span><span class="ag-item-text"><span class="ag-item-name">Steward Transcript</span><span class="ag-item-hint">Objective evidence</span></span></a>
       </div>
     </div>
 
@@ -392,6 +407,19 @@ try {
     btn.textContent = saved === 'light' ? '◑ theme' : '◐ theme';
   }
 } catch(e) {}
+
+/* kill any externally-injected floating close buttons — including late ones */
+const KEEP = el => el.classList.contains('cursor') || el.classList.contains('strip') ||
+                   el.tagName === 'NAV' || el.tagName === 'SCRIPT' ||
+                   el.classList.contains('grid-wrap');
+function purgeFixed() {
+  document.querySelectorAll('body > *').forEach(el => {
+    if (KEEP(el)) return;
+    if (getComputedStyle(el).position === 'fixed') el.remove();
+  });
+}
+purgeFixed();
+new MutationObserver(purgeFixed).observe(document.body, { childList: true, subtree: false });
 </script>
 </body>
 </html>
