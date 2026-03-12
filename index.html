@@ -41,11 +41,11 @@ body{background:var(--bg);color:var(--ink);font-family:var(--syne);overflow-x:hi
 @keyframes cshift{0%{background-position:0 50%}100%{background-position:200% 50%}}
 
 /* ── RAINBOW STRIP (top, decorative) ── */
-.strip{position:fixed;top:0;left:0;right:0;height:3px;background:var(--roy);background-size:200% 100%;animation:sh 6s linear infinite;z-index:102;pointer-events:none;}
+.strip{display:none;}
 @keyframes sh{0%{background-position:0 50%}100%{background-position:300% 50%}}
 
 /* ── SCROLL PROGRESS BAR ── */
-.progress-bar{position:fixed;top:3px;left:0;height:2px;background:var(--ink);width:0%;z-index:102;pointer-events:none;transition:width .1s linear;opacity:.5;}
+.progress-bar{position:fixed;top:0;left:0;height:3px;background:var(--roy);background-size:200% 100%;width:0%;z-index:103;pointer-events:none;transition:width .12s linear;}
 
 /* ── NAV ── */
 nav{position:fixed;top:0;left:0;right:0;z-index:100;display:flex;justify-content:space-between;align-items:center;padding:0.9rem 2.5rem;background:color-mix(in srgb,var(--bg) 92%,transparent);backdrop-filter:blur(12px);border-bottom:1px solid var(--rule);transition:var(--T);}
@@ -79,7 +79,7 @@ section{min-height:100vh;padding:0 3rem;display:flex;flex-direction:column;justi
   background:var(--roy);background-size:300% 100%;
   -webkit-background-clip:text;-webkit-text-fill-color:transparent;
   background-clip:text;
-  animation:sh 12s linear infinite;  /* was 4s — now 12s, calm */
+  animation:sh 99s linear infinite;
 }
 
 .hero-sub-head{font-family:var(--serif);font-style:italic;font-size:clamp(1.05rem,2.2vw,1.65rem);color:var(--muted);display:block;margin-top:1.1rem;padding-top:1rem;border-top:1px solid var(--rule);max-width:540px;line-height:1.35;letter-spacing:.01em;transition:color .35s,border-color .35s;}
