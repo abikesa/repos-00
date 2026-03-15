@@ -12,7 +12,7 @@ OUTPUT_XML=false
 OUTPUT_HAIKU=false
 DEFAULT_EXCLUDES=".git|node_modules|__pycache__|env|.venv|myenv|_build"
 
-# === Parse flags ===
+# === Parse flags ===    
 for arg in "$@"; do
     case $arg in
         --deep) DEPTH=10 ;;
