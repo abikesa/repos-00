@@ -68,12 +68,19 @@ body{font-family:'DM Sans',sans-serif;font-size:13px;background:var(--bg);color:
 .stage.active .st-status{color:rgba(239,159,39,.6);}
 .stage.done   .st-status{color:rgba(29,158,117,.6);}
 
-/* SOURCE TOGGLE */
-.src-toggle{display:flex;gap:.4rem;margin-top:.6rem;}
-.src-btn{flex:1;padding:.35rem .5rem;background:var(--surf2);border:1px solid var(--brd);border-radius:4px;font-family:'DM Mono',monospace;font-size:.6rem;color:var(--mut);cursor:pointer;text-align:center;transition:all .15s;}
-.src-btn:hover{border-color:var(--y);}
-.src-btn.on-syn{border-color:var(--y);color:var(--y);background:rgba(239,159,39,.06);}
-.src-btn.on-real{border-color:var(--v);color:var(--v);background:rgba(29,158,117,.06);}
+/* SOURCE TOGGLE — θ (the prior, inherited) */
+.src-block{background:var(--surf2);border:1px solid var(--brd);border-radius:6px;padding:.5rem .65rem;margin-bottom:.7rem;}
+.src-block-lbl{font-family:'DM Mono',monospace;font-size:.54rem;letter-spacing:.12em;text-transform:uppercase;color:var(--mut);margin-bottom:.4rem;display:flex;align-items:center;justify-content:space-between;}
+.src-theta{font-size:.72rem;color:var(--i);font-family:'DM Mono',monospace;}
+.src-toggle{display:flex;border:1px solid var(--brd);border-radius:5px;overflow:hidden;}
+.src-btn{flex:1;padding:.3rem .4rem;background:transparent;border:none;border-right:1px solid var(--brd);font-family:'DM Mono',monospace;font-size:.6rem;color:var(--mut);cursor:pointer;text-align:center;transition:background .15s,color .15s;}
+.src-btn:last-child{border-right:none;}
+.src-btn:hover{background:rgba(255,255,255,.04);}
+.src-btn.on-syn{background:rgba(239,159,39,.1);color:var(--y);}
+.src-btn.on-real{background:rgba(29,158,117,.1);color:var(--v);}
+.src-note{font-family:'DM Mono',monospace;font-size:.57rem;color:var(--mut);margin-top:.3rem;line-height:1.5;}
+.src-note .sy{color:rgba(239,159,39,.65);}
+.src-note .re{color:rgba(29,158,117,.65);}
 
 /* DEMO MODES */
 .modes{display:flex;flex-direction:column;gap:.3rem;margin-top:.6rem;}
@@ -211,20 +218,28 @@ body{font-family:'DM Sans',sans-serif;font-size:13px;background:var(--bg);color:
     <div class="pm-hd">
       <div class="pm-title">Pipeline monitor</div>
 
-      <!-- Stage indicators -->
-      <div class="stages">
-        <div class="stage done"  id="st-1"><div class="st-dot"></div><span class="st-name">1 · Source</span><span class="st-status" id="ss-1">synthetic</span></div>
-        <div class="stage done"  id="st-2"><div class="st-dot"></div><span class="st-name">2 · Ingest</span><span class="st-status" id="ss-2">133/133 ✓</span></div>
-        <div class="stage done"  id="st-3"><div class="st-dot"></div><span class="st-name">3 · Validate</span><span class="st-status" id="ss-3">schema ✓</span></div>
-        <div class="stage active" id="st-4"><div class="st-dot"></div><span class="st-name">4 · Transform</span><span class="st-status" id="ss-4">L(θ) running</span></div>
-        <div class="stage done"  id="st-5"><div class="st-dot"></div><span class="st-name">5 · Serve</span><span class="st-status" id="ss-5">map live</span></div>
-        <div class="stage"       id="st-6"><div class="st-dot"></div><span class="st-name">6 · Act</span><span class="st-status" id="ss-6">awaiting</span></div>
+      <!-- θ — SOURCE (the prior, not a pipeline stage) -->
+      <div class="src-block">
+        <div class="src-block-lbl">
+          <span>θ — Source</span>
+          <span class="src-theta">the prior</span>
+        </div>
+        <div class="src-toggle">
+          <button class="src-btn on-syn" id="src-syn" onclick="setSource('synthetic')">Synthetic</button>
+          <button class="src-btn" id="src-real" onclick="triggerBayesianSwap()">Real · DHIS2</button>
+        </div>
+        <div class="src-note" id="src-note">
+          <span class="sy">WHO priors + N(0,σ) noise · NPA Feb 2026</span>
+        </div>
       </div>
 
-      <!-- Source toggle -->
-      <div class="src-toggle">
-        <button class="src-btn on-syn" id="src-syn" onclick="setSource('synthetic')">Synthetic</button>
-        <button class="src-btn" id="src-real" onclick="triggerBayesianSwap()">→ Real (DHIS2)</button>
+      <!-- L(θ) → ∇L → −η∇L → θ′  (4 pentadic stages) -->
+      <div class="stages">
+        <div class="stage done"  id="st-2"><div class="st-dot"></div><span class="st-name">L(θ) · Ingest</span><span class="st-status" id="ss-2">133/133 ✓</span></div>
+        <div class="stage done"  id="st-3"><div class="st-dot"></div><span class="st-name">∇L · Validate + Transform</span><span class="st-status" id="ss-3">schema ✓</span></div>
+        <div class="stage active" id="st-4"><div class="st-dot"></div><span class="st-name">∇L · Compute L(θ)</span><span class="st-status" id="ss-4">running</span></div>
+        <div class="stage done"  id="st-5"><div class="st-dot"></div><span class="st-name">−η∇L · Serve map</span><span class="st-status" id="ss-5">live</span></div>
+        <div class="stage"       id="st-6"><div class="st-dot"></div><span class="st-name">θ′ · Act</span><span class="st-status" id="ss-6">awaiting</span></div>
       </div>
 
       <!-- Demo modes -->
@@ -554,6 +569,9 @@ function setSource(src) {
   isRealMode=(src==='real');
   document.getElementById('src-syn').className='src-btn'+(isRealMode?'':' on-syn');
   document.getElementById('src-real').className='src-btn'+(isRealMode?' on-real':'');
+  document.getElementById('src-note').innerHTML=isRealMode
+    ?'<span class="re">MoH DHIS2 · UBOS district data · NPA surveys</span>'
+    :'<span class="sy">WHO priors + N(0,σ) noise · NPA Feb 2026</span>';
   buildLoss();
   renderMarkers();
 }
@@ -563,16 +581,14 @@ function triggerBayesianSwap() {
   document.getElementById('mode-b').classList.add('on');
 
   const steps=[
-    [0,    '1','Connecting to MoH DHIS2 API…','connecting'],
-    [1200, '1','DHIS2 connection established ✓','real'],
-    [2000, '2','Ingesting 133 district records…','connecting'],
-    [3000, '2','133/133 records ingested ✓','real'],
-    [3800, '3','Schema validation running…','connecting'],
-    [4600, '3','Schema validated — all fields present ✓','real'],
-    [5400, '4','Bayesian update: prior → posterior…','connecting'],
-    [6400, '4','∇L recomputed on real observations ✓','real'],
-    [7200, '5','Serving updated ROYGBIV map…','real'],
-    [8000, '6','Pipeline swap complete — real data active','real'],
+    [0,    '2','Ingesting 133 district records from DHIS2…','connecting'],
+    [1200, '2','133/133 records ingested ✓','real'],
+    [2200, '3','Schema validation running…','connecting'],
+    [3200, '3','Schema validated — all fields present ✓','real'],
+    [4000, '4','Bayesian update: prior → posterior…','connecting'],
+    [5200, '4','∇L recomputed on real observations ✓','real'],
+    [6200, '5','Serving updated ROYGBIV map…','real'],
+    [7200, '6','Pipeline swap complete — θ′ active','real'],
   ];
 
   steps.forEach(([delay,stage,msg,cls])=>{
@@ -595,6 +611,7 @@ function triggerBayesianSwap() {
     document.getElementById('real-badge').style.display='inline-block';
     document.getElementById('src-syn').className='src-btn';
     document.getElementById('src-real').className='src-btn on-real';
+    document.getElementById('src-note').innerHTML='<span class="re">MoH DHIS2 · UBOS district data · NPA surveys</span>';
     isRealMode=true;
     buildLoss();
     renderMarkers();
