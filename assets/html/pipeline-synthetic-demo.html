@@ -1,1 +1,1154 @@
-. 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ukubona · NPA Synthetic Twin · Uganda District Loss Map</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@300;400;500&family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap');
+
+:root {
+  --bg: #0d0d0b;
+  --surface: #141412;
+  --surface2: #1c1c19;
+  --border: rgba(255,255,255,0.07);
+  --ink: #e8e6df;
+  --muted: #6b6b65;
+  --dim: #3a3a36;
+
+  /* ROYGBIV loss scale */
+  --r: #e24b4a;   /* Red    — loss 0.80–1.00 */
+  --o: #d85a30;   /* Orange — loss 0.60–0.79 */
+  --y: #ef9f27;   /* Yellow — loss 0.40–0.59 */
+  --g: #639922;   /* Green  — loss 0.20–0.39 */
+  --b: #378add;   /* Blue   — loss 0.10–0.19 */
+  --i: #534ab7;   /* Indigo — loss 0.05–0.09 */
+  --v: #1d9e75;   /* Violet — loss 0.00–0.04 */
+
+  --u-green: #0f6e56;
+  --u-purple: #534ab7;
+  --u-amber: #854f0b;
+  --u-coral: #993c1d;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  font-family: 'DM Sans', sans-serif;
+  font-size: 14px;
+  background: var(--bg);
+  color: var(--ink);
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+/* ── HEADER ─────────────────────────────────────────── */
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid var(--border);
+  background: var(--surface);
+  position: sticky;
+  top: 0;
+  z-index: 100;
+}
+.header-brand {
+  display: flex;
+  align-items: baseline;
+  gap: 0.75rem;
+}
+.header-logo {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.1rem;
+  color: var(--ink);
+  letter-spacing: 0.02em;
+}
+.header-sub {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--muted);
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.header-badge {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 0.25em 0.75em;
+  border: 1px solid var(--border);
+  border-radius: 999px;
+  color: var(--muted);
+}
+.synthetic-badge {
+  color: var(--y);
+  border-color: rgba(239,159,39,0.3);
+}
+
+/* ── LAYOUT ─────────────────────────────────────────── */
+.layout {
+  display: grid;
+  grid-template-columns: 280px 1fr 240px;
+  grid-template-rows: auto 1fr;
+  height: calc(100vh - 53px);
+}
+
+/* ── LEFT PANEL — Controls ───────────────────────────── */
+.panel-left {
+  background: var(--surface);
+  border-right: 1px solid var(--border);
+  overflow-y: auto;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+.panel-section-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.6rem;
+  padding-bottom: 0.4rem;
+  border-bottom: 1px solid var(--border);
+}
+
+/* FORMULA */
+.formula-display {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.72rem;
+  color: var(--muted);
+  line-height: 1.9;
+  padding: 0.75rem;
+  background: var(--surface2);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+}
+.formula-display .active-term { color: var(--y); }
+
+/* SLIDERS */
+.slider-group { display: flex; flex-direction: column; gap: 0.75rem; }
+.slider-row { display: flex; flex-direction: column; gap: 0.3rem; }
+.slider-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+}
+.slider-name {
+  font-size: 0.75rem;
+  color: var(--ink);
+  opacity: 0.85;
+}
+.slider-val {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--y);
+}
+input[type=range] {
+  width: 100%;
+  height: 3px;
+  appearance: none;
+  background: var(--dim);
+  border-radius: 2px;
+  outline: none;
+  cursor: pointer;
+}
+input[type=range]::-webkit-slider-thumb {
+  appearance: none;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: var(--y);
+  cursor: pointer;
+}
+input[type=range].red-slider::-webkit-slider-thumb { background: var(--r); }
+input[type=range].green-slider::-webkit-slider-thumb { background: var(--g); }
+input[type=range].blue-slider::-webkit-slider-thumb { background: var(--b); }
+input[type=range].indigo-slider::-webkit-slider-thumb { background: var(--i); }
+input[type=range].violet-slider::-webkit-slider-thumb { background: var(--v); }
+
+/* SCENARIO BUTTONS */
+.scenario-btns { display: flex; flex-direction: column; gap: 0.5rem; }
+.scenario-btn {
+  padding: 0.5rem 0.75rem;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--ink);
+  font-family: 'DM Sans', sans-serif;
+  font-size: 0.75rem;
+  cursor: pointer;
+  text-align: left;
+  transition: border-color 0.15s, background 0.15s;
+}
+.scenario-btn:hover { border-color: var(--y); background: rgba(239,159,39,0.06); }
+.scenario-btn.active { border-color: var(--y); color: var(--y); }
+.scenario-btn span { display: block; font-size: 0.65rem; color: var(--muted); margin-top: 0.15rem; }
+
+/* ── CENTER PANEL — Map ──────────────────────────────── */
+.panel-center {
+  position: relative;
+  overflow: hidden;
+  background: var(--bg);
+}
+
+#map-canvas {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* TOOLTIP */
+.tooltip {
+  position: fixed;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 0.15s;
+  z-index: 200;
+  min-width: 200px;
+  max-width: 260px;
+}
+.tooltip.visible { opacity: 1; }
+.tooltip-name {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1rem;
+  margin-bottom: 0.4rem;
+  color: var(--ink);
+}
+.tooltip-loss {
+  font-family: 'DM Mono', monospace;
+  font-size: 1.4rem;
+  font-weight: 500;
+  margin-bottom: 0.5rem;
+}
+.tooltip-row {
+  display: flex;
+  justify-content: space-between;
+  font-size: 0.72rem;
+  color: var(--muted);
+  padding: 0.15rem 0;
+  border-bottom: 1px solid var(--border);
+}
+.tooltip-row:last-child { border-bottom: none; }
+.tooltip-row-val { color: var(--ink); font-family: 'DM Mono', monospace; }
+
+/* ZOOM CONTROLS */
+.map-controls {
+  position: absolute;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+.map-btn {
+  width: 32px;
+  height: 32px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--ink);
+  font-size: 1rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: border-color 0.15s;
+}
+.map-btn:hover { border-color: var(--y); }
+
+/* MAP LEGEND */
+.map-legend {
+  position: absolute;
+  bottom: 1.5rem;
+  left: 1.5rem;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem;
+}
+.legend-title {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.58rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.5rem;
+}
+.legend-scale {
+  display: flex;
+  gap: 2px;
+  align-items: center;
+  margin-bottom: 0.35rem;
+}
+.legend-swatch {
+  width: 18px;
+  height: 10px;
+  border-radius: 2px;
+}
+.legend-labels {
+  display: flex;
+  justify-content: space-between;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.58rem;
+  color: var(--muted);
+}
+
+/* UPDATING PULSE */
+.updating-indicator {
+  position: absolute;
+  top: 1rem;
+  left: 50%;
+  transform: translateX(-50%);
+  background: var(--surface);
+  border: 1px solid rgba(239,159,39,0.3);
+  border-radius: 999px;
+  padding: 0.3em 1em;
+  font-family: 'DM Mono', monospace;
+  font-size: 0.62rem;
+  color: var(--y);
+  opacity: 0;
+  transition: opacity 0.3s;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.updating-indicator.show { opacity: 1; }
+
+/* ── RIGHT PANEL — Stats ─────────────────────────────── */
+.panel-right {
+  background: var(--surface);
+  border-left: 1px solid var(--border);
+  overflow-y: auto;
+  padding: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: 1.25rem;
+}
+
+/* NATIONAL STATS */
+.stat-card {
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.75rem 1rem;
+}
+.stat-label {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--muted);
+  margin-bottom: 0.3rem;
+}
+.stat-value {
+  font-family: 'Instrument Serif', serif;
+  font-size: 1.6rem;
+  line-height: 1;
+  margin-bottom: 0.15rem;
+}
+.stat-delta {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--muted);
+}
+.stat-delta.bad { color: var(--r); }
+.stat-delta.good { color: var(--v); }
+
+/* TOP DISTRICTS LIST */
+.district-list { display: flex; flex-direction: column; gap: 0.4rem; }
+.district-item {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.6rem;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background 0.12s;
+}
+.district-item:hover { background: var(--surface2); }
+.district-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  flex-shrink: 0;
+}
+.district-item-name { font-size: 0.78rem; flex: 1; }
+.district-item-val {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+}
+
+/* PENTAD READOUT */
+.pentad-strip {
+  display: flex;
+  flex-direction: column;
+  gap: 0.35rem;
+}
+.pentad-row {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  padding: 0.4rem 0.6rem;
+  background: var(--surface2);
+  border-radius: 5px;
+  border-left: 2px solid var(--border);
+}
+.pentad-row.active { border-left-color: var(--y); }
+.pentad-sym {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.7rem;
+  color: var(--muted);
+  min-width: 48px;
+}
+.pentad-row.active .pentad-sym { color: var(--y); }
+.pentad-desc { font-size: 0.72rem; color: var(--muted); flex: 1; }
+.pentad-row.active .pentad-desc { color: var(--ink); }
+
+/* STEWARD TRANSCRIPT */
+.transcript-log {
+  font-family: 'DM Mono', monospace;
+  font-size: 0.65rem;
+  color: var(--muted);
+  line-height: 1.7;
+  max-height: 140px;
+  overflow-y: auto;
+}
+.log-entry { padding: 0.2rem 0; border-bottom: 1px solid var(--border); }
+.log-entry:last-child { border-bottom: none; }
+.log-time { color: var(--dim); margin-right: 0.4rem; }
+.log-action { color: var(--y); }
+
+/* RESPONSIVE */
+@media (max-width: 900px) {
+  .layout { grid-template-columns: 1fr; grid-template-rows: auto; height: auto; }
+  .panel-left, .panel-right { height: auto; }
+  .panel-center { height: 60vw; min-height: 320px; }
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<header class="header">
+  <div class="header-brand">
+    <span class="header-logo">Ukubona</span>
+    <span class="header-sub">NPA Digital Twin · Uganda</span>
+  </div>
+  <div style="display:flex;gap:0.5rem;align-items:center;">
+    <span class="header-badge synthetic-badge">Synthetic Phase I</span>
+    <span class="header-badge">135 Districts</span>
+    <span class="header-badge">θ → L(θ) → ∇L → −η∇L → θ′</span>
+  </div>
+</header>
+
+<div class="tooltip" id="tooltip">
+  <div class="tooltip-name" id="tt-name">Kampala</div>
+  <div class="tooltip-loss" id="tt-loss" style="color:var(--r)">L(θ) = 0.82</div>
+  <div class="tooltip-row"><span>Mental health</span><span class="tooltip-row-val" id="tt-mh">—</span></div>
+  <div class="tooltip-row"><span>Infant mortality</span><span class="tooltip-row-val" id="tt-im">—</span></div>
+  <div class="tooltip-row"><span>Malaria burden</span><span class="tooltip-row-val" id="tt-ml">—</span></div>
+  <div class="tooltip-row"><span>Drug stockout</span><span class="tooltip-row-val" id="tt-so">—</span></div>
+  <div class="tooltip-row"><span>∇L direction</span><span class="tooltip-row-val" id="tt-grad">—</span></div>
+</div>
+
+<div class="updating-indicator" id="updating">Recomputing gradient…</div>
+
+<div class="layout">
+
+  <!-- LEFT: Controls -->
+  <aside class="panel-left">
+
+    <div>
+      <div class="panel-section-label">Loss function L(θ)</div>
+      <div class="formula-display">
+        θₜ → <span class="active-term">L(θ)</span> → ∇L → −η∇L + ε → θ′<br><br>
+        L = w₁·mh + w₂·mort + w₃·mal + w₄·so
+      </div>
+    </div>
+
+    <div>
+      <div class="panel-section-label">Loss weights (policy choice)</div>
+      <div class="slider-group">
+        <div class="slider-row">
+          <div class="slider-meta">
+            <span class="slider-name">Mental health <span style="color:var(--r);font-size:0.6rem;">← NPA silent emergency</span></span>
+            <span class="slider-val" id="v-mh">25%</span>
+          </div>
+          <input type="range" class="red-slider" id="s-mh" min="5" max="50" value="25" step="1">
+        </div>
+        <div class="slider-row">
+          <div class="slider-meta">
+            <span class="slider-name">Infant mortality</span>
+            <span class="slider-val" id="v-im">25%</span>
+          </div>
+          <input type="range" class="red-slider" id="s-im" min="5" max="50" value="25" step="1">
+        </div>
+        <div class="slider-row">
+          <div class="slider-meta">
+            <span class="slider-name">Malaria burden</span>
+            <span class="slider-val" id="v-ml">25%</span>
+          </div>
+          <input type="range" id="s-ml" min="5" max="50" value="25" step="1">
+        </div>
+        <div class="slider-row">
+          <div class="slider-meta">
+            <span class="slider-name">Drug stockouts</span>
+            <span class="slider-val" id="v-so">25%</span>
+          </div>
+          <input type="range" class="green-slider" id="s-so" min="5" max="50" value="25" step="1">
+        </div>
+      </div>
+    </div>
+
+    <div>
+      <div class="panel-section-label">Learning rate η (intervention speed)</div>
+      <div class="slider-row">
+        <div class="slider-meta">
+          <span class="slider-name">η — policy step size</span>
+          <span class="slider-val" id="v-eta">0.10</span>
+        </div>
+        <input type="range" class="blue-slider" id="s-eta" min="1" max="30" value="10" step="1">
+      </div>
+    </div>
+
+    <div>
+      <div class="panel-section-label">Noise ε (exploration)</div>
+      <div class="slider-row">
+        <div class="slider-meta">
+          <span class="slider-name">ε — stochastic foraging</span>
+          <span class="slider-val" id="v-eps">0.05</span>
+        </div>
+        <input type="range" class="indigo-slider" id="s-eps" min="0" max="20" value="5" step="1">
+      </div>
+    </div>
+
+    <div>
+      <div class="panel-section-label">Scenarios</div>
+      <div class="scenario-btns">
+        <button class="scenario-btn active" data-scenario="baseline" onclick="setScenario(this,'baseline')">
+          Status quo
+          <span>NPA Feb 2026 baseline — 71% MH surge</span>
+        </button>
+        <button class="scenario-btn" data-scenario="mh-priority" onclick="setScenario(this,'mh-priority')">
+          Mental health priority
+          <span>Weight MH at 45% — NPA mandate</span>
+        </button>
+        <button class="scenario-btn" data-scenario="intervention" onclick="setScenario(this,'intervention')">
+          Simulate intervention
+          <span>η=0.25 — aggressive descent step</span>
+        </button>
+        <button class="scenario-btn" data-scenario="goat" onclick="setScenario(this,'goat')">
+          Goat phase (ε ≫ 0)
+          <span>High exploration — find new basins</span>
+        </button>
+        <button class="scenario-btn" data-scenario="real-swap" onclick="setScenario(this,'real-swap')">
+          → Bayesian swap ready
+          <span>Replace synthetic with real MoH data</span>
+        </button>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- CENTER: Map -->
+  <main class="panel-center">
+    <canvas id="map-canvas"></canvas>
+
+    <div class="map-legend">
+      <div class="legend-title">L(θ) — National Loss Gradient</div>
+      <div class="legend-scale">
+        <div class="legend-swatch" style="background:var(--r)"></div>
+        <div class="legend-swatch" style="background:var(--o)"></div>
+        <div class="legend-swatch" style="background:var(--y)"></div>
+        <div class="legend-swatch" style="background:var(--g)"></div>
+        <div class="legend-swatch" style="background:var(--b)"></div>
+        <div class="legend-swatch" style="background:var(--i)"></div>
+        <div class="legend-swatch" style="background:var(--v)"></div>
+      </div>
+      <div class="legend-labels">
+        <span>High loss</span>
+        <span>Optimized</span>
+      </div>
+    </div>
+
+    <div class="map-controls">
+      <button class="map-btn" id="zoom-in" title="Zoom in">+</button>
+      <button class="map-btn" id="zoom-out" title="Zoom out">−</button>
+      <button class="map-btn" id="zoom-reset" title="Reset view" style="font-size:0.7rem;">⌖</button>
+    </div>
+  </main>
+
+  <!-- RIGHT: Stats -->
+  <aside class="panel-right">
+
+    <div>
+      <div class="panel-section-label">National L(θ)</div>
+      <div class="stat-card">
+        <div class="stat-label">Mean composite loss</div>
+        <div class="stat-value" id="stat-loss" style="color:var(--o)">0.61</div>
+        <div class="stat-delta bad" id="stat-loss-delta">↑ 0.12 from pre-surge baseline</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="panel-section-label">Districts at critical loss (≥0.7)</div>
+      <div class="stat-card">
+        <div class="stat-label">Red/Orange districts</div>
+        <div class="stat-value" id="stat-critical" style="color:var(--r)">43</div>
+        <div class="stat-delta bad" id="stat-crit-delta">of 135 require immediate intervention</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="panel-section-label">Mental health surge (NPA Feb 2026)</div>
+      <div class="stat-card">
+        <div class="stat-label">Facility cases vs. 2022</div>
+        <div class="stat-value" style="color:var(--r)">+71%</div>
+        <div class="stat-delta bad">494,326 → 843,295 cases</div>
+      </div>
+    </div>
+
+    <div>
+      <div class="panel-section-label">Highest loss districts</div>
+      <div class="district-list" id="top-districts"></div>
+    </div>
+
+    <div>
+      <div class="panel-section-label">Pentadic state</div>
+      <div class="pentad-strip">
+        <div class="pentad-row"><span class="pentad-sym">θₜ</span><span class="pentad-desc">Synthetic prior — 135 districts</span></div>
+        <div class="pentad-row active"><span class="pentad-sym">L(θ)</span><span class="pentad-desc">Computing composite loss now</span></div>
+        <div class="pentad-row"><span class="pentad-sym">∇L</span><span class="pentad-desc">ROYGBIV gradient visible</span></div>
+        <div class="pentad-row"><span class="pentad-sym">−η∇L</span><span class="pentad-desc">Policy step — adjust η slider</span></div>
+        <div class="pentad-row"><span class="pentad-sym">θ′</span><span class="pentad-desc">Updated state after step</span></div>
+      </div>
+    </div>
+
+    <div>
+      <div class="panel-section-label">Steward transcript</div>
+      <div class="transcript-log" id="transcript"></div>
+    </div>
+
+    <div style="margin-top:auto;">
+      <div class="panel-section-label">Data source</div>
+      <div style="font-family:'DM Mono',monospace;font-size:0.62rem;color:var(--muted);line-height:1.8;">
+        SYNTHETIC PHASE I<br>
+        WHO priors + N(0,σ) noise<br>
+        NPA surge params: Feb 2026<br>
+        ── Bayesian swap ready ──<br>
+        <span style="color:var(--v);">→ Replace: MoH DHIS2 API</span><br>
+        <span style="color:var(--v);">→ Replace: UBOS district data</span><br>
+        <span style="color:var(--v);">→ Replace: NPA survey streams</span>
+      </div>
+    </div>
+
+  </aside>
+</div>
+
+<script>
+// ── DISTRICT DATA GENERATION ──────────────────────────────────
+// 135 synthetic Ugandan districts with approximate geographic positions
+// Coordinate system: Uganda roughly 1°S–4.2°N, 29.5°E–35.0°E
+
+const DISTRICT_NAMES = [
+  "Abim","Adjumani","Agago","Alebtong","Amolatar","Amudat","Amuria","Amuru","Apac","Arua",
+  "Budaka","Bududa","Bugiri","Buhweju","Buikwe","Bukedea","Bukomansimbi","Bukwo","Bulambuli","Buliisa",
+  "Bundibugyo","Bunyangabu","Bushenyi","Busia","Butaleja","Butebo","Buvuma","Buyende",
+  "Dokolo","Gomba","Gulu","Hoima","Ibanda","Iganga","Isingiro","Jinja","Kaabong","Kabale","Kabarole","Kaberamaido",
+  "Kagadi","Kakumiro","Kalaki","Kalangala","Kaliro","Kalungu","Kampala","Kamuli","Kamwenge","Kanungu",
+  "Kapchorwa","Kapelebyong","Karenga","Kasanda","Kasese","Katakwi","Kayunga","Kazo","Kibale","Kiboga",
+  "Kibuku","Kikuube","Kiruhura","Kiryandongo","Kisoro","Kitgum","Koboko","Kole","Kotido","Kumi",
+  "Kwania","Kween","Kyankwanzi","Kyegegwa","Kyenjojo","Kyotera","Lamwo","Lira","Luuka","Luwero",
+  "Lwengo","Lyantonde","Madi-Okollo","Manafwa","Maracha","Masaka","Masindi","Mayuge","Mbale","Mbarara",
+  "Mitooma","Mityana","Moroto","Moyo","Mpigi","Mubende","Mukono","Nabilatuk","Nakapiripirit","Nakaseke",
+  "Nakasongola","Namayingo","Namisindwa","Namutumba","Napak","Nebbi","Ngora","Ntoroko","Ntungamo","Nwoya",
+  "Obongi","Omoro","Otuke","Oyam","Pader","Pakwach","Pallisa","Rakai","Rubanda","Rubirizi",
+  "Rukiga","Rukungiri","Rwampara","Sembabule","Serere","Sheema","Sironko","Soroti","Ssese","Terego",
+  "Tororo","Wakiso","Yumbe","Zombo","Bukedea-E"
+];
+
+// Approximate Uganda map coords (normalized 0-1 space)
+// Real Uganda bounding box: lon 29.5–35.0, lat -1.5–4.2
+function districtPos(i) {
+  // Pseudo-geographic positions based on regional groupings
+  const regions = [
+    // North (Acholi, Lango, West Nile)
+    {x:[0.2,0.7], y:[0.0,0.3], count:35},
+    // East (Bugisu, Teso, Busoga)
+    {x:[0.6,1.0], y:[0.3,0.7], count:35},
+    // Central (Buganda, Kampala)
+    {x:[0.35,0.75], y:[0.3,0.65], count:25},
+    // West (Ankole, Tooro, Bunyoro)
+    {x:[0.0,0.45], y:[0.35,0.85], count:25},
+    // South
+    {x:[0.2,0.8], y:[0.7,1.0], count:15},
+  ];
+
+  let cumCount = 0;
+  for (const r of regions) {
+    if (i < cumCount + r.count) {
+      const local = i - cumCount;
+      const cols = Math.ceil(Math.sqrt(r.count * 1.5));
+      const row = Math.floor(local / cols);
+      const col = local % cols;
+      return {
+        x: r.x[0] + (col / cols) * (r.x[1] - r.x[0]) + (Math.sin(i * 2.7) * 0.025),
+        y: r.y[0] + (row / Math.ceil(r.count / cols)) * (r.y[1] - r.y[0]) + (Math.cos(i * 3.1) * 0.025)
+      };
+    }
+    cumCount += r.count;
+  }
+  return {x: Math.random(), y: Math.random()};
+}
+
+// Generate synthetic district data
+function generateDistricts(weights, eta, eps) {
+  const W = normalizeWeights(weights);
+
+  return DISTRICT_NAMES.map((name, i) => {
+    // Seed-based pseudo-random (stable per district, varies with ε)
+    const seed = i * 137.508 + 19.1;
+    const base = {
+      mh:   clamp(0.3 + 0.5 * Math.abs(Math.sin(seed * 0.7))  + eps * (Math.sin(seed * 11.3) * 0.5), 0, 1),
+      mort: clamp(0.2 + 0.5 * Math.abs(Math.sin(seed * 1.3))  + eps * (Math.sin(seed * 7.1)  * 0.4), 0, 1),
+      mal:  clamp(0.15+ 0.6 * Math.abs(Math.sin(seed * 0.9))  + eps * (Math.sin(seed * 5.7)  * 0.4), 0, 1),
+      so:   clamp(0.1 + 0.5 * Math.abs(Math.sin(seed * 1.7))  + eps * (Math.sin(seed * 9.3)  * 0.4), 0, 1),
+    };
+
+    // Mental health surge: boost northern + eastern districts (real pattern)
+    const isHighMH = (i < 40) || (i >= 60 && i < 90);
+    if (isHighMH) base.mh = clamp(base.mh * 1.35 + 0.15, 0, 1);
+
+    // Kampala (index 46) — urban paradox: high MH, lower mortality
+    if (i === 46) { base.mh = 0.78; base.mort = 0.28; base.mal = 0.15; base.so = 0.35; }
+    // Karamoja region (Kaabong, Kotido, Moroto, Amudat) — highest burden
+    if ([7,12,69,5].includes(i)) { base.mh = clamp(base.mh + 0.2, 0, 1); base.mort = clamp(base.mort + 0.25, 0, 1); }
+
+    const loss = W.mh * base.mh + W.mort * base.mort + W.mal * base.mal + W.so * base.so;
+
+    // Apply learning rate (simulate intervention step)
+    const loss_post = clamp(loss - eta * loss * 0.3, 0, 1);
+
+    const pos = districtPos(i);
+
+    return { name, i, pos, base, loss: loss_post, raw_loss: loss };
+  });
+}
+
+function normalizeWeights(w) {
+  const total = w.mh + w.mort + w.mal + w.so;
+  return { mh: w.mh/total, mort: w.mort/total, mal: w.mal/total, so: w.so/total };
+}
+
+function clamp(v, lo, hi) { return Math.max(lo, Math.min(hi, v)); }
+
+// ── ROYGBIV COLOR SCALE ────────────────────────────────────────
+function lossColor(l) {
+  // Red → Orange → Yellow → Green → Blue → Indigo → Violet
+  const stops = [
+    {t:0.00, r:226,g:75, b:74},
+    {t:0.20, r:216,g:90, b:48},
+    {t:0.40, r:239,g:159,b:39},
+    {t:0.60, r:99, g:153,b:34},
+    {t:0.75, r:55, g:138,b:221},
+    {t:0.88, r:83, g:74, b:183},
+    {t:1.00, r:29, g:158,b:117},
+  ];
+  // l=1 → red, l=0 → violet; invert
+  const t = 1 - l;
+  for (let i = 0; i < stops.length - 1; i++) {
+    if (t >= stops[i].t && t <= stops[i+1].t) {
+      const frac = (t - stops[i].t) / (stops[i+1].t - stops[i].t);
+      const r = Math.round(stops[i].r + frac * (stops[i+1].r - stops[i].r));
+      const g = Math.round(stops[i].g + frac * (stops[i+1].g - stops[i].g));
+      const b = Math.round(stops[i].b + frac * (stops[i+1].b - stops[i].b));
+      return `rgb(${r},${g},${b})`;
+    }
+  }
+  return '#1d9e75';
+}
+
+// ── CANVAS MAP ─────────────────────────────────────────────────
+const canvas = document.getElementById('map-canvas');
+const ctx = canvas.getContext('2d');
+let districts = [];
+let zoom = 1;
+let pan = {x:0, y:0};
+let isDragging = false;
+let dragStart = {x:0, y:0};
+let panStart = {x:0, y:0};
+let hoveredDistrict = null;
+
+function resize() {
+  canvas.width = canvas.offsetWidth;
+  canvas.height = canvas.offsetHeight;
+  drawMap();
+}
+
+function worldToScreen(pos) {
+  // Uganda has ~16:9 aspect distorted — pad top/bottom slightly
+  const margin = 40;
+  const w = canvas.width - margin * 2;
+  const h = canvas.height - margin * 2;
+  return {
+    x: margin + pos.x * w * zoom + pan.x,
+    y: margin + pos.y * h * zoom + pan.y
+  };
+}
+
+function screenToWorld(sx, sy) {
+  const margin = 40;
+  const w = canvas.width - margin * 2;
+  const h = canvas.height - margin * 2;
+  return {
+    x: (sx - margin - pan.x) / (w * zoom),
+    y: (sy - margin - pan.y) / (h * zoom)
+  };
+}
+
+function drawMap() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  // Faint Uganda outline (simplified polygon)
+  drawUgandaOutline();
+
+  // District circles
+  const r = Math.max(6, Math.min(18, 12 * zoom));
+  districts.forEach(d => {
+    const s = worldToScreen(d.pos);
+    const col = lossColor(d.loss);
+
+    // Outer glow for high-loss districts
+    if (d.loss > 0.65) {
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, r + 5, 0, Math.PI * 2);
+      ctx.fillStyle = col.replace('rgb', 'rgba').replace(')', ',0.15)');
+      ctx.fill();
+    }
+
+    // Main circle
+    ctx.beginPath();
+    ctx.arc(s.x, s.y, r, 0, Math.PI * 2);
+    ctx.fillStyle = col;
+    ctx.fill();
+
+    // Hover ring
+    if (hoveredDistrict && hoveredDistrict.i === d.i) {
+      ctx.beginPath();
+      ctx.arc(s.x, s.y, r + 4, 0, Math.PI * 2);
+      ctx.strokeStyle = '#fff';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+    }
+
+    // Label for large zoom or hovered
+    if (zoom > 1.8 || (hoveredDistrict && hoveredDistrict.i === d.i)) {
+      ctx.font = `${Math.max(8, 9 * zoom)}px 'DM Sans', sans-serif`;
+      ctx.fillStyle = 'rgba(232,230,223,0.9)';
+      ctx.textAlign = 'center';
+      ctx.fillText(d.name, s.x, s.y + r + 11);
+    }
+  });
+
+  // Gradient direction arrows for top 5 loss districts
+  const top5 = [...districts].sort((a,b) => b.loss - a.loss).slice(0, 5);
+  top5.forEach(d => {
+    const s = worldToScreen(d.pos);
+    drawGradientArrow(s.x, s.y, r);
+  });
+}
+
+function drawUgandaOutline() {
+  // Simplified Uganda boundary (schematic only)
+  const pts = [
+    {x:0.18,y:0.02},{x:0.45,y:0.0},{x:0.72,y:0.05},{x:0.92,y:0.18},
+    {x:1.0,y:0.38},{x:0.95,y:0.55},{x:0.88,y:0.65},{x:0.82,y:0.75},
+    {x:0.75,y:0.88},{x:0.58,y:0.98},{x:0.42,y:1.0},{x:0.25,y:0.95},
+    {x:0.08,y:0.82},{x:0.02,y:0.65},{x:0.0,y:0.45},{x:0.05,y:0.28},
+    {x:0.18,y:0.02}
+  ];
+  ctx.beginPath();
+  pts.forEach((p, i) => {
+    const s = worldToScreen(p);
+    i === 0 ? ctx.moveTo(s.x, s.y) : ctx.lineTo(s.x, s.y);
+  });
+  ctx.strokeStyle = 'rgba(255,255,255,0.06)';
+  ctx.lineWidth = 1;
+  ctx.stroke();
+  ctx.fillStyle = 'rgba(255,255,255,0.015)';
+  ctx.fill();
+
+  // Lake Victoria (schematic)
+  ctx.beginPath();
+  const lv = worldToScreen({x:0.62, y:0.72});
+  ctx.arc(lv.x, lv.y, 28 * zoom, 0, Math.PI * 2);
+  ctx.fillStyle = 'rgba(55,138,221,0.12)';
+  ctx.fill();
+  ctx.strokeStyle = 'rgba(55,138,221,0.2)';
+  ctx.lineWidth = 0.5;
+  ctx.stroke();
+
+  if (zoom > 0.9) {
+    ctx.font = '9px DM Mono, monospace';
+    ctx.fillStyle = 'rgba(55,138,221,0.4)';
+    ctx.textAlign = 'center';
+    ctx.fillText('Lake Victoria', lv.x, lv.y + 3);
+  }
+}
+
+function drawGradientArrow(x, y, r) {
+  // Small downward arrow indicating descent needed
+  const ar = r + 8;
+  ctx.beginPath();
+  ctx.moveTo(x, y - ar);
+  ctx.lineTo(x, y - ar - 8);
+  ctx.strokeStyle = 'rgba(239,159,39,0.6)';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+  ctx.beginPath();
+  ctx.moveTo(x - 4, y - ar - 5);
+  ctx.lineTo(x, y - ar);
+  ctx.lineTo(x + 4, y - ar - 5);
+  ctx.strokeStyle = 'rgba(239,159,39,0.6)';
+  ctx.lineWidth = 1.5;
+  ctx.stroke();
+}
+
+// ── INTERACTION ────────────────────────────────────────────────
+function districtAtPoint(sx, sy) {
+  const r = Math.max(6, Math.min(18, 12 * zoom)) + 4;
+  for (const d of districts) {
+    const s = worldToScreen(d.pos);
+    const dx = s.x - sx, dy = s.y - sy;
+    if (dx*dx + dy*dy < r*r) return d;
+  }
+  return null;
+}
+
+const tooltip = document.getElementById('tooltip');
+
+canvas.addEventListener('mousemove', e => {
+  const rect = canvas.getBoundingClientRect();
+  const sx = e.clientX - rect.left;
+  const sy = e.clientY - rect.top;
+
+  if (isDragging) {
+    pan.x = panStart.x + (e.clientX - dragStart.x);
+    pan.y = panStart.y + (e.clientY - dragStart.y);
+    drawMap();
+    return;
+  }
+
+  const d = districtAtPoint(sx, sy);
+  hoveredDistrict = d;
+
+  if (d) {
+    canvas.style.cursor = 'pointer';
+    tooltip.classList.add('visible');
+    const W = normalizeWeights(getWeights());
+    document.getElementById('tt-name').textContent = d.name;
+    document.getElementById('tt-loss').textContent = `L(θ) = ${d.loss.toFixed(3)}`;
+    document.getElementById('tt-loss').style.color = lossColor(d.loss);
+    document.getElementById('tt-mh').textContent = `${(d.base.mh * 100).toFixed(1)}%`;
+    document.getElementById('tt-im').textContent = `${(d.base.mort * 100).toFixed(1)}%`;
+    document.getElementById('tt-ml').textContent = `${(d.base.mal * 100).toFixed(1)}%`;
+    document.getElementById('tt-so').textContent = `${(d.base.so * 100).toFixed(1)}%`;
+    document.getElementById('tt-grad').textContent = d.loss > 0.7 ? '↓ Urgent' : d.loss > 0.4 ? '↓ Moderate' : '✓ Stable';
+
+    // Position tooltip
+    const tx = e.clientX + 16;
+    const ty = e.clientY - 80;
+    tooltip.style.left = Math.min(tx, window.innerWidth - 280) + 'px';
+    tooltip.style.top = Math.max(10, ty) + 'px';
+  } else {
+    canvas.style.cursor = 'grab';
+    tooltip.classList.remove('visible');
+  }
+  drawMap();
+});
+
+canvas.addEventListener('mouseleave', () => {
+  tooltip.classList.remove('visible');
+  hoveredDistrict = null;
+  isDragging = false;
+  drawMap();
+});
+
+canvas.addEventListener('mousedown', e => {
+  isDragging = true;
+  dragStart = {x: e.clientX, y: e.clientY};
+  panStart = {x: pan.x, y: pan.y};
+  canvas.style.cursor = 'grabbing';
+});
+
+canvas.addEventListener('mouseup', () => {
+  isDragging = false;
+  canvas.style.cursor = 'grab';
+});
+
+canvas.addEventListener('click', e => {
+  const rect = canvas.getBoundingClientRect();
+  const d = districtAtPoint(e.clientX - rect.left, e.clientY - rect.top);
+  if (d) logAction(`District selected: ${d.name} · L(θ)=${d.loss.toFixed(3)}`);
+});
+
+canvas.addEventListener('wheel', e => {
+  e.preventDefault();
+  const delta = e.deltaY > 0 ? 0.85 : 1.15;
+  zoom = clamp(zoom * delta, 0.5, 4);
+  drawMap();
+}, {passive: false});
+
+document.getElementById('zoom-in').addEventListener('click', () => { zoom = clamp(zoom * 1.25, 0.5, 4); drawMap(); });
+document.getElementById('zoom-out').addEventListener('click', () => { zoom = clamp(zoom * 0.8, 0.5, 4); drawMap(); });
+document.getElementById('zoom-reset').addEventListener('click', () => { zoom = 1; pan = {x:0,y:0}; drawMap(); });
+
+// ── CONTROLS ────────────────────────────────────────────────────
+function getWeights() {
+  return {
+    mh:   parseInt(document.getElementById('s-mh').value) / 100,
+    mort: parseInt(document.getElementById('s-im').value) / 100,
+    mal:  parseInt(document.getElementById('s-ml').value) / 100,
+    so:   parseInt(document.getElementById('s-so').value) / 100,
+  };
+}
+
+function getEta() { return parseInt(document.getElementById('s-eta').value) / 100; }
+function getEps() { return parseInt(document.getElementById('s-eps').value) / 100; }
+
+function updateSliderDisplays() {
+  const w = getWeights();
+  const total = w.mh + w.mort + w.mal + w.so;
+  document.getElementById('v-mh').textContent = Math.round(w.mh/total*100) + '%';
+  document.getElementById('v-im').textContent = Math.round(w.mort/total*100) + '%';
+  document.getElementById('v-ml').textContent = Math.round(w.mal/total*100) + '%';
+  document.getElementById('v-so').textContent = Math.round(w.so/total*100) + '%';
+  document.getElementById('v-eta').textContent = getEta().toFixed(2);
+  document.getElementById('v-eps').textContent = getEps().toFixed(2);
+}
+
+let recomputeTimer = null;
+function scheduleRecompute() {
+  updateSliderDisplays();
+  document.getElementById('updating').classList.add('show');
+  clearTimeout(recomputeTimer);
+  recomputeTimer = setTimeout(() => {
+    recompute();
+    document.getElementById('updating').classList.remove('show');
+  }, 300);
+}
+
+['s-mh','s-im','s-ml','s-so','s-eta','s-eps'].forEach(id => {
+  document.getElementById(id).addEventListener('input', scheduleRecompute);
+});
+
+function recompute() {
+  districts = generateDistricts(getWeights(), getEta(), getEps());
+  updateStats();
+  drawMap();
+}
+
+// ── STATS PANEL ─────────────────────────────────────────────────
+function updateStats() {
+  const mean = districts.reduce((s,d) => s+d.loss, 0) / districts.length;
+  const critical = districts.filter(d => d.loss >= 0.7).length;
+
+  document.getElementById('stat-loss').textContent = mean.toFixed(3);
+  document.getElementById('stat-loss').style.color = lossColor(mean);
+  document.getElementById('stat-loss-delta').textContent =
+    `${mean > 0.55 ? '↑' : '↓'} ${Math.abs(mean - 0.49).toFixed(2)} from pre-surge baseline`;
+  document.getElementById('stat-loss-delta').className = 'stat-delta ' + (mean > 0.55 ? 'bad' : 'good');
+
+  document.getElementById('stat-critical').textContent = critical;
+  document.getElementById('stat-crit-delta').textContent = `of 135 require immediate intervention`;
+
+  // Top 8 districts
+  const top = [...districts].sort((a,b) => b.loss - a.loss).slice(0, 8);
+  const listEl = document.getElementById('top-districts');
+  listEl.innerHTML = top.map(d => `
+    <div class="district-item" onclick="logAction('Intervention queued: ${d.name}')">
+      <div class="district-dot" style="background:${lossColor(d.loss)}"></div>
+      <span class="district-item-name">${d.name}</span>
+      <span class="district-item-val">${d.loss.toFixed(3)}</span>
+    </div>
+  `).join('');
+}
+
+// ── STEWARD TRANSCRIPT ───────────────────────────────────────────
+const logEl = document.getElementById('transcript');
+function logAction(msg) {
+  const now = new Date();
+  const t = `${now.getHours().toString().padStart(2,'0')}:${now.getMinutes().toString().padStart(2,'0')}:${now.getSeconds().toString().padStart(2,'0')}`;
+  const entry = document.createElement('div');
+  entry.className = 'log-entry';
+  entry.innerHTML = `<span class="log-time">${t}</span><span class="log-action">${msg}</span>`;
+  logEl.prepend(entry);
+  if (logEl.children.length > 20) logEl.removeChild(logEl.lastChild);
+}
+
+// ── SCENARIOS ───────────────────────────────────────────────────
+function setSliders(mh, im, ml, so, eta, eps) {
+  document.getElementById('s-mh').value  = mh;
+  document.getElementById('s-im').value  = im;
+  document.getElementById('s-ml').value  = ml;
+  document.getElementById('s-so').value  = so;
+  document.getElementById('s-eta').value = eta;
+  document.getElementById('s-eps').value = eps;
+}
+
+function setScenario(btn, name) {
+  document.querySelectorAll('.scenario-btn').forEach(b => b.classList.remove('active'));
+  btn.classList.add('active');
+
+  const scenarios = {
+    'baseline':      [25, 25, 25, 25, 10,  5],
+    'mh-priority':   [45, 20, 20, 15, 10,  5],
+    'intervention':  [25, 25, 25, 25, 25,  5],
+    'goat':          [25, 25, 25, 25,  5, 18],
+    'real-swap':     [30, 20, 25, 25, 15,  2],
+  };
+
+  const s = scenarios[name];
+  setSliders(...s);
+  updateSliderDisplays();
+  logAction(`Scenario: ${btn.querySelector('span') ? btn.childNodes[0].textContent.trim() : name}`);
+  recompute();
+}
+
+// ── INIT ────────────────────────────────────────────────────────
+window.addEventListener('resize', resize);
+
+// Initial log entries
+function initLog() {
+  logAction('Synthetic pipeline initialized — 135 districts');
+  logAction('NPA Feb 2026 params loaded — MH surge +71%');
+  logAction('WHO priors applied — Uganda district baseline');
+  logAction('Bayesian swap ready — awaiting real data');
+}
+
+// Boot
+resize();
+recompute();
+initLog();
+
+// Animate — subtle pulse on high-loss districts every 4s
+setInterval(() => {
+  const highLoss = districts.filter(d => d.loss > 0.72);
+  if (highLoss.length > 0) {
+    const d = highLoss[Math.floor(Math.random() * highLoss.length)];
+    // Brief opacity flash — just redraw with slight offset
+    drawMap();
+  }
+}, 4000);
+</script>
+</body>
+</html>
