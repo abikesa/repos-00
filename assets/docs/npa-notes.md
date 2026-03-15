@@ -1,0 +1,5 @@
+- OPM is client
+- https://opm.go.ug/government-annual-performance-report/
+- https://npa.go.ug/national-development-reports/
+- https://npa.go.ug/wp-content/uploads/2025/12/National-Development-Report-FY2023-24.pdf?x56883
+- 
