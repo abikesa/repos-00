@@ -696,6 +696,49 @@
     <p class="lead slide-in" style="font-size:clamp(11px,1.1vw,13px);color:var(--mid);margin-top:0.8rem;">Same five nodes. Top row = governance owner. Bottom row = technical component. The loop closes when OPM's intervention lands in a district and θ′ is measured — which feeds the next NPA query.</p>
   </div>
 
+  <!-- 5b: SGD EPISTEMOLOGY -->
+  <div class="slide" id="s_sgd">
+    <p class="eyebrow slide-in">05b · Why low learning rate · the epistemology of governance</p>
+    <div class="two-col-wide">
+      <div>
+        <h2 class="slide-in">You cannot see<br>the full landscape.<br><em>Neither can they.</em></h2>
+        <p class="lead slide-in" style="font-size:clamp(13px,1.4vw,17px);">SGD uses a low learning rate not out of timidity — but because the loss landscape is <strong>non-convex</strong>. One large step in a confident direction overshoots, destabilises, and leaves you unable to trace why. The correct response to irreducible uncertainty isn't a bigger model. It's smaller steps, more often, with honest measurement after each one.</p>
+        <p class="lead slide-in" style="font-size:clamp(12px,1.3vw,16px);border-left:3px solid var(--red);padding-left:1rem;color:var(--red);">Do not let an all-knowing politician — or an all-knowing PhD — convince you the landscape is convex. It never is at national scale.</p>
+        <div class="slide-in" style="margin-top:1rem;">
+          <div style="display:grid;grid-template-columns:1fr 1fr;gap:0.8rem;">
+            <div style="border:1px solid var(--border);border-radius:4px;padding:0.9rem;">
+              <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--red);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem;">High η — the failure mode</div>
+              <p style="font-size:clamp(11px,1.1vw,13px);line-height:1.7;color:#555;">Large foreign aid package · 5-year plan executed as written · One confident policy direction · Landscape moves; plan doesn't · Cannot trace why it failed</p>
+            </div>
+            <div style="border:1px solid var(--teal);border-radius:4px;padding:0.9rem;background:#f0f9f7;">
+              <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);letter-spacing:0.1em;text-transform:uppercase;margin-bottom:0.5rem;">Low η — the twin's architecture</div>
+              <p style="font-size:clamp(11px,1.1vw,13px);line-height:1.7;color:#555;">One <span class="mono">/intervene</span> at a time · <span class="mono">/whatif</span> before committing · Loop closes at district level · Next step only after θ′ is measured · Sunk costs stay small</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="slide-in">
+        <div style="background:var(--ink);color:var(--paper);border-radius:4px;padding:1.4rem 1.6rem;font-family:'DM Mono',monospace;font-size:clamp(10px,1.1vw,13px);line-height:1.8;">
+          <div style="color:#666;font-size:10px;letter-spacing:0.1em;margin-bottom:1rem;">THE GOVERNANCE UPDATE RULE</div>
+          θ′ = θ − <span style="color:#a0d8c8">η</span> · ∇L(θ)<br><br>
+          <span style="color:#555;"># η is small by design</span><br>
+          <span style="color:#555;"># not because we lack ambition</span><br>
+          <span style="color:#555;"># because the landscape is unknown</span><br><br>
+          <span style="color:#a0d8c8">η_aid_package</span> = 0.8 &nbsp;<span style="color:#c0392b"># overshoots</span><br>
+          <span style="color:#a0d8c8">η_5yr_plan</span> &nbsp;&nbsp;= 0.6 &nbsp;<span style="color:#c0392b"># stale gradient</span><br>
+          <span style="color:#a0d8c8">η_twin_step</span> &nbsp;= 0.05 <span style="color:#27ae60"># measurable</span><br><br>
+          <span style="color:#555;"># high η requires knowing the landscape</span><br>
+          <span style="color:#555;"># that confidence is always fraudulent</span><br>
+          <span style="color:#555;"># at national scale</span>
+        </div>
+        <div style="margin-top:1rem;border:1px solid var(--border);border-radius:4px;padding:1rem;">
+          <p style="font-family:'DM Mono',monospace;font-size:10px;color:var(--mid);margin-bottom:0.5rem;">WHAT THIS MEANS FOR NPA SPECIFICALLY</p>
+          <p style="font-size:clamp(11px,1.1vw,13px);line-height:1.7;color:#444;">More frequent reappraisal · lower cost per step · no massive sunk costs when the landscape shifts · <strong>the /whatif endpoint is not a feature — it is the epistemological contract</strong> between the model and the decision-maker</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
   <!-- 6: ENDPOINTS -->
   <div class="slide" id="s4">
     <p class="eyebrow slide-in">06 · API endpoints · for Vincent's team</p>
