@@ -629,71 +629,80 @@
 
   <!-- 5: ARCHITECTURE -->
   <div class="slide" id="s3">
-    <p class="eyebrow slide-in">05 · System architecture · two ways to read the same loop</p>
-    <h2 class="slide-in" style="margin-bottom:0.4rem;">The technical pipeline<br><em>is</em> the governance loop.</h2>
+    <p class="eyebrow slide-in">05 · System architecture · three ways to read the same pentad</p>
+    <h2 class="slide-in" style="margin-bottom:0.3rem;">The technical pipeline <em>is</em> the<br>governance loop <em>is</em> the SGD equation.</h2>
 
-    <!-- OWNER ROW -->
-    <div class="slide-in" style="margin-top:1.2rem;">
-      <div style="display:flex;align-items:center;margin-bottom:0;gap:0;">
-        <div style="flex:1;text-align:center;font-family:'DM Mono',monospace;font-size:clamp(8px,0.85vw,11px);letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);padding:0.35rem 0.4rem;background:#e8f5f2;border:1px solid #b2ddd7;border-bottom:none;border-radius:4px 4px 0 0;">Districts</div>
-        <div style="flex:0 0 2rem;"></div>
-        <div style="flex:1;text-align:center;font-family:'DM Mono',monospace;font-size:clamp(8px,0.85vw,11px);letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);padding:0.35rem 0.4rem;background:#e8f5f2;border:1px solid #b2ddd7;border-bottom:none;border-radius:4px 4px 0 0;">NPA</div>
-        <div style="flex:0 0 2rem;"></div>
-        <div style="flex:1;text-align:center;font-family:'DM Mono',monospace;font-size:clamp(8px,0.85vw,11px);letter-spacing:0.1em;text-transform:uppercase;color:white;padding:0.35rem 0.4rem;background:var(--teal);border:1px solid var(--teal);border-bottom:none;border-radius:4px 4px 0 0;">UKB</div>
-        <div style="flex:0 0 2rem;"></div>
-        <div style="flex:1;text-align:center;font-family:'DM Mono',monospace;font-size:clamp(8px,0.85vw,11px);letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);padding:0.35rem 0.4rem;background:#e8f5f2;border:1px solid #b2ddd7;border-bottom:none;border-radius:4px 4px 0 0;">OPM / Cabinet</div>
+    <div class="slide-in" style="margin-top:1rem;">
+
+      <!-- ROW 1: SGD equation labels -->
+      <div style="display:flex;align-items:stretch;gap:0;margin-bottom:0;">
+        <div style="flex:1;text-align:center;font-family:'DM Mono',monospace;font-size:clamp(8px,0.9vw,11px);color:var(--violet);letter-spacing:0.06em;padding:0.3rem 0.3rem;background:#f3eef9;border:1px solid #d4bfed;border-bottom:none;border-radius:4px 4px 0 0;">θ_t<br><span style="font-size:9px;color:#aaa;letter-spacing:0.04em;">calibrate</span></div>
+        <div style="flex:0 0 2rem;background:transparent;border:none;"></div>
+        <div style="flex:1;text-align:center;font-family:'DM Mono',monospace;font-size:clamp(8px,0.9vw,11px);color:var(--violet);letter-spacing:0.06em;padding:0.3rem 0.3rem;background:#f3eef9;border:1px solid #d4bfed;border-bottom:none;border-radius:4px 4px 0 0;">L(θ)<br><span style="font-size:9px;color:#aaa;letter-spacing:0.04em;">taste</span></div>
+        <div style="flex:0 0 2rem;background:transparent;border:none;"></div>
+        <div style="flex:1;text-align:center;font-family:'DM Mono',monospace;font-size:clamp(8px,0.9vw,11px);color:white;letter-spacing:0.06em;padding:0.3rem 0.3rem;background:var(--violet);border:1px solid var(--violet);border-bottom:none;border-radius:4px 4px 0 0;">∇L<br><span style="font-size:9px;color:#c9a8e8;letter-spacing:0.04em;">soul</span></div>
+        <div style="flex:0 0 2rem;background:transparent;border:none;"></div>
+        <div style="flex:1;text-align:center;font-family:'DM Mono',monospace;font-size:clamp(8px,0.9vw,11px);color:var(--violet);letter-spacing:0.06em;padding:0.3rem 0.3rem;background:#f3eef9;border:1px solid #d4bfed;border-bottom:none;border-radius:4px 4px 0 0;">−η∇L<br><span style="font-size:9px;color:#aaa;letter-spacing:0.04em;">mind</span></div>
+        <div style="flex:0 0 2rem;background:transparent;border:none;"></div>
+        <div style="flex:1;text-align:center;font-family:'DM Mono',monospace;font-size:clamp(8px,0.9vw,11px);color:var(--violet);letter-spacing:0.06em;padding:0.3rem 0.3rem;background:#f3eef9;border:1px solid #d4bfed;border-bottom:none;border-radius:4px 4px 0 0;">θ′<br><span style="font-size:9px;color:#aaa;letter-spacing:0.04em;">body</span></div>
       </div>
 
-      <!-- PIPELINE NODES -->
-      <div class="pipeline" style="margin:0;">
-        <div class="pipe-node" style="border-radius:0 0 4px 4px;">
+      <!-- ROW 2: governance owner labels -->
+      <div style="display:flex;align-items:stretch;gap:0;margin-bottom:0;">
+        <div style="flex:1;text-align:center;font-family:'DM Mono',monospace;font-size:clamp(8px,0.85vw,11px);letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);padding:0.3rem 0.3rem;background:#e8f5f2;border:1px solid #b2ddd7;border-top:1px solid #b2ddd7;border-bottom:none;">Districts</div>
+        <div style="flex:0 0 2rem;background:transparent;border:none;"></div>
+        <div style="flex:1;text-align:center;font-family:'DM Mono',monospace;font-size:clamp(8px,0.85vw,11px);letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);padding:0.3rem 0.3rem;background:#e8f5f2;border:1px solid #b2ddd7;border-top:1px solid #b2ddd7;border-bottom:none;">NPA</div>
+        <div style="flex:0 0 2rem;background:transparent;border:none;"></div>
+        <div style="flex:1;text-align:center;font-family:'DM Mono',monospace;font-size:clamp(8px,0.85vw,11px);letter-spacing:0.1em;text-transform:uppercase;color:white;padding:0.3rem 0.3rem;background:var(--teal);border:1px solid var(--teal);border-top:1px solid #0a6660;border-bottom:none;">UKB</div>
+        <div style="flex:0 0 2rem;background:transparent;border:none;"></div>
+        <div style="flex:1;text-align:center;font-family:'DM Mono',monospace;font-size:clamp(8px,0.85vw,11px);letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);padding:0.3rem 0.3rem;background:#e8f5f2;border:1px solid #b2ddd7;border-top:1px solid #b2ddd7;border-bottom:none;">OPM</div>
+        <div style="flex:0 0 2rem;background:transparent;border:none;"></div>
+        <div style="flex:1;text-align:center;font-family:'DM Mono',monospace;font-size:clamp(8px,0.85vw,11px);letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);padding:0.3rem 0.3rem;background:#e8f5f2;border:1px solid #b2ddd7;border-top:1px solid #b2ddd7;border-bottom:none;">District′</div>
+      </div>
+
+      <!-- ROW 3: pipeline nodes -->
+      <div style="display:flex;align-items:stretch;gap:0;margin:0;">
+        <div class="pipe-node" style="border-radius:0 0 4px 4px;flex:1;">
           <div class="label">District<br>Officers</div>
-          <div class="sub">token upload<br>excel · pdf · voice · screenshot</div>
+          <div class="sub">current state · θ_t<br>excel · pdf · voice · screenshot</div>
         </div>
         <div class="pipe-arrow">→</div>
-        <div class="pipe-node" style="border-radius:0 0 4px 4px;">
-          <div class="label">Data<br>Pipeline</div>
-          <div class="sub">validate · parse<br>officer_id · timestamp · geotag</div>
+        <div class="pipe-node" style="border-radius:0 0 4px 4px;flex:1;">
+          <div class="label">Loss<br>Computation</div>
+          <div class="sub">L = 0.35·mh + 0.25·mort<br>+ 0.25·mal + 0.15·so</div>
         </div>
         <div class="pipe-arrow">→</div>
-        <div class="pipe-node highlight" style="border-radius:0 0 4px 4px;">
-          <div class="label">LLM<br>Interface</div>
-          <div class="sub">natural language<br>structured queries</div>
+        <div class="pipe-node highlight" style="border-radius:0 0 4px 4px;flex:1;">
+          <div class="label">LLM + Gradient<br>Interface</div>
+          <div class="sub">∇L · honest signal<br>natural language query</div>
         </div>
         <div class="pipe-arrow">→</div>
-        <div class="pipe-node" style="border-radius:0 0 4px 4px;">
-          <div class="label">Decision<br>Intelligence</div>
-          <div class="sub">heatmap · loss surface<br>Cabinet brief</div>
+        <div class="pipe-node" style="border-radius:0 0 4px 4px;flex:1;">
+          <div class="label">Intervention<br>Step</div>
+          <div class="sub">−η∇L · POST /intervene<br>/whatif · Cabinet brief</div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-node" style="border-radius:0 0 4px 4px;flex:1;">
+          <div class="label">Updated<br>District State</div>
+          <div class="sub">θ′ · source: "intervened"<br>measured · feeds next L</div>
         </div>
       </div>
 
       <!-- FEEDBACK LOOP ARROW -->
-      <div style="display:flex;align-items:flex-start;margin-top:0.5rem;position:relative;height:2.8rem;">
-        <!-- left anchor label -->
-        <div style="flex:1;padding-top:0.2rem;">
-          <div style="font-family:'DM Mono',monospace;font-size:clamp(8px,0.8vw,10px);color:var(--mid);letter-spacing:0.08em;">θ′ → district update<br>source tag: "intervened"</div>
-        </div>
-        <!-- the curved return arrow, drawn in SVG -->
-        <div style="flex:3;position:relative;">
-          <svg viewBox="0 0 420 40" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:40px;overflow:visible;">
-            <defs>
-              <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
-                <polygon points="0 0, 8 3, 0 6" fill="#0e7a6e"/>
-              </marker>
-            </defs>
-            <!-- return path: right to left along bottom -->
-            <path d="M 410 8 C 410 32, 10 32, 10 8" fill="none" stroke="#0e7a6e" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr)"/>
-            <text x="210" y="30" text-anchor="middle" font-family="'DM Mono',monospace" font-size="9" fill="#0e7a6e" letter-spacing="0.08em">OPM authorises intervention → district receives update → loop closes</text>
-          </svg>
-        </div>
-        <!-- right anchor label -->
-        <div style="flex:1;padding-top:0.2rem;text-align:right;">
-          <div style="font-family:'DM Mono',monospace;font-size:clamp(8px,0.8vw,10px);color:var(--mid);letter-spacing:0.08em;">POST /intervene<br>η∇L applied</div>
-        </div>
+      <div style="position:relative;height:2.6rem;margin-top:0.2rem;">
+        <svg viewBox="0 0 900 36" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:36px;overflow:visible;">
+          <defs>
+            <marker id="arr2" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+              <polygon points="0 0, 8 3, 0 6" fill="#0e7a6e"/>
+            </marker>
+          </defs>
+          <path d="M 888 6 C 888 28, 12 28, 12 6" fill="none" stroke="#0e7a6e" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr2)"/>
+          <text x="450" y="26" text-anchor="middle" font-family="'DM Mono',monospace" font-size="9" fill="#0e7a6e" letter-spacing="0.08em">θ′ measured at district → feeds next NPA loss computation → loop closes · this is SGD as governance</text>
+        </svg>
       </div>
     </div>
 
-    <p class="lead slide-in" style="font-size:clamp(11px,1.1vw,13px);color:var(--mid);margin-top:0.8rem;">Same five nodes. Top row = governance owner. Bottom row = technical component. The loop closes when OPM's intervention lands in a district and θ′ is measured — which feeds the next NPA query.</p>
+    <p class="lead slide-in" style="font-size:clamp(10px,1vw,12px);color:var(--mid);margin-top:0.3rem;">Three label rows. One structure. Top = SGD equation (θ_t · L · ∇L · −η∇L · θ′). Middle = governance owner (Districts · NPA · UKB · OPM · District′). Bottom = technical component. UKB highlighted because it holds the gradient — the soul of the system.</p>
   </div>
 
   <!-- 5b: SGD EPISTEMOLOGY -->
