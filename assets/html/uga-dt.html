@@ -629,36 +629,71 @@
 
   <!-- 5: ARCHITECTURE -->
   <div class="slide" id="s3">
-    <p class="eyebrow slide-in">05 · System architecture</p>
-    <h2 class="slide-in" style="margin-bottom:0.8rem;">Five layers. One continuous loop.</h2>
-    <div class="pipeline slide-in">
-      <div class="pipe-node">
-        <div class="label">District<br>Officers</div>
-        <div class="sub">token upload<br>excel · pdf · voice · screenshot</div>
+    <p class="eyebrow slide-in">05 · System architecture · two ways to read the same loop</p>
+    <h2 class="slide-in" style="margin-bottom:0.4rem;">The technical pipeline<br><em>is</em> the governance loop.</h2>
+
+    <!-- OWNER ROW -->
+    <div class="slide-in" style="margin-top:1.2rem;">
+      <div style="display:flex;align-items:center;margin-bottom:0;gap:0;">
+        <div style="flex:1;text-align:center;font-family:'DM Mono',monospace;font-size:clamp(8px,0.85vw,11px);letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);padding:0.35rem 0.4rem;background:#e8f5f2;border:1px solid #b2ddd7;border-bottom:none;border-radius:4px 4px 0 0;">Districts</div>
+        <div style="flex:0 0 2rem;"></div>
+        <div style="flex:1;text-align:center;font-family:'DM Mono',monospace;font-size:clamp(8px,0.85vw,11px);letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);padding:0.35rem 0.4rem;background:#e8f5f2;border:1px solid #b2ddd7;border-bottom:none;border-radius:4px 4px 0 0;">NPA</div>
+        <div style="flex:0 0 2rem;"></div>
+        <div style="flex:1;text-align:center;font-family:'DM Mono',monospace;font-size:clamp(8px,0.85vw,11px);letter-spacing:0.1em;text-transform:uppercase;color:white;padding:0.35rem 0.4rem;background:var(--teal);border:1px solid var(--teal);border-bottom:none;border-radius:4px 4px 0 0;">UKB</div>
+        <div style="flex:0 0 2rem;"></div>
+        <div style="flex:1;text-align:center;font-family:'DM Mono',monospace;font-size:clamp(8px,0.85vw,11px);letter-spacing:0.1em;text-transform:uppercase;color:var(--teal);padding:0.35rem 0.4rem;background:#e8f5f2;border:1px solid #b2ddd7;border-bottom:none;border-radius:4px 4px 0 0;">OPM / Cabinet</div>
       </div>
-      <div class="pipe-arrow">→</div>
-      <div class="pipe-node">
-        <div class="label">Data<br>Pipeline</div>
-        <div class="sub">validate · parse<br>officer_id · timestamp · geotag</div>
+
+      <!-- PIPELINE NODES -->
+      <div class="pipeline" style="margin:0;">
+        <div class="pipe-node" style="border-radius:0 0 4px 4px;">
+          <div class="label">District<br>Officers</div>
+          <div class="sub">token upload<br>excel · pdf · voice · screenshot</div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-node" style="border-radius:0 0 4px 4px;">
+          <div class="label">Data<br>Pipeline</div>
+          <div class="sub">validate · parse<br>officer_id · timestamp · geotag</div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-node highlight" style="border-radius:0 0 4px 4px;">
+          <div class="label">LLM<br>Interface</div>
+          <div class="sub">natural language<br>structured queries</div>
+        </div>
+        <div class="pipe-arrow">→</div>
+        <div class="pipe-node" style="border-radius:0 0 4px 4px;">
+          <div class="label">Decision<br>Intelligence</div>
+          <div class="sub">heatmap · loss surface<br>Cabinet brief</div>
+        </div>
       </div>
-      <div class="pipe-arrow">→</div>
-      <div class="pipe-node">
-        <div class="label">FastAPI<br>Backend</div>
-        <div class="sub">/compute · /intervene<br>/whatif · /bayesian-swap</div>
-      </div>
-      <div class="pipe-arrow">→</div>
-      <div class="pipe-node highlight">
-        <div class="label">LLM<br>Interface</div>
-        <div class="sub">natural language<br>structured queries</div>
-      </div>
-      <div class="pipe-arrow">→</div>
-      <div class="pipe-node">
-        <div class="label">Decision<br>Intelligence</div>
-        <div class="sub">heatmap · loss surface<br>Cabinet brief</div>
+
+      <!-- FEEDBACK LOOP ARROW -->
+      <div style="display:flex;align-items:flex-start;margin-top:0.5rem;position:relative;height:2.8rem;">
+        <!-- left anchor label -->
+        <div style="flex:1;padding-top:0.2rem;">
+          <div style="font-family:'DM Mono',monospace;font-size:clamp(8px,0.8vw,10px);color:var(--mid);letter-spacing:0.08em;">θ′ → district update<br>source tag: "intervened"</div>
+        </div>
+        <!-- the curved return arrow, drawn in SVG -->
+        <div style="flex:3;position:relative;">
+          <svg viewBox="0 0 420 40" xmlns="http://www.w3.org/2000/svg" style="width:100%;height:40px;overflow:visible;">
+            <defs>
+              <marker id="arr" markerWidth="8" markerHeight="6" refX="8" refY="3" orient="auto">
+                <polygon points="0 0, 8 3, 0 6" fill="#0e7a6e"/>
+              </marker>
+            </defs>
+            <!-- return path: right to left along bottom -->
+            <path d="M 410 8 C 410 32, 10 32, 10 8" fill="none" stroke="#0e7a6e" stroke-width="1.5" stroke-dasharray="5,3" marker-end="url(#arr)"/>
+            <text x="210" y="30" text-anchor="middle" font-family="'DM Mono',monospace" font-size="9" fill="#0e7a6e" letter-spacing="0.08em">OPM authorises intervention → district receives update → loop closes</text>
+          </svg>
+        </div>
+        <!-- right anchor label -->
+        <div style="flex:1;padding-top:0.2rem;text-align:right;">
+          <div style="font-family:'DM Mono',monospace;font-size:clamp(8px,0.8vw,10px);color:var(--mid);letter-spacing:0.08em;">POST /intervene<br>η∇L applied</div>
+        </div>
       </div>
     </div>
-    <p class="lead slide-in" style="font-size:clamp(11px,1.1vw,14px);color:var(--mid);margin-top:0.6rem;">The LLM layer — highlighted — replaces the dashboard entirely. No training required for end users.</p>
-    <p class="lead slide-in" style="font-size:clamp(11px,1.1vw,14px);">Backend is <span class="mono">FastAPI + Uvicorn</span>, running now at <a href="https://ukubona-llc.github.io/npa-demo/" style="color:var(--teal)">ukubona-llc.github.io/npa-demo</a>. All 135 districts initialized. State in-memory for PoC; <span class="mono">source</span> field tracks synthetic/real/bayesian/intervened provenance on every record.</p>
+
+    <p class="lead slide-in" style="font-size:clamp(11px,1.1vw,13px);color:var(--mid);margin-top:0.8rem;">Same five nodes. Top row = governance owner. Bottom row = technical component. The loop closes when OPM's intervention lands in a district and θ′ is measured — which feeds the next NPA query.</p>
   </div>
 
   <!-- 6: ENDPOINTS -->
