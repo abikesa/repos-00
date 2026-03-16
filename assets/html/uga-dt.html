@@ -30,7 +30,6 @@
     cursor: default;
   }
 
-  /* ── SLIDE SHELL ── */
   #slides { width: 100%; height: 100vh; position: relative; }
 
   .slide {
@@ -46,7 +45,6 @@
   }
   .slide.active { opacity: 1; pointer-events: all; }
 
-  /* ── TYPOGRAPHY ── */
   .eyebrow {
     font-family: 'DM Mono', monospace;
     font-size: clamp(10px, 1.1vw, 14px);
@@ -86,7 +84,7 @@
   em { font-style: italic; color: var(--teal); }
   strong { font-weight: 500; }
 
-  /* ── NAVIGATION ── */
+  /* NAV */
   #nav {
     position: fixed;
     bottom: 2.2rem;
@@ -118,10 +116,7 @@
     letter-spacing: 0.08em;
     transition: background 0.2s, color 0.2s;
   }
-  #btn-prev:hover, #btn-next:hover {
-    background: var(--ink);
-    color: var(--paper);
-  }
+  #btn-prev:hover, #btn-next:hover { background: var(--ink); color: var(--paper); }
 
   #slide-counter {
     font-family: 'DM Mono', monospace;
@@ -132,7 +127,7 @@
     text-align: center;
   }
 
-  /* ── SLIDE 0: COVER ── */
+  /* COVER */
   #s0 { background: var(--ink); color: var(--paper); }
   #s0 .eyebrow { color: #888; }
   #s0 h1 { color: var(--paper); }
@@ -156,7 +151,56 @@
     letter-spacing: 0.1em;
   }
 
-  /* ── PIPELINE DIAGRAM ── */
+  /* SUITE STACK — new slide */
+  .suite-stack {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin: 1.2rem 0;
+  }
+  .suite-row {
+    display: flex;
+    align-items: center;
+    gap: 1.2rem;
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    transition: background 0.2s;
+  }
+  .suite-row.active-layer {
+    background: var(--ink);
+    border-color: var(--ink);
+  }
+  .suite-row.active-layer .suite-num { color: #888; }
+  .suite-row.active-layer .suite-name { color: var(--paper); }
+  .suite-row.active-layer .suite-desc { color: #777; }
+  .suite-num {
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--mid);
+    min-width: 2.5rem;
+    letter-spacing: 0.1em;
+  }
+  .suite-name {
+    font-weight: 500;
+    font-size: clamp(12px, 1.3vw, 16px);
+    min-width: 9rem;
+  }
+  .suite-desc {
+    font-size: clamp(11px, 1.1vw, 14px);
+    color: #666;
+    line-height: 1.5;
+  }
+  .suite-arrow {
+    margin-left: auto;
+    font-family: 'DM Mono', monospace;
+    font-size: 11px;
+    color: var(--teal);
+    text-decoration: none;
+    white-space: nowrap;
+  }
+
+  /* PIPELINE */
   .pipeline {
     display: flex;
     align-items: center;
@@ -172,7 +216,6 @@
     padding: 1rem 0.8rem;
     text-align: center;
     min-width: 0;
-    position: relative;
   }
   .pipe-node .label {
     font-family: 'DM Mono', monospace;
@@ -182,15 +225,8 @@
     letter-spacing: 0.06em;
     margin-bottom: 0.3rem;
   }
-  .pipe-node .sub {
-    font-size: clamp(8px, 0.8vw, 10px);
-    color: var(--mid);
-    line-height: 1.4;
-  }
-  .pipe-node.highlight {
-    background: var(--ink);
-    border-color: var(--ink);
-  }
+  .pipe-node .sub { font-size: clamp(8px, 0.8vw, 10px); color: var(--mid); line-height: 1.4; }
+  .pipe-node.highlight { background: var(--ink); border-color: var(--ink); }
   .pipe-node.highlight .label { color: var(--paper); }
   .pipe-node.highlight .sub { color: #888; }
   .pipe-arrow {
@@ -199,9 +235,13 @@
     color: var(--mid);
     padding: 0 4px;
     flex-shrink: 0;
+    animation: pulse-right 1.8s ease-in-out infinite;
   }
+  .pipe-arrow:nth-child(4) { animation-delay: 0.3s; }
+  .pipe-arrow:nth-child(6) { animation-delay: 0.6s; }
+  .pipe-arrow:nth-child(8) { animation-delay: 0.9s; }
 
-  /* ── ENDPOINT TABLE ── */
+  /* ENDPOINT TABLE */
   .ep-table {
     width: 100%;
     border-collapse: collapse;
@@ -232,7 +272,7 @@
   }
   .ep-table tr:last-child td { border-bottom: none; }
 
-  /* ── LOSS FORMULA ── */
+  /* LOSS */
   .formula-box {
     background: var(--ink);
     color: var(--paper);
@@ -244,14 +284,8 @@
     margin: 1.5rem 0;
     display: inline-block;
   }
-  .formula-box .comment {
-    font-size: clamp(9px, 0.9vw, 12px);
-    color: #666;
-    margin-top: 0.6rem;
-    letter-spacing: 0.04em;
-  }
+  .formula-box .comment { font-size: clamp(9px, 0.9vw, 12px); color: #666; margin-top: 0.6rem; letter-spacing: 0.04em; }
 
-  /* ── HEATMAP LEGEND ── */
   .heatbar {
     display: flex;
     align-items: stretch;
@@ -272,7 +306,7 @@
     color: rgba(255,255,255,0.85);
   }
 
-  /* ── ACCESS LEVELS ── */
+  /* ACCESS LEVELS */
   .level-row {
     display: flex;
     align-items: flex-start;
@@ -294,44 +328,19 @@
   .level-desc { font-size: clamp(12px, 1.2vw, 15px); line-height: 1.55; }
   .level-desc small { font-family: 'DM Mono', monospace; font-size: 10px; color: var(--mid); }
 
-  /* ── BUSINESS MODEL ── */
-  .tier-grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    gap: 1.2rem;
-    margin-top: 1.5rem;
-  }
-  .tier {
-    border: 1px solid var(--border);
-    border-radius: 4px;
-    padding: 1.2rem;
-  }
-  .tier .tier-name {
-    font-family: 'DM Mono', monospace;
-    font-size: 11px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--mid);
-    margin-bottom: 0.5rem;
-  }
-  .tier .tier-price {
-    font-family: 'DM Serif Display', serif;
-    font-size: clamp(20px, 2.5vw, 30px);
-    margin-bottom: 0.6rem;
-  }
-  .tier ul {
-    list-style: none;
-    font-size: clamp(11px, 1.1vw, 13px);
-    color: #555;
-    line-height: 1.8;
-  }
+  /* TIERS */
+  .tier-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.2rem; margin-top: 1.5rem; }
+  .tier { border: 1px solid var(--border); border-radius: 4px; padding: 1.2rem; }
+  .tier .tier-name { font-family: 'DM Mono', monospace; font-size: 11px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--mid); margin-bottom: 0.5rem; }
+  .tier .tier-price { font-family: 'DM Serif Display', serif; font-size: clamp(20px, 2.5vw, 30px); margin-bottom: 0.6rem; }
+  .tier ul { list-style: none; font-size: clamp(11px, 1.1vw, 13px); color: #555; line-height: 1.8; }
   .tier ul li::before { content: "— "; color: var(--mid); }
   .tier.featured { background: var(--ink); color: var(--paper); border-color: var(--ink); }
   .tier.featured .tier-name { color: #666; }
   .tier.featured .tier-price { color: var(--paper); }
   .tier.featured ul { color: #aaa; }
 
-  /* ── GOTCHA PANEL ── */
+  /* GOTCHA */
   .gotcha {
     display: flex;
     gap: 1.5rem;
@@ -340,25 +349,11 @@
     border-left: 3px solid var(--red);
     background: #fdf5f5;
   }
-  .gotcha .q {
-    font-weight: 500;
-    font-size: clamp(12px, 1.2vw, 15px);
-    color: var(--red);
-    margin-bottom: 0.4rem;
-  }
-  .gotcha .a {
-    font-size: clamp(11px, 1.1vw, 14px);
-    line-height: 1.6;
-    color: #333;
-  }
+  .gotcha .q { font-weight: 500; font-size: clamp(12px, 1.2vw, 15px); color: var(--red); margin-bottom: 0.4rem; }
+  .gotcha .a { font-size: clamp(11px, 1.1vw, 14px); line-height: 1.6; color: #333; }
 
-  /* ── LINKS ── */
-  .link-grid {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 0.8rem;
-    margin-top: 1.2rem;
-  }
+  /* LINKS */
+  .link-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 0.8rem; margin-top: 1.2rem; }
   .link-item {
     display: flex;
     flex-direction: column;
@@ -371,32 +366,15 @@
     transition: border-color 0.2s, background 0.2s;
   }
   .link-item:hover { border-color: var(--teal); background: #f0f9f7; }
-  .link-item .link-label {
-    font-family: 'DM Mono', monospace;
-    font-size: 10px;
-    letter-spacing: 0.1em;
-    text-transform: uppercase;
-    color: var(--teal);
-  }
-  .link-item .link-title {
-    font-size: clamp(12px, 1.1vw, 14px);
-    font-weight: 500;
-    color: var(--ink);
-  }
-  .link-item .link-url {
-    font-family: 'DM Mono', monospace;
-    font-size: 9px;
-    color: var(--mid);
-    white-space: nowrap;
-    overflow: hidden;
-    text-overflow: ellipsis;
-  }
+  .link-item .link-label { font-family: 'DM Mono', monospace; font-size: 10px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--teal); }
+  .link-item .link-title { font-size: clamp(12px, 1.1vw, 14px); font-weight: 500; color: var(--ink); }
+  .link-item .link-url { font-family: 'DM Mono', monospace; font-size: 9px; color: var(--mid); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
 
-  /* ── TWO-COL LAYOUT ── */
+  /* LAYOUT */
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 4vw; align-items: start; }
   .two-col-wide { display: grid; grid-template-columns: 1.3fr 1fr; gap: 4vw; align-items: start; }
 
-  /* ── POOH GATE SLIDE ── */
+  /* POOH GATE */
   .pooh-quote {
     border-left: 4px solid var(--ink);
     padding: 0.6rem 0 0.6rem 1.8rem;
@@ -419,27 +397,78 @@
   }
   .pooh-mechanic .cm { color: #444; }
 
-  /* ── CLOSING ── */
+  /* UCU SLIDE */
+  #s_ucu { background: #f0f9f7; }
+  .stat-row {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 1rem;
+    margin: 1.2rem 0;
+  }
+  .stat-box {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1rem;
+    text-align: center;
+    background: white;
+  }
+  .stat-box .stat-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(24px, 3vw, 40px);
+    color: var(--teal);
+    display: block;
+    margin-bottom: 0.3rem;
+  }
+  .stat-box .stat-label {
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(9px, 0.9vw, 11px);
+    color: var(--mid);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    line-height: 1.4;
+  }
+  .pi-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 1rem;
+    margin-top: 1rem;
+  }
+  .pi-card {
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 1rem;
+  }
+  .pi-card .pi-role {
+    font-family: 'DM Mono', monospace;
+    font-size: 10px;
+    color: var(--teal);
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    margin-bottom: 0.4rem;
+  }
+  .pi-card .pi-name {
+    font-weight: 500;
+    font-size: clamp(13px, 1.3vw, 16px);
+    margin-bottom: 0.3rem;
+  }
+  .pi-card .pi-affil {
+    font-size: clamp(10px, 1vw, 12px);
+    color: var(--mid);
+    line-height: 1.5;
+  }
+
+  /* CLOSING */
   #s_close { background: var(--teal); color: var(--paper); }
   #s_close h2 { color: var(--paper); }
   #s_close .lead { color: rgba(255,255,255,0.75); }
 
-  /* ── PULSE ANIMATION on pipeline ── */
+  /* ANIMATIONS */
   @keyframes pulse-right {
     0%   { opacity: 0; transform: translateX(-6px); }
     50%  { opacity: 1; transform: translateX(0); }
     100% { opacity: 0; transform: translateX(6px); }
   }
-  .pipe-arrow { animation: pulse-right 1.8s ease-in-out infinite; }
-  .pipe-arrow:nth-child(4)  { animation-delay: 0.3s; }
-  .pipe-arrow:nth-child(6)  { animation-delay: 0.6s; }
-  .pipe-arrow:nth-child(8)  { animation-delay: 0.9s; }
-
-  /* ── SLIDE-IN ITEMS ── */
-  .slide.active .slide-in {
-    animation: slideUp 0.5s ease forwards;
-    opacity: 0;
-  }
+  .slide.active .slide-in { animation: slideUp 0.5s ease forwards; opacity: 0; }
   @keyframes slideUp {
     from { opacity: 0; transform: translateY(14px); }
     to   { opacity: 1; transform: translateY(0); }
@@ -462,7 +491,8 @@
     <p class="eyebrow slide-in">Ukubona LLC · Government Suite · Layer 4 of 5</p>
     <h1 class="slide-in">A National<br><em style="color:#6b9e8f">Digital Twin</em><br>for Uganda.</h1>
     <p class="lead slide-in" style="color:#999">Not a dashboard. Not a report.<br>A living model that updates automatically — and answers questions in plain language. The signal stays honest because the architecture requires it.</p>
-    <p class="tagline slide-in">MD MPH PhDc · Johns Hopkins · ukubona-llc.github.io/npa-demo</p>
+    <p class="lead slide-in" style="color:#666;font-size:clamp(11px,1.1vw,15px);max-width:72ch;">Built at the intersection of transplant epidemiology, Bayesian inference, and public health systems — the same methodological rigour that drives NIH K08-funded research, applied to national planning.</p>
+    <p class="tagline slide-in">MD MPH PhDc · Johns Hopkins · NIH K08-AG065520 · ukubona-llc.github.io/npa-demo</p>
   </div>
 
   <!-- 1: THE PROBLEM -->
@@ -474,9 +504,55 @@
     <p class="lead slide-in" style="color:var(--mid); font-size:clamp(11px,1.1vw,14px);">Data fragmented across MDAs · Reports retrospective · No live query layer · No natural language interface · Decision latency is the failure mode</p>
   </div>
 
-  <!-- 2: WHAT IS A DIGITAL TWIN -->
+  <!-- 2: FIVE SUITES — new slide -->
+  <div class="slide" id="s_suites">
+    <p class="eyebrow slide-in">02 · Where government sits · the five-scale architecture</p>
+    <div class="two-col-wide">
+      <div>
+        <h2 class="slide-in">NPA is Layer 4.<br><em>The twin scales<br>to every layer.</em></h2>
+        <p class="lead slide-in" style="font-size:clamp(12px,1.3vw,16px);">Ukubona builds digital twins across five scales — from a single patient to a civilization. The government suite isn't isolated infrastructure. It is continuous with the patient data below it and the civilizational planning above it. That continuity is what makes the signal trustworthy.</p>
+        <p class="lead slide-in" style="font-size:clamp(11px,1.1vw,14px);color:var(--mid);">A national loss gradient that cannot be traced to district-level clinical reality is a projection, not a twin.</p>
+      </div>
+      <div class="slide-in">
+        <div class="suite-stack">
+          <div class="suite-row">
+            <span class="suite-num">01</span>
+            <span class="suite-name">Individual</span>
+            <span class="suite-desc">Patient metabolic state · health trajectory · personalized risk</span>
+            <a href="https://abikesa.github.io/repos-00/assets/html/dt-001.html" class="suite-arrow">→</a>
+          </div>
+          <div class="suite-row">
+            <span class="suite-num">02</span>
+            <span class="suite-name">Household</span>
+            <span class="suite-desc">Kin networks as unit of care · shared risk · pedigree</span>
+            <span class="suite-arrow" style="color:var(--mid)">coming</span>
+          </div>
+          <div class="suite-row">
+            <span class="suite-num">03</span>
+            <span class="suite-name">Firm</span>
+            <span class="suite-desc">HR twin · steward dashboard · organisational ledger</span>
+            <a href="https://abikesa.github.io/repos-00/assets/html/hr.html" class="suite-arrow">→</a>
+          </div>
+          <div class="suite-row active-layer">
+            <span class="suite-num">04</span>
+            <span class="suite-name">Government</span>
+            <span class="suite-desc">NPA · 135 districts · loss gradient · Cabinet brief</span>
+            <span class="suite-arrow" style="color:#a0d8c8">← you are here</span>
+          </div>
+          <div class="suite-row">
+            <span class="suite-num">05</span>
+            <span class="suite-name">Civilization</span>
+            <span class="suite-desc">UCU · NPA · energy · environment · stratigraphic planning</span>
+            <a href="https://abikesa.github.io/repos-00/assets/html/ukhona.html" class="suite-arrow">→</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 3: WHAT IS A DIGITAL TWIN -->
   <div class="slide" id="s2">
-    <p class="eyebrow slide-in">02 · Core concept</p>
+    <p class="eyebrow slide-in">03 · Core concept</p>
     <div class="two-col-wide">
       <div>
         <h2 class="slide-in">A simulation dies.<br>A twin <em>keeps learning.</em></h2>
@@ -497,9 +573,63 @@
     </div>
   </div>
 
-  <!-- 3: THE ARCHITECTURE -->
+  <!-- 4: UCU PARTNERSHIP — new slide -->
+  <div class="slide" id="s_ucu">
+    <p class="eyebrow slide-in">04 · UCU Partnership · evidence already running</p>
+    <h2 class="slide-in">The data layer<br>is <em>not hypothetical.</em></h2>
+    <div class="two-col slide-in">
+      <div>
+        <div class="stat-row">
+          <div class="stat-box">
+            <span class="stat-num">135</span>
+            <span class="stat-label">Uganda Districts Mapped</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num">&lt;12</span>
+            <span class="stat-label">With CKD Prevalence Data</span>
+          </div>
+          <div class="stat-box">
+            <span class="stat-num">4</span>
+            <span class="stat-label">Dialysis Centres Nationally</span>
+          </div>
+          <div class="stat-box" style="border-color:var(--teal)">
+            <span class="stat-num" style="color:var(--teal)">Live</span>
+            <span class="stat-label">DHIS2 Mental Health Feed</span>
+          </div>
+        </div>
+        <p style="font-size:clamp(12px,1.2vw,15px);line-height:1.7;color:#444;margin-top:0.8rem;">The UCU–Ukubona collaboration has already mapped Uganda's mental health landscape — depression, PTSD, Alzheimer's — at district level, with a live DHIS2 feed running now. The first formal case study is CKD and ESRD: the sharpest intersection of NIH K08-funded transplant epidemiology and Uganda's most undercharted terrain.</p>
+        <p style="font-size:clamp(11px,1.1vw,14px);color:var(--teal);margin-top:0.8rem;font-family:'DM Mono',monospace;">Less than 12 of 135 districts have CKD prevalence data. That gap is not a gap in disease — it is a gap in surveillance. That is the gradient.</p>
+        <a href="https://ukubona-llc.github.io/landscape/" style="display:inline-block;margin-top:0.8rem;font-family:'DM Mono',monospace;font-size:11px;color:var(--teal);border:1px solid var(--teal);padding:4px 12px;border-radius:2px;text-decoration:none;">→ ukubona-llc.github.io/landscape/</a>
+      </div>
+      <div>
+        <p style="font-family:'DM Mono',monospace;font-size:11px;color:var(--mid);margin-bottom:0.8rem;">PRINCIPAL INVESTIGATORS</p>
+        <div class="pi-row">
+          <div class="pi-card">
+            <div class="pi-role">Lead PI</div>
+            <div class="pi-name">Dr. Abimereki Muzaale</div>
+            <div class="pi-affil">Johns Hopkins University · Ukubona LLC<br>NIH K08-AG065520 · Transplant epidemiology</div>
+          </div>
+          <div class="pi-card">
+            <div class="pi-role">Co-PI</div>
+            <div class="pi-name">Prof. Robert Basaza</div>
+            <div class="pi-affil">Uganda Christian University<br>Institutional coordination · Policy networks</div>
+          </div>
+          <div class="pi-card">
+            <div class="pi-role">Systems & Strategy</div>
+            <div class="pi-name">Paul Luswata</div>
+            <div class="pi-affil">Ukubona LLC<br>Platform architecture · Data pipelines</div>
+          </div>
+        </div>
+        <div style="margin-top:1rem;border-left:3px solid var(--teal);padding-left:1rem;">
+          <p style="font-size:clamp(11px,1.1vw,13px);color:#555;line-height:1.6;">Mental health weighted highest in L(θ) at 35%: most underreported, most predictive of downstream failures. The weight is not a design choice — it is what the epidemiology requires. <a href="https://ukubona-llc.github.io/assets/html/cartography-256.html" style="color:var(--teal);">View live command center →</a></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 5: ARCHITECTURE -->
   <div class="slide" id="s3">
-    <p class="eyebrow slide-in">03 · System architecture</p>
+    <p class="eyebrow slide-in">05 · System architecture</p>
     <h2 class="slide-in" style="margin-bottom:0.8rem;">Five layers. One continuous loop.</h2>
     <div class="pipeline slide-in">
       <div class="pipe-node">
@@ -531,17 +661,13 @@
     <p class="lead slide-in" style="font-size:clamp(11px,1.1vw,14px);">Backend is <span class="mono">FastAPI + Uvicorn</span>, running now at <a href="https://ukubona-llc.github.io/npa-demo/" style="color:var(--teal)">ukubona-llc.github.io/npa-demo</a>. All 135 districts initialized. State in-memory for PoC; <span class="mono">source</span> field tracks synthetic/real/bayesian/intervened provenance on every record.</p>
   </div>
 
-  <!-- 4: ENDPOINTS -->
+  <!-- 6: ENDPOINTS -->
   <div class="slide" id="s4">
-    <p class="eyebrow slide-in">04 · API endpoints · for Vincent's team</p>
+    <p class="eyebrow slide-in">06 · API endpoints · for Vincent's team</p>
     <h2 class="slide-in" style="margin-bottom:0.5rem;">What the backend actually does.</h2>
     <table class="ep-table slide-in">
       <thead>
-        <tr>
-          <th>endpoint</th>
-          <th>what it does</th>
-          <th>technical note</th>
-        </tr>
+        <tr><th>endpoint</th><th>what it does</th><th>technical note</th></tr>
       </thead>
       <tbody>
         <tr>
@@ -573,9 +699,9 @@
     </table>
   </div>
 
-  <!-- 5: LOSS FUNCTION -->
+  <!-- 7: LOSS FUNCTION -->
   <div class="slide" id="s5">
-    <p class="eyebrow slide-in">05 · The loss function · why the heatmap is not decoration</p>
+    <p class="eyebrow slide-in">07 · The loss function · why the heatmap is not decoration</p>
     <div class="two-col">
       <div>
         <h2 class="slide-in">The map <em>is</em><br>the math.</h2>
@@ -589,6 +715,7 @@
           </div>
         </div>
         <p class="lead slide-in">Each district scores 0–1. The heatmap renders that score spatially. Red = L(θ) near 1 = maximum gap to NDP target. Violet = L(θ) near 0 = optimized. Policy step: <span class="mono">θ′ = θ − η ∇L</span></p>
+        <p class="lead slide-in" style="font-size:clamp(11px,1.1vw,14px);color:var(--mid);">The 35% weight on mental health is not aesthetic. It reflects what the epidemiological literature says about predictive power — and what 12 years of transplant research says about underreporting.</p>
       </div>
       <div class="slide-in">
         <div class="heatbar">
@@ -609,32 +736,26 @@
     </div>
   </div>
 
-  <!-- 6: SYNTHETIC → REAL -->
+  <!-- 8: SYNTHETIC → REAL -->
   <div class="slide" id="s6">
-    <p class="eyebrow slide-in">06 · Synthetic → real · the Bayesian rehearsal</p>
+    <p class="eyebrow slide-in">08 · Synthetic → real · the Bayesian rehearsal</p>
     <h2 class="slide-in">You don't need clean data to start.<br><em>You need the pipeline.</em></h2>
     <p class="lead slide-in">In clinical research we run power calculations and simulate data before a single patient is enrolled. We rehearse the infrastructure before reality arrives. Same methodology here.</p>
     <div class="two-col slide-in">
       <div>
         <div style="border:1px solid var(--border);border-radius:4px;overflow:hidden;">
           <div style="background:#f0ebe0;padding:0.7rem 1rem;font-family:'DM Mono',monospace;font-size:11px;color:var(--mid);border-bottom:1px solid var(--border);">PHASE 1 · SYNTHETIC</div>
-          <div style="padding:0.8rem 1rem;font-size:clamp(11px,1.1vw,13px);line-height:1.7;color:#444;">
-            State seeded from geographic priors · <span class="mono">source: "synthetic"</span> · District officers onboard · Infrastructure rehearsed · Decision cadence practiced
-          </div>
+          <div style="padding:0.8rem 1rem;font-size:clamp(11px,1.1vw,13px);line-height:1.7;color:#444;">State seeded from geographic priors · <span class="mono">source: "synthetic"</span> · District officers onboard · Infrastructure rehearsed · Decision cadence practiced</div>
         </div>
         <div style="text-align:center;padding:0.5rem;font-size:20px;color:var(--mid);">↓</div>
         <div style="border:1px solid var(--teal);border-radius:4px;overflow:hidden;">
           <div style="background:#e8f5f2;padding:0.7rem 1rem;font-family:'DM Mono',monospace;font-size:11px;color:var(--teal);border-bottom:1px solid var(--teal);">PHASE 2 · BAYESIAN HYBRID</div>
-          <div style="padding:0.8rem 1rem;font-size:clamp(11px,1.1vw,13px);line-height:1.7;color:#444;">
-            Real uploads arrive · <span class="mono">/bayesian-swap</span> fuses priors with observations · <span class="mono">source</span> tag flips: "synthetic" → "real" · Confidence weights update automatically
-          </div>
+          <div style="padding:0.8rem 1rem;font-size:clamp(11px,1.1vw,13px);line-height:1.7;color:#444;">Real uploads arrive · <span class="mono">/bayesian-swap</span> fuses priors with observations · <span class="mono">source</span> tag flips: "synthetic" → "real" · Confidence weights update automatically</div>
         </div>
         <div style="text-align:center;padding:0.5rem;font-size:20px;color:var(--mid);">↓</div>
         <div style="border:1px solid var(--ink);border-radius:4px;overflow:hidden;">
           <div style="background:var(--ink);padding:0.7rem 1rem;font-family:'DM Mono',monospace;font-size:11px;color:#666;border-bottom:1px solid #333;">PHASE 3 · LIVE</div>
-          <div style="padding:0.8rem 1rem;font-size:clamp(11px,1.1vw,13px);line-height:1.7;color:#444;">
-            All 135 districts reporting · Automatic daily update cycle · NPA queries the twin in natural language · Cabinet briefs generated on demand
-          </div>
+          <div style="padding:0.8rem 1rem;font-size:clamp(11px,1.1vw,13px);line-height:1.7;color:#444;">All 135 districts reporting · Automatic daily update cycle · NPA queries the twin in natural language · Cabinet briefs generated on demand</div>
         </div>
       </div>
       <div>
@@ -643,15 +764,15 @@
         <div style="margin-top:1.5rem;border-left:3px solid var(--teal);padding-left:1rem;">
           <p style="font-size:clamp(12px,1.2vw,15px);color:var(--teal);font-weight:500;">UCU Partnership — real data, running now</p>
           <p style="font-size:clamp(11px,1.1vw,13px);color:#555;margin-top:0.4rem;line-height:1.6;">Intern has already mapped Uganda's mental health landscape — depression, PTSD, Alzheimer's — district-level, live DHIS2 feed. Mental health is weighted highest in L(θ) at 35%: most underreported, most predictive of other failures. This is not a future plan.</p>
-          <a href="https://ukubona-llc.github.io/assets/html/team.html" style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);display:block;margin-top:0.4rem;">→ ukubona-llc.github.io/assets/html/team.html</a>
+          <a href="https://ukubona-llc.github.io/landscape/" style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);display:block;margin-top:0.4rem;">→ ukubona-llc.github.io/landscape/</a>
         </div>
       </div>
     </div>
   </div>
 
-  <!-- 7: ACCESS LEVELS + SECURITY -->
+  <!-- 9: ACCESS LEVELS -->
   <div class="slide" id="s7">
-    <p class="eyebrow slide-in">07 · Access control · for Vincent's team specifically</p>
+    <p class="eyebrow slide-in">09 · Access control · for Vincent's team specifically</p>
     <h2 class="slide-in" style="margin-bottom:1rem;">Your team manages tokens.<br>We manage the pipeline.</h2>
     <div class="two-col slide-in">
       <div>
@@ -691,9 +812,9 @@
     </div>
   </div>
 
-  <!-- 8: POOH GATE — THE INTEGRITY MECHANISM -->
+  <!-- 10: INTEGRITY MECHANISM -->
   <div class="slide" id="s_pooh">
-    <p class="eyebrow slide-in">08 · The integrity mechanism · why the rug stays here</p>
+    <p class="eyebrow slide-in">10 · The integrity mechanism · why the rug stays here</p>
     <div class="two-col-wide">
       <div>
         <h2 class="slide-in">The interface must never<br>back-propagate into<br><em>the signal.</em></h2>
@@ -720,9 +841,9 @@
     </div>
   </div>
 
-  <!-- 9: BUSINESS MODEL -->
+  <!-- 11: BUSINESS MODEL -->
   <div class="slide" id="s8">
-    <p class="eyebrow slide-in">09 · Delivery model · Ukubona Infrastructure-as-a-Service</p>
+    <p class="eyebrow slide-in">11 · Delivery model · Ukubona Infrastructure-as-a-Service</p>
     <h2 class="slide-in">You access the intelligence.<br><em>We maintain the integrity.</em></h2>
     <p class="lead slide-in">Source code, heatmap frontend, and model architecture remain Ukubona LLC intellectual property. NPA subscribes to the capability — not the codebase. This is not a limitation. It is the structural guarantee that the system stays honest.</p>
     <div class="tier-grid slide-in">
@@ -764,9 +885,9 @@
     <p class="lead slide-in" style="font-size:clamp(10px,1vw,13px);color:var(--mid);margin-top:1rem;">LLM API ~$0.004 per inference at government query volume — less than a phone call to a district officer. Costs fully logged and transparent.</p>
   </div>
 
-  <!-- 10: GOTCHAS -->
+  <!-- 12: GOTCHAS -->
   <div class="slide" id="s9b">
-    <p class="eyebrow slide-in">10 · Anticipated objections · hold your ground</p>
+    <p class="eyebrow slide-in">12 · Anticipated objections · hold your ground</p>
     <h2 class="slide-in" style="margin-bottom:1rem;">They will test you.<br><em>Be ready.</em></h2>
     <div class="slide-in">
       <div class="gotcha">
@@ -781,7 +902,7 @@
       </div>
       <div class="gotcha">
         <p class="q">"The state is in-memory — what happens if the server restarts?"</p>
-        <p class="a">Intentional for PoC speed — standard practice. Production persists to PostgreSQL: one <span class="mono">SQLModel</span> import away. The <span class="mono">source</span> field is already the schema for a proper audit table. Every district knows whether it's synthetic, real, bayesian, or intervened.</p>
+        <p class="a">Intentional for PoC speed — standard practice. Production persists to PostgreSQL: one <span class="mono">SQLModel</span> import away. The <span class="mono">source</span> field is already the schema for a proper audit table.</p>
       </div>
       <div class="gotcha">
         <p class="q">"What about data sovereignty? Who owns the data?"</p>
@@ -790,9 +911,9 @@
     </div>
   </div>
 
-  <!-- 11: LINKS + CLOSING -->
+  <!-- 13: CLOSING -->
   <div class="slide" id="s_close">
-    <p class="eyebrow slide-in" style="color:rgba(255,255,255,0.4);">11 · Resources · open these today</p>
+    <p class="eyebrow slide-in" style="color:rgba(255,255,255,0.4);">13 · Resources · open these today</p>
     <h2 class="slide-in" style="color:var(--paper);margin-bottom:1rem;">Uganda already has the data.<br><em style="color:#a0d8c8">What's missing is a system<br>that stays honest about it.</em></h2>
     <div class="link-grid slide-in">
       <a href="https://ukubona-llc.github.io/npa-demo/" class="link-item" style="background:#0a6660;border-color:#0d8a82">
@@ -800,25 +921,25 @@
         <span class="link-title" style="color:white">NPA Digital Twin Backend</span>
         <span class="link-url" style="color:#5bbdb6">ukubona-llc.github.io/npa-demo/</span>
       </a>
+      <a href="https://ukubona-llc.github.io/landscape/" class="link-item" style="background:#0a6660;border-color:#0d8a82">
+        <span class="link-label" style="color:#a0d8c8">UCU Partnership</span>
+        <span class="link-title" style="color:white">Disease Burden Atlas · CKD · Mental Health</span>
+        <span class="link-url" style="color:#5bbdb6">ukubona-llc.github.io/landscape/</span>
+      </a>
+      <a href="https://ukubona-llc.github.io/assets/html/cartography-256.html" class="link-item" style="background:#0a6660;border-color:#0d8a82">
+        <span class="link-label" style="color:#a0d8c8">Live Command Center</span>
+        <span class="link-title" style="color:white">District Cartography · 256 Indicators</span>
+        <span class="link-url" style="color:#5bbdb6">ukubona-llc.github.io/…/cartography-256.html</span>
+      </a>
       <a href="https://abikesa.github.io/repos-00/assets/html/claude-api-key.html" class="link-item" style="background:#0a6660;border-color:#0d8a82">
         <span class="link-label" style="color:#a0d8c8">LLM Interface · Patient Suite</span>
         <span class="link-title" style="color:white">Claude API — proof of concept</span>
         <span class="link-url" style="color:#5bbdb6">abikesa.github.io/…/claude-api-key.html</span>
       </a>
-      <a href="https://ukubona-llc.github.io/assets/html/team.html" class="link-item" style="background:#0a6660;border-color:#0d8a82">
-        <span class="link-label" style="color:#a0d8c8">UCU Partnership</span>
-        <span class="link-title" style="color:white">Team — mental health intern</span>
-        <span class="link-url" style="color:#5bbdb6">ukubona-llc.github.io/assets/html/team.html</span>
-      </a>
       <a href="https://abikesa.github.io/repos-00/index.html" class="link-item" style="background:#0a6660;border-color:#0d8a82">
         <span class="link-label" style="color:#a0d8c8">Five Suites</span>
         <span class="link-title" style="color:white">Patients → Government → Civilizational</span>
         <span class="link-url" style="color:#5bbdb6">abikesa.github.io/repos-00/index.html</span>
-      </a>
-      <a href="https://abikesa.github.io/repos-00/assets/html/intelligence.html" class="link-item" style="background:#0a6660;border-color:#0d8a82">
-        <span class="link-label" style="color:#a0d8c8">Signal / Noise · Philosophy</span>
-        <span class="link-title" style="color:white">The intellectual foundation</span>
-        <span class="link-url" style="color:#5bbdb6">abikesa.github.io/…/intelligence.html</span>
       </a>
       <a href="https://abikesa.github.io/repos-00/assets/html/npa-pipeline.html" class="link-item" style="background:#0a6660;border-color:#0d8a82">
         <span class="link-label" style="color:#a0d8c8">Pipeline Architecture</span>
@@ -829,13 +950,12 @@
     <p class="slide-in" style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.3);margin-top:1.5rem;letter-spacing:0.08em;">THE ASK — One dataset. 30 days. If the twin stays honest under pressure, we talk.</p>
   </div>
 
-</div><!-- /slides -->
+</div>
 
-<!-- NAVIGATION -->
 <div id="nav">
   <button id="btn-prev">← prev</button>
   <div id="dots"></div>
-  <span id="slide-counter">1 / 12</span>
+  <span id="slide-counter">1 / 14</span>
   <button id="btn-next">next →</button>
 </div>
 
@@ -855,21 +975,16 @@
   function go(n) {
     slides[current].classList.remove('active');
     dotsEl.children[current].classList.remove('active');
-    slides[current].querySelectorAll('.slide-in').forEach(el => {
-      el.style.animation = 'none';
-    });
+    slides[current].querySelectorAll('.slide-in').forEach(el => { el.style.animation = 'none'; });
     current = (n + slides.length) % slides.length;
     slides[current].classList.add('active');
     dotsEl.children[current].classList.add('active');
-    slides[current].querySelectorAll('.slide-in').forEach(el => {
-      el.style.animation = '';
-    });
+    slides[current].querySelectorAll('.slide-in').forEach(el => { el.style.animation = ''; });
     counter.textContent = (current + 1) + ' / ' + slides.length;
   }
 
   document.getElementById('btn-next').onclick = () => go(current + 1);
   document.getElementById('btn-prev').onclick = () => go(current - 1);
-
   document.addEventListener('keydown', e => {
     if (e.key === 'ArrowRight' || e.key === ' ') go(current + 1);
     if (e.key === 'ArrowLeft') go(current - 1);
