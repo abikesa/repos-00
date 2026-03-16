@@ -156,7 +156,7 @@
     letter-spacing: 0.1em;
   }
 
-  /* ── PIPELINE DIAGRAM (slide 4) ── */
+  /* ── PIPELINE DIAGRAM ── */
   .pipeline {
     display: flex;
     align-items: center;
@@ -396,19 +396,33 @@
   .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 4vw; align-items: start; }
   .two-col-wide { display: grid; grid-template-columns: 1.3fr 1fr; gap: 4vw; align-items: start; }
 
-  /* ── CLOSING ── */
-  #s9 { background: var(--teal); color: var(--paper); }
-  #s9 h2 { color: var(--paper); }
-  #s9 .lead { color: rgba(255,255,255,0.75); }
-  #s9 .big-ask {
+  /* ── POOH GATE SLIDE ── */
+  .pooh-quote {
+    border-left: 4px solid var(--ink);
+    padding: 0.6rem 0 0.6rem 1.8rem;
     font-family: 'DM Serif Display', serif;
-    font-size: clamp(18px, 2.5vw, 32px);
-    line-height: 1.35;
-    color: var(--paper);
-    border-left: 3px solid rgba(255,255,255,0.3);
-    padding-left: 1.5rem;
+    font-size: clamp(16px, 2vw, 24px);
+    line-height: 1.4;
+    font-style: italic;
     margin: 1.5rem 0;
+    max-width: 58ch;
   }
+  .pooh-mechanic {
+    background: var(--ink);
+    color: #a0d8c8;
+    font-family: 'DM Mono', monospace;
+    font-size: clamp(10px, 1.1vw, 14px);
+    line-height: 1.7;
+    padding: 1.2rem 1.6rem;
+    border-radius: 4px;
+    margin-top: 1.2rem;
+  }
+  .pooh-mechanic .cm { color: #444; }
+
+  /* ── CLOSING ── */
+  #s_close { background: var(--teal); color: var(--paper); }
+  #s_close h2 { color: var(--paper); }
+  #s_close .lead { color: rgba(255,255,255,0.75); }
 
   /* ── PULSE ANIMATION on pipeline ── */
   @keyframes pulse-right {
@@ -445,19 +459,19 @@
   <!-- 0: COVER -->
   <div class="slide active" id="s0">
     <div class="corner-mark">NPA · 16.03.2026 · 14:30</div>
-    <p class="eyebrow slide-in">Ukubona LLC · Government Suite</p>
+    <p class="eyebrow slide-in">Ukubona LLC · Government Suite · Layer 4 of 5</p>
     <h1 class="slide-in">A National<br><em style="color:#6b9e8f">Digital Twin</em><br>for Uganda.</h1>
-    <p class="lead slide-in" style="color:#999">Not a dashboard. Not a report.<br>A living model that updates automatically — and answers questions in plain language.</p>
+    <p class="lead slide-in" style="color:#999">Not a dashboard. Not a report.<br>A living model that updates automatically — and answers questions in plain language. The signal stays honest because the architecture requires it.</p>
     <p class="tagline slide-in">MD MPH PhDc · Johns Hopkins · ukubona-llc.github.io/npa-demo</p>
   </div>
 
   <!-- 1: THE PROBLEM -->
   <div class="slide" id="s1">
     <p class="eyebrow slide-in">01 · The problem</p>
-    <h2 class="slide-in">You fly blind before Cabinet.</h2>
+    <h2 class="slide-in">Decision latency.<br>The signal arrives<br><em>after the meeting.</em></h2>
     <p class="lead slide-in">The challenge isn't a lack of data. Uganda has enormous reporting infrastructure. The challenge is <strong>decision latency</strong> — when a Cabinet summons arrives at short notice, the best available intelligence is a static PDF from the previous fiscal year.</p>
     <p class="lead slide-in" style="font-family:'DM Mono',monospace; font-size:clamp(12px,1.2vw,16px); border-left:3px solid var(--red); padding-left:1rem; color:var(--red);">"We usually have to fly blind. We no longer have access to the infrastructure we commissioned."</p>
-    <p class="lead slide-in" style="color:var(--mid); font-size:clamp(11px,1.1vw,14px);">Data is fragmented · Reports are retrospective · No live query layer · Decision latency kills policy quality</p>
+    <p class="lead slide-in" style="color:var(--mid); font-size:clamp(11px,1.1vw,14px);">Data fragmented across MDAs · Reports retrospective · No live query layer · No natural language interface · Decision latency is the failure mode</p>
   </div>
 
   <!-- 2: WHAT IS A DIGITAL TWIN -->
@@ -465,19 +479,20 @@
     <p class="eyebrow slide-in">02 · Core concept</p>
     <div class="two-col-wide">
       <div>
-        <h2 class="slide-in">A simulation dies.<br>A twin <em>lives</em>.</h2>
+        <h2 class="slide-in">A simulation dies.<br>A twin <em>keeps learning.</em></h2>
         <p class="lead slide-in">A simulation is a snapshot. It reflects the world at the moment it was built — then it goes stale. A <strong>digital twin</strong> is continuously synchronized with reality through automated data pipelines. It never goes stale because it never stops updating.</p>
         <p class="lead slide-in">The key innovation: an <strong>LLM as the interface layer</strong>. No dashboard training. No complex filters. You type a question; the twin answers it.</p>
+        <p class="lead slide-in" style="font-size:clamp(12px,1.2vw,15px);border-left:3px solid var(--teal);padding-left:1rem;color:var(--teal);">The interface exists to serve the data. Not to make the data comfortable.</p>
       </div>
       <div class="slide-in">
         <div style="border:1px solid var(--border); border-radius:4px; overflow:hidden; margin-top:1rem;">
-          <div style="background:#f0ebe0; padding:0.8rem 1rem; font-family:'DM Mono',monospace; font-size:11px; color:var(--mid); letter-spacing:0.08em; border-bottom:1px solid var(--border);">QUERY EXAMPLE</div>
+          <div style="background:#f0ebe0; padding:0.8rem 1rem; font-family:'DM Mono',monospace; font-size:11px; color:var(--mid); letter-spacing:0.08em; border-bottom:1px solid var(--border);">QUERY EXAMPLE · LIVE DEMO</div>
           <div style="padding:1rem 1.2rem;">
             <p style="font-family:'DM Mono',monospace;font-size:clamp(10px,1vw,13px);color:var(--teal);margin-bottom:0.8rem;">"Which three districts have the worst maternal mortality trend this quarter?"</p>
             <div style="background:#f5f0e8;border-radius:3px;padding:0.8rem;font-size:clamp(10px,1vw,12px);color:#333;line-height:1.6;font-family:'DM Mono',monospace;">→ Kaabong (0.71), Kotido (0.68), Moroto (0.65)<br>— all NE cluster, malaria co-morbidity pattern<br>— source: synthetic · last updated: live</div>
           </div>
         </div>
-        <p style="font-size:11px;color:var(--mid);margin-top:0.8rem;font-family:'DM Mono',monospace;">Plain language in · structured intelligence out</p>
+        <p style="font-size:11px;color:var(--mid);margin-top:0.8rem;font-family:'DM Mono',monospace;">Plain language in · structured intelligence out · no dashboard training required</p>
       </div>
     </div>
   </div>
@@ -512,11 +527,11 @@
         <div class="sub">heatmap · loss surface<br>Cabinet brief</div>
       </div>
     </div>
-    <p class="lead slide-in" style="font-size:clamp(11px,1.1vw,14px);color:var(--mid);margin-top:0.6rem;">The LLM layer — highlighted — is what replaces the dashboard entirely. No training required for end users.</p>
-    <p class="lead slide-in" style="font-size:clamp(11px,1.1vw,14px);">Backend is <span class="mono">FastAPI + Uvicorn</span>, running now at <a href="https://ukubona-llc.github.io/npa-demo/" style="color:var(--teal)">ukubona-llc.github.io/npa-demo</a>. All 135 districts initialized. State is in-memory, endpoints are live.</p>
+    <p class="lead slide-in" style="font-size:clamp(11px,1.1vw,14px);color:var(--mid);margin-top:0.6rem;">The LLM layer — highlighted — replaces the dashboard entirely. No training required for end users.</p>
+    <p class="lead slide-in" style="font-size:clamp(11px,1.1vw,14px);">Backend is <span class="mono">FastAPI + Uvicorn</span>, running now at <a href="https://ukubona-llc.github.io/npa-demo/" style="color:var(--teal)">ukubona-llc.github.io/npa-demo</a>. All 135 districts initialized. State in-memory for PoC; <span class="mono">source</span> field tracks synthetic/real/bayesian/intervened provenance on every record.</p>
   </div>
 
-  <!-- 4: ENDPOINTS — HOLD YOUR OWN -->
+  <!-- 4: ENDPOINTS -->
   <div class="slide" id="s4">
     <p class="eyebrow slide-in">04 · API endpoints · for Vincent's team</p>
     <h2 class="slide-in" style="margin-bottom:0.5rem;">What the backend actually does.</h2>
@@ -532,7 +547,7 @@
         <tr>
           <td>GET /districts</td>
           <td>Returns all 135 districts with mh, mort, mal, so values</td>
-          <td>Lazily initializes synthetic state on first call via <span class="mono">random.seed(42)</span></td>
+          <td>Lazily initializes synthetic state on first call via <span class="mono">random.seed(42)</span> — reproducible baseline anyone can verify</td>
         </tr>
         <tr>
           <td>GET /compute</td>
@@ -541,18 +556,18 @@
         </tr>
         <tr>
           <td>POST /intervene</td>
-          <td>Applies a resource intervention to a named district — mutates state</td>
-          <td>Differential reduction rates per indicator — malaria most sensitive (1.2×), social outcomes least (0.5×)</td>
+          <td>Applies a resource intervention to a named district — <em>mutates state</em></td>
+          <td>Differential reduction rates: malaria most sensitive (1.2×), social outcomes least (0.5×)</td>
         </tr>
         <tr>
           <td>POST /whatif</td>
-          <td>Same as /intervene but <em>does not mutate</em> state — pure preview</td>
-          <td>Returns a deep copy via <span class="mono">model_copy(deep=True)</span> — safe for Cabinet scenarios</td>
+          <td>Same logic — <em>does not mutate state</em> — pure preview</td>
+          <td>Deep copy via <span class="mono">model_copy(deep=True)</span> — Cabinet can run scenarios safely without touching live twin</td>
         </tr>
         <tr>
           <td>POST /bayesian-swap</td>
           <td>Fuses two districts' data into a shared posterior</td>
-          <td>Simple mean fusion — placeholder for real Bayesian update when real data arrives; <span class="mono">source</span> tag flips to "bayesian"</td>
+          <td>Mean fusion placeholder — <span class="mono">source</span> tag flips to "bayesian" when real data arrives; full Bayesian update in production</td>
         </tr>
       </tbody>
     </table>
@@ -567,13 +582,13 @@
         <div class="formula-box slide-in">
           L(θ) = 0.35·mh + 0.25·mort + 0.25·mal + 0.15·so
           <div class="comment">
-            mh = mental health burden<br>
+            mh = mental health burden (highest weight — most underreported, most predictive)<br>
             mort = under-5 mortality rate<br>
             mal = malaria incidence<br>
             so = social outcomes index
           </div>
         </div>
-        <p class="lead slide-in">Each district gets a score between 0–1. The heatmap renders that score as colour. Red = L(θ) near 1 = maximum gap to NDP target. Violet = L(θ) near 0 = optimized.</p>
+        <p class="lead slide-in">Each district scores 0–1. The heatmap renders that score spatially. Red = L(θ) near 1 = maximum gap to NDP target. Violet = L(θ) near 0 = optimized. Policy step: <span class="mono">θ′ = θ − η ∇L</span></p>
       </div>
       <div class="slide-in">
         <div class="heatbar">
@@ -587,31 +602,31 @@
         <p style="font-size:11px;color:var(--mid);font-family:'DM Mono',monospace;margin-top:0.5rem;">ROYGBIV = loss gradient · spatial · district-level</p>
         <div style="margin-top:1.5rem;border:1px solid var(--border);border-radius:4px;padding:1rem;">
           <p style="font-family:'DM Mono',monospace;font-size:11px;color:var(--mid);margin-bottom:0.6rem;">GEOGRAPHIC PATTERNS IN SYNTHETIC DATA</p>
-          <p style="font-size:clamp(11px,1.1vw,13px);line-height:1.7;color:#444;">Karamoja cluster (lat>2.5, lon>33.5): all four indicators elevated +0.15–0.25 · Northern districts: mh+0.15, mort+0.10 · Western: mal+0.18 · Urban centres: mortality and malaria reduced, mental health elevated</p>
+          <p style="font-size:clamp(11px,1.1vw,13px);line-height:1.7;color:#444;">Karamoja cluster (lat&gt;2.5, lon&gt;33.5): all four indicators elevated +0.15–0.25 · Northern districts: mh+0.15, mort+0.10 · Western: mal+0.18 · Urban centres (Kampala, Wakiso, Mbarara): mortality and malaria reduced, mental health elevated</p>
         </div>
-        <p class="lead" style="font-size:clamp(11px,1.1vw,13px);margin-top:1rem;color:#444;">Policy intervention: <span class="mono">θ′ = θ − η ∇L</span> — the step that moves the map from red toward violet.</p>
+        <p class="lead" style="font-size:clamp(11px,1.1vw,13px);margin-top:1rem;color:#444;">Every policy intervention is a step: <span class="mono">θ′ = θ − η ∇L</span> — moving the map from red toward violet.</p>
       </div>
     </div>
   </div>
 
-  <!-- 6: SYNTHETIC → REAL (Bayesian pipeline) -->
+  <!-- 6: SYNTHETIC → REAL -->
   <div class="slide" id="s6">
     <p class="eyebrow slide-in">06 · Synthetic → real · the Bayesian rehearsal</p>
     <h2 class="slide-in">You don't need clean data to start.<br><em>You need the pipeline.</em></h2>
-    <p class="lead slide-in">In clinical research we run power calculations and simulate the data before a single patient is enrolled. We rehearse the infrastructure before reality arrives. Same methodology here.</p>
+    <p class="lead slide-in">In clinical research we run power calculations and simulate data before a single patient is enrolled. We rehearse the infrastructure before reality arrives. Same methodology here.</p>
     <div class="two-col slide-in">
       <div>
         <div style="border:1px solid var(--border);border-radius:4px;overflow:hidden;">
           <div style="background:#f0ebe0;padding:0.7rem 1rem;font-family:'DM Mono',monospace;font-size:11px;color:var(--mid);border-bottom:1px solid var(--border);">PHASE 1 · SYNTHETIC</div>
           <div style="padding:0.8rem 1rem;font-size:clamp(11px,1.1vw,13px);line-height:1.7;color:#444;">
-            State seeded from geographic priors · <span class="mono">source: "synthetic"</span> · District officers onboard · Infrastructure rehearsed · Decision loop practiced
+            State seeded from geographic priors · <span class="mono">source: "synthetic"</span> · District officers onboard · Infrastructure rehearsed · Decision cadence practiced
           </div>
         </div>
         <div style="text-align:center;padding:0.5rem;font-size:20px;color:var(--mid);">↓</div>
         <div style="border:1px solid var(--teal);border-radius:4px;overflow:hidden;">
-          <div style="background:#e8f5f2;padding:0.7rem 1rem;font-family:'DM Mono',monospace;font-size:11px;color:var(--teal);border-bottom:1px solid var(--teal);">PHASE 2 · HYBRID</div>
+          <div style="background:#e8f5f2;padding:0.7rem 1rem;font-family:'DM Mono',monospace;font-size:11px;color:var(--teal);border-bottom:1px solid var(--teal);">PHASE 2 · BAYESIAN HYBRID</div>
           <div style="padding:0.8rem 1rem;font-size:clamp(11px,1.1vw,13px);line-height:1.7;color:#444;">
-            Real uploads arrive · <span class="mono">/bayesian-swap</span> fuses priors with observations · <span class="mono">source</span> tag flips: "synthetic" → "real" · Confidence weights update
+            Real uploads arrive · <span class="mono">/bayesian-swap</span> fuses priors with observations · <span class="mono">source</span> tag flips: "synthetic" → "real" · Confidence weights update automatically
           </div>
         </div>
         <div style="text-align:center;padding:0.5rem;font-size:20px;color:var(--mid);">↓</div>
@@ -626,8 +641,8 @@
         <p style="font-family:'DM Mono',monospace;font-size:11px;color:var(--mid);margin-bottom:0.8rem;">THIS IS HOW ALPHAFOLD WORKED</p>
         <p style="font-size:clamp(12px,1.2vw,15px);line-height:1.7;color:#444;">AlphaFold trained on structural priors before experimental data. Autonomous vehicles train in simulation before roads. The digital twin starts in synthetic phase so you can <strong>rehearse the rhythm of governance</strong> before stakes are real.</p>
         <div style="margin-top:1.5rem;border-left:3px solid var(--teal);padding-left:1rem;">
-          <p style="font-size:clamp(12px,1.2vw,15px);color:var(--teal);font-weight:500;">UCU Partnership</p>
-          <p style="font-size:clamp(11px,1.1vw,13px);color:#555;margin-top:0.4rem;line-height:1.6;">Intern has already mapped Uganda's mental health landscape using this same pipeline — depression, PTSD, Alzheimer's — district-level, live DHIS2 feed. Government suite is the same architecture, different parameters.</p>
+          <p style="font-size:clamp(12px,1.2vw,15px);color:var(--teal);font-weight:500;">UCU Partnership — real data, running now</p>
+          <p style="font-size:clamp(11px,1.1vw,13px);color:#555;margin-top:0.4rem;line-height:1.6;">Intern has already mapped Uganda's mental health landscape — depression, PTSD, Alzheimer's — district-level, live DHIS2 feed. Mental health is weighted highest in L(θ) at 35%: most underreported, most predictive of other failures. This is not a future plan.</p>
           <a href="https://ukubona-llc.github.io/assets/html/team.html" style="font-family:'DM Mono',monospace;font-size:10px;color:var(--teal);display:block;margin-top:0.4rem;">→ ukubona-llc.github.io/assets/html/team.html</a>
         </div>
       </div>
@@ -654,7 +669,7 @@
         </div>
         <div class="level-row" style="border:none">
           <div class="level-badge">L4 · CABINET</div>
-          <div class="level-desc">Read-only · LLM-generated executive summary · no raw data exposure</div>
+          <div class="level-desc">Read-only · LLM-generated executive summary · no raw data exposure · no access to model weights</div>
         </div>
       </div>
       <div>
@@ -666,7 +681,7 @@
             <div>📷 Screenshot</div>
             <div>🎙 Voice memo (60s)</div>
           </div>
-          <p style="font-size:11px;color:var(--mid);margin-top:0.8rem;font-family:'DM Mono',monospace;">Vision API parses images · Whisper transcribes voice · LLM extracts structured JSON</p>
+          <p style="font-size:11px;color:var(--mid);margin-top:0.8rem;font-family:'DM Mono',monospace;">Vision API parses images · Whisper transcribes voice · LLM extracts structured JSON · 3σ anomaly detection before acceptance</p>
         </div>
         <div style="border:1px solid var(--border);border-radius:4px;padding:1.2rem;">
           <p style="font-family:'DM Mono',monospace;font-size:11px;color:var(--mid);margin-bottom:0.6rem;">SECURITY MODEL</p>
@@ -676,11 +691,40 @@
     </div>
   </div>
 
-  <!-- 8: BUSINESS MODEL — IP PROTECTED -->
+  <!-- 8: POOH GATE — THE INTEGRITY MECHANISM -->
+  <div class="slide" id="s_pooh">
+    <p class="eyebrow slide-in">08 · The integrity mechanism · why the rug stays here</p>
+    <div class="two-col-wide">
+      <div>
+        <h2 class="slide-in">The interface must never<br>back-propagate into<br><em>the signal.</em></h2>
+        <p class="lead slide-in" style="font-size:clamp(13px,1.4vw,17px);">Every government data system faces the same pressure: when the map goes red over a politically sensitive district, someone will call and ask to adjust the weighting. That call is the moment the system either survives as a twin — or becomes a caricature that tells you what you want to hear.</p>
+        <div class="pooh-quote slide-in">"If the UI starts dictating the loss function, you lose the salience of the data. You end up with a system that confirms comfortable narratives rather than mapping uncomfortable reality."</div>
+        <p class="lead slide-in" style="font-size:clamp(12px,1.2vw,15px);color:#555;">This is why Ukubona maintains the infrastructure. Not only for commercial reasons — for <strong>architectural</strong> ones. When the call comes, the answer is: "I don't control the model. The data is the data." Ivan gets deniability. You get fired if necessary. The twin stays honest.</p>
+      </div>
+      <div class="slide-in">
+        <div class="pooh-mechanic">
+          <span class="cm"># The integrity check — contractual, not just code</span><br><br>
+          if political_pressure &gt; fidelity_threshold:<br>
+          &nbsp;&nbsp;<span class="cm"># Offer /whatif with labeled assumptions</span><br>
+          &nbsp;&nbsp;<span class="cm"># Never mutate live twin weights</span><br>
+          &nbsp;&nbsp;log_request(district, requester, timestamp)<br>
+          &nbsp;&nbsp;return labeled_scenario_only<br><br>
+          <span class="cm"># The audit trail IS the deterrent</span><br>
+          <span class="cm"># Its existence changes behavior before any call is made</span>
+        </div>
+        <div style="margin-top:1.2rem;border:1px solid var(--border);border-radius:4px;padding:1rem;">
+          <p style="font-family:'DM Mono',monospace;font-size:10px;color:var(--mid);margin-bottom:0.6rem;">WHAT THIS GIVES NPA SPECIFICALLY</p>
+          <p style="font-size:clamp(11px,1.1vw,13px);line-height:1.7;color:#444;"><strong>Technocrats (Ivan):</strong> Structured deniability. "I don't control the model." Credibility protected by vendor architecture.<br><br><strong>ICT team (Vincent):</strong> You own the audit trail. Every adjustment request logged. The log is the deterrent.<br><br><strong>Ukubona:</strong> We get fired if necessary. The twin survives intact. That's the product working as designed.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- 9: BUSINESS MODEL -->
   <div class="slide" id="s8">
-    <p class="eyebrow slide-in">08 · Delivery model · Ukubona Infrastructure-as-a-Service</p>
-    <h2 class="slide-in">You access the intelligence.<br><em>We maintain the machine.</em></h2>
-    <p class="lead slide-in">Source code, heatmap frontend, and model architecture remain Ukubona LLC intellectual property. NPA subscribes to the capability — not the codebase. This means the system is always maintained, always updated, and never abandoned when a contractor leaves.</p>
+    <p class="eyebrow slide-in">09 · Delivery model · Ukubona Infrastructure-as-a-Service</p>
+    <h2 class="slide-in">You access the intelligence.<br><em>We maintain the integrity.</em></h2>
+    <p class="lead slide-in">Source code, heatmap frontend, and model architecture remain Ukubona LLC intellectual property. NPA subscribes to the capability — not the codebase. This is not a limitation. It is the structural guarantee that the system stays honest.</p>
     <div class="tier-grid slide-in">
       <div class="tier">
         <div class="tier-name">Pilot</div>
@@ -688,7 +732,7 @@
         <ul>
           <li>Sandbox API access</li>
           <li>Synthetic data initialized</li>
-          <li>LLM query interface</li>
+          <li>LLM query interface live</li>
           <li>Schema mapping session</li>
           <li>Free of charge</li>
         </ul>
@@ -702,13 +746,14 @@
           <li>LLM interface · logged usage</li>
           <li>Cabinet brief generation</li>
           <li>Ukubona hosts + maintains</li>
+          <li>Pooh gate in contract</li>
         </ul>
       </div>
       <div class="tier">
-        <div class="tier-name">Annual</div>
+        <div class="tier-name">Annual SLA</div>
         <div class="tier-price">SLA + support</div>
         <ul>
-          <li>Dedicated uptime SLA</li>
+          <li>Dedicated uptime guarantee</li>
           <li>Custom indicator sets</li>
           <li>DHIS2 integration</li>
           <li>UCU research feed</li>
@@ -716,72 +761,72 @@
         </ul>
       </div>
     </div>
-    <p class="lead slide-in" style="font-size:clamp(10px,1vw,13px);color:var(--mid);margin-top:1rem;">LLM API token costs ~$0.004 per inference at government query volume — less than the cost of a phone call to a district officer. Costs are fully logged and transparent.</p>
+    <p class="lead slide-in" style="font-size:clamp(10px,1vw,13px);color:var(--mid);margin-top:1rem;">LLM API ~$0.004 per inference at government query volume — less than a phone call to a district officer. Costs fully logged and transparent.</p>
   </div>
 
-  <!-- 9: GOTCHAS — ADVERSARIAL Q&A -->
-  <div class="slide" id="s9b" style="background:#f5f0e8">
-    <p class="eyebrow slide-in">09 · Anticipated objections · hold your ground</p>
+  <!-- 10: GOTCHAS -->
+  <div class="slide" id="s9b">
+    <p class="eyebrow slide-in">10 · Anticipated objections · hold your ground</p>
     <h2 class="slide-in" style="margin-bottom:1rem;">They will test you.<br><em>Be ready.</em></h2>
     <div class="slide-in">
       <div class="gotcha">
         <div>
           <p class="q">"Does this replace our jobs?"</p>
-          <p class="a">No — your role shifts from data entry and cleaning to <strong>system oversight</strong>. The pipeline handles the mechanical work. You manage the tokens, validate anomalies, and run the what-if scenarios. You become the operators of a national intelligence system, not spreadsheet cleaners.</p>
+          <p class="a">No — your role shifts from data entry and cleaning to <strong>system oversight</strong>. You manage tokens, validate anomalies, decide when a district flips from synthetic to real. You become operators of a national intelligence system, not spreadsheet cleaners. That's not a smaller job — it's the one that actually matters.</p>
         </div>
       </div>
       <div class="gotcha">
         <p class="q">"Why FastAPI and not something enterprise — Oracle, SAP?"</p>
-        <p class="a">FastAPI is the standard for high-performance Python APIs — used at Netflix, Microsoft, Uber. It's stateless, horizontally scalable, and the ecosystem runs on open standards. Enterprise stacks lock you into vendor contracts. This stack can be containerized and hosted on NPA's own servers if needed — no lock-in.</p>
+        <p class="a">FastAPI is the standard for high-performance Python APIs — Netflix, Microsoft, Uber. Stateless, horizontally scalable, open standards. Enterprise stacks lock you into vendor contracts. This stack can run on NITA-U infrastructure if needed. No lock-in except our methodology — which is the point.</p>
       </div>
       <div class="gotcha">
         <p class="q">"The state is in-memory — what happens if the server restarts?"</p>
-        <p class="a">Good catch. Current demo uses in-memory state for speed — standard for PoC. Production version persists to PostgreSQL or MongoDB with <span class="mono">generate_synthetic()</span> as fallback. The <span class="mono">source</span> field tracks whether each district's data is synthetic, real, or bayesian-fused, so you always know data provenance.</p>
+        <p class="a">Intentional for PoC speed — standard practice. Production persists to PostgreSQL: one <span class="mono">SQLModel</span> import away. The <span class="mono">source</span> field is already the schema for a proper audit table. Every district knows whether it's synthetic, real, bayesian, or intervened.</p>
       </div>
       <div class="gotcha">
         <p class="q">"What about data sovereignty? Who owns the data?"</p>
-        <p class="a">NPA owns all data submitted through the pipeline. Ukubona LLC owns the model, the heatmap frontend, and the inference layer. Data never leaves Uganda's jurisdictional scope in production — we can host on NITA-U infrastructure or any cloud provider NPA designates.</p>
+        <p class="a">NPA owns all data submitted through the pipeline. Ukubona owns the model, heatmap frontend, and inference layer. Data stays in Uganda's jurisdictional scope — we can host on any infrastructure NPA designates. What doesn't leave Ukubona is the methodology. That's what you're subscribing to.</p>
       </div>
     </div>
   </div>
 
-  <!-- 10: LINKS + CLOSING -->
-  <div class="slide" id="s10" style="background:var(--ink);color:var(--paper);">
-    <p class="eyebrow slide-in" style="color:#555">10 · Resources · open these today</p>
-    <h2 class="slide-in" style="color:var(--paper);margin-bottom:1rem;">Uganda already has the data.<br><em style="color:#6b9e8f">What's missing is a system<br>that learns from it.</em></h2>
+  <!-- 11: LINKS + CLOSING -->
+  <div class="slide" id="s_close">
+    <p class="eyebrow slide-in" style="color:rgba(255,255,255,0.4);">11 · Resources · open these today</p>
+    <h2 class="slide-in" style="color:var(--paper);margin-bottom:1rem;">Uganda already has the data.<br><em style="color:#a0d8c8">What's missing is a system<br>that stays honest about it.</em></h2>
     <div class="link-grid slide-in">
-      <a href="https://ukubona-llc.github.io/npa-demo/" class="link-item" style="background:#111;border-color:#333">
-        <span class="link-label">Live Demo</span>
-        <span class="link-title">NPA Digital Twin Backend</span>
-        <span class="link-url">ukubona-llc.github.io/npa-demo/</span>
+      <a href="https://ukubona-llc.github.io/npa-demo/" class="link-item" style="background:#0a6660;border-color:#0d8a82">
+        <span class="link-label" style="color:#a0d8c8">Live Demo</span>
+        <span class="link-title" style="color:white">NPA Digital Twin Backend</span>
+        <span class="link-url" style="color:#5bbdb6">ukubona-llc.github.io/npa-demo/</span>
       </a>
-      <a href="https://abikesa.github.io/repos-00/assets/html/claude-api-key.html" class="link-item" style="background:#111;border-color:#333">
-        <span class="link-label">LLM Interface · Patient Suite</span>
-        <span class="link-title">Claude API — proof of concept</span>
-        <span class="link-url">abikesa.github.io/…/claude-api-key.html</span>
+      <a href="https://abikesa.github.io/repos-00/assets/html/claude-api-key.html" class="link-item" style="background:#0a6660;border-color:#0d8a82">
+        <span class="link-label" style="color:#a0d8c8">LLM Interface · Patient Suite</span>
+        <span class="link-title" style="color:white">Claude API — proof of concept</span>
+        <span class="link-url" style="color:#5bbdb6">abikesa.github.io/…/claude-api-key.html</span>
       </a>
-      <a href="https://ukubona-llc.github.io/assets/html/team.html" class="link-item" style="background:#111;border-color:#333">
-        <span class="link-label">UCU Partnership</span>
-        <span class="link-title">Team — mental health intern</span>
-        <span class="link-url">ukubona-llc.github.io/assets/html/team.html</span>
+      <a href="https://ukubona-llc.github.io/assets/html/team.html" class="link-item" style="background:#0a6660;border-color:#0d8a82">
+        <span class="link-label" style="color:#a0d8c8">UCU Partnership</span>
+        <span class="link-title" style="color:white">Team — mental health intern</span>
+        <span class="link-url" style="color:#5bbdb6">ukubona-llc.github.io/assets/html/team.html</span>
       </a>
-      <a href="https://abikesa.github.io/repos-00/index.html" class="link-item" style="background:#111;border-color:#333">
-        <span class="link-label">Five Suites</span>
-        <span class="link-title">Patients → Government → Civilizational</span>
-        <span class="link-url">abikesa.github.io/repos-00/index.html</span>
+      <a href="https://abikesa.github.io/repos-00/index.html" class="link-item" style="background:#0a6660;border-color:#0d8a82">
+        <span class="link-label" style="color:#a0d8c8">Five Suites</span>
+        <span class="link-title" style="color:white">Patients → Government → Civilizational</span>
+        <span class="link-url" style="color:#5bbdb6">abikesa.github.io/repos-00/index.html</span>
       </a>
-      <a href="https://npa.go.ug/national-development-reports/" class="link-item" style="background:#111;border-color:#333">
-        <span class="link-label">NPA Source Data</span>
-        <span class="link-title">National Development Reports</span>
-        <span class="link-url">npa.go.ug/national-development-reports/</span>
+      <a href="https://abikesa.github.io/repos-00/assets/html/intelligence.html" class="link-item" style="background:#0a6660;border-color:#0d8a82">
+        <span class="link-label" style="color:#a0d8c8">Signal / Noise · Philosophy</span>
+        <span class="link-title" style="color:white">The intellectual foundation</span>
+        <span class="link-url" style="color:#5bbdb6">abikesa.github.io/…/intelligence.html</span>
       </a>
-      <a href="https://abikesa.github.io/repos-00/assets/html/npa-pipeline.html" class="link-item" style="background:#111;border-color:#333">
-        <span class="link-label">Pipeline Architecture</span>
-        <span class="link-title">Distributed ingestion diagram</span>
-        <span class="link-url">abikesa.github.io/…/npa-pipeline.html</span>
+      <a href="https://abikesa.github.io/repos-00/assets/html/npa-pipeline.html" class="link-item" style="background:#0a6660;border-color:#0d8a82">
+        <span class="link-label" style="color:#a0d8c8">Pipeline Architecture</span>
+        <span class="link-title" style="color:white">Distributed ingestion diagram</span>
+        <span class="link-url" style="color:#5bbdb6">abikesa.github.io/…/npa-pipeline.html</span>
       </a>
     </div>
-    <p class="slide-in" style="font-family:'DM Mono',monospace;font-size:11px;color:#444;margin-top:1.5rem;letter-spacing:0.08em;">THE ASK — Give me one dataset and 30 days. I'll return with a live twin. If it works, we talk.</p>
+    <p class="slide-in" style="font-family:'DM Mono',monospace;font-size:11px;color:rgba(255,255,255,0.3);margin-top:1.5rem;letter-spacing:0.08em;">THE ASK — One dataset. 30 days. If the twin stays honest under pressure, we talk.</p>
   </div>
 
 </div><!-- /slides -->
@@ -790,7 +835,7 @@
 <div id="nav">
   <button id="btn-prev">← prev</button>
   <div id="dots"></div>
-  <span id="slide-counter">1 / 11</span>
+  <span id="slide-counter">1 / 12</span>
   <button id="btn-next">next →</button>
 </div>
 
@@ -800,7 +845,6 @@
   const counter = document.getElementById('slide-counter');
   let current = 0;
 
-  // Build dots
   slides.forEach((_, i) => {
     const d = document.createElement('div');
     d.className = 'dot' + (i === 0 ? ' active' : '');
@@ -811,14 +855,12 @@
   function go(n) {
     slides[current].classList.remove('active');
     dotsEl.children[current].classList.remove('active');
-    // Reset animations on leaving slide
     slides[current].querySelectorAll('.slide-in').forEach(el => {
       el.style.animation = 'none';
     });
     current = (n + slides.length) % slides.length;
     slides[current].classList.add('active');
     dotsEl.children[current].classList.add('active');
-    // Re-trigger animations
     slides[current].querySelectorAll('.slide-in').forEach(el => {
       el.style.animation = '';
     });
