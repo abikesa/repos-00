@@ -2,54 +2,66 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Ukubona Sovereign Deployment v1.6</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ukubona Sovereign Vessel v1.8.1</title>
     <script src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
     <style>
-        :root { --bg: #0d1117; --surf: #161b22; --text: #c9d1d9; --y: #ef9f27; --r: #f85149; }
-        body { font-family: sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 2vw; line-height: 1.6; }
-        .full-width { width: 98vw; margin: 0 auto; }
-        .section { background: var(--surf); border: 1px solid #30363d; border-radius: 12px; padding: 40px; margin-bottom: 30px; }
-        pre { background: #010409; padding: 25px; border-radius: 8px; overflow-x: auto; border: 1px solid #30363d; width: 100%; box-sizing: border-box; }
-        code { color: #79c0ff; font-family: "SFMono-Regular", monospace; font-size: 0.9rem; }
-        .math-box { background: #000; padding: 20px; border-radius: 8px; border-left: 4px solid var(--y); font-size: 1.3rem; margin: 20px 0; }
+        :root { --bg: #0d0d0b; --surf: #141412; --text: #e8e6df; --y: #ef9f27; --r: #e24b4a; --dim: #3a3a36; }
+        body { font-family: 'Inter', -apple-system, sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 4vw; line-height: 1.7; }
+        .vessel-container { max-width: 1200px; margin: 0 auto; }
+        header { border-bottom: 1px solid var(--dim); padding-bottom: 30px; margin-bottom: 50px; }
+        h1 { font-weight: 200; font-size: 2.5rem; letter-spacing: -1px; }
+        .calculus-frame { background: #000; border-left: 3px solid var(--y); padding: 30px; border-radius: 0 8px 8px 0; margin: 40px 0; }
+        .deployment-zone { background: var(--surf); border: 1px solid var(--dim); border-radius: 12px; padding: 40px; position: relative; }
+        .label { font-family: monospace; color: var(--y); text-transform: uppercase; font-size: 0.75rem; letter-spacing: 2px; margin-bottom: 10px; display: block; }
+        pre { background: #050505; padding: 25px; border-radius: 8px; overflow-x: auto; border: 1px solid var(--dim); color: #88c0d0; font-size: 0.9rem; }
+        blockquote { border-left: 2px solid var(--dim); margin: 30px 0; padding-left: 20px; font-style: italic; color: #a0a095; }
     </style>
 </head>
 <body>
 
-<div class="full-width">
-    <header style="border-bottom: 1px solid #30363d; padding-bottom: 20px; margin-bottom: 40px;">
-        <h1 style="font-weight: 300;">Ukubona Sovereign Engine <span style="color:var(--y)">v1.6</span></h1>
-        <p>Transitioning from <em>Static Disclosure</em> to <em>Runtime Invariants</em>.</p>
+<div class="vessel-container">
+    <header>
+        <span class="label">Architecture: Ecosystem</span>
+        <h1>Sovereign Engine <span style="color:var(--y)">v1.8.1</span></h1>
+        <p>Transitioning from <em>Static Disclosure</em> to the <em>Execution Gradient</em>.</p>
     </header>
 
-    <div class="section">
+    <section>
         <h2>The Veto Logic ($C_t$)</h2>
-        <p>Ms. Kituuka's research highlights the failure of the "disclosure" model. We move the consent gate from the <strong>paper preface</strong> to the <strong>execution gradient</strong>.</p>
-        <div class="math-box">
-            $$\text{If } \nabla L(\theta) \cdot \text{Veto} > 0, \text{ then } \Delta \theta \to 0$$
+        <p>Correcting the inadequate disclosure models identified in recent clinical research. We implement a <strong>Runtime Invariant</strong> to enforce sovereignty at the data layer.</p>
+        
+        <div class="calculus-frame">
+            <span class="label">Pentadic Calculus</span>
+            $$ \text{If } \langle \nabla L(\theta), \text{Veto} \rangle > 0 \implies \Delta \theta = 0 $$
+            <p style="font-size: 0.9rem; margin-top: 20px; color: #888;">The "Calculus of Will" ensures no optimization step occurs without alignment to the sovereign landscape.</p>
         </div>
-    </div>
+    </section>
 
-    <div class="section">
-        <h2>Uncompressed setup.sh</h2>
-        <p>Run this script to deploy the full 135-district landscape. This is the code that belongs on your server.</p>
+    <section class="deployment-zone">
+        <span class="label">Terminal Payload</span>
+        <h2>setup.sh: The Uncompressed Engine</h2>
+        <p>Run this in your terminal to deploy the 135-district digital twin.</p>
+
 <pre><code>#!/bin/bash
-# Master Setup for 135-District Digital Twin
-read -p "GitHub Username: " USR
-read -p "Project Name: " PRJ
-read -p "GitHub Token: " TKN
+set -e
+# UKUBONA SOVEREIGN DEPLOYMENT v1.8.1
+read -p "GitHub Username: " GH_USER
+read -p "Project Name: " REPO
+read -p "GitHub Token: " GH_TOKEN
 
-mkdir -p "$PRJ" && cd "$PRJ"
+mkdir -p "$REPO" && cd "$REPO"
+git init
 
-# --- BACKEND (main.py) ---
+# --- THE BACKEND ---
 cat > main.py << 'PYEOF'
 from fastapi import FastAPI
 from fastapi.responses import HTMLResponse
 import random
 
-app = FastAPI()
+app = FastAPI(title="Ukubona v1.8.1")
 
-# THE UNCOMPRESSED LANDSCAPE (Uganda 135 Districts)
+# UNCOMPRESSED LANDSCAPE - 135 DISTRICT NODES
 D = [
     {"n":"Abim","lat":3.00,"lon":33.67},{"n":"Adjumani","lat":3.38,"lon":31.79},{"n":"Agago","lat":2.98,"lon":33.38},
     {"n":"Alebtong","lat":2.26,"lon":33.35},{"n":"Amolatar","lat":1.60,"lon":32.80},{"n":"Amudat","lat":1.95,"lon":34.93},
@@ -107,7 +119,7 @@ async def get_data():
     return [{"n":d["n"],"lat":d["lat"],"lon":d["lon"],"loss":round(random.uniform(0.1,0.9),2)} for d in D]
 PYEOF
 
-# --- FRONTEND (index.html) ---
+# --- THE FRONTEND ---
 cat > index.html << 'HTMLEOF'
 <!DOCTYPE html>
 <html>
@@ -116,46 +128,48 @@ cat > index.html << 'HTMLEOF'
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css">
     <style>
         body { margin:0; background:#0d0d0b; color:#e8e6df; display:flex; height:100vh; font-family:sans-serif; }
-        #map { flex:3; border-right:1px solid #30363d; }
-        .side { flex:1; padding:20px; background:#141412; display:flex; flex-direction:column; gap:20px; }
-        .card { background:#000; padding:15px; border:1px solid #30363d; border-radius:8px; }
-        button { background:#e24b4a; color:white; border:none; padding:15px; border-radius:8px; width:100%; cursor:pointer; font-weight:bold; }
+        #map { flex:3; border-right:1px solid #333; }
+        .side { flex:1; padding:30px; background:#141412; }
     </style>
 </head>
 <body>
     <div id="map"></div>
     <div class="side">
-        <div class="card">
-            <h2 style="color:#ef9f27; font-size:0.9rem;">SOVEREIGN TELEMETRY</h2>
-            <div id="inspector">Hover over a district...</div>
-        </div>
-        <div class="card">
-            <button onclick="alert('SOVEREIGN VETO TRIGGERED')">VETO UPDATE</button>
-        </div>
+        <h2>Sovereign Telemetry</h2>
+        <div id="inspector">Hover over a district...</div>
     </div>
     <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js"></script>
     <script>
         const map = L.map('map').setView([1.3733, 32.2903], 7);
         L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
-        async function load() {
+        async function sync() {
             const r = await fetch('/telemetry');
             const data = await r.json();
             data.forEach(d => {
-                const c = L.circleMarker([d.lat, d.lon], {radius:d.loss*10, color:'#ef9f27'}).addTo(map);
+                const c = L.circleMarker([d.lat, d.lon], {radius:d.loss*12, color:'#ef9f27', fillOpacity:0.5}).addTo(map);
                 c.on('mouseover', () => { document.getElementById('inspector').innerHTML = `<b>${d.n}</b><br>Loss: ${d.loss}`; });
             });
         }
-        load();
+        sync();
     </script>
 </body>
 </html>
 HTMLEOF
 
-git init && git add . && git commit -m "Deploy Sovereign Engine v1.6"
-git remote add origin https://$TKN@github.com/$USR/$PRJ.git
-git branch -M main && git push -u origin main --force
+echo "fastapi\nuvicorn[standard]" > requirements.txt
+git add .
+git commit -m "System Sync: v1.8.1 Corrected"
+git remote add origin https://$GH_TOKEN@github.com/$GH_USER/$REPO.git
+git branch -M main
+git push -u origin main --force
 </code></pre>
-    </div>
+    </section>
+
+    <footer>
+        <blockquote>
+            "The model is the landscape." — Ukubona LLC, 2026.
+        </blockquote>
+    </footer>
 </div>
 
 </body>
