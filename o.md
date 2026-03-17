@@ -2813,3 +2813,5 @@ That’s it. The instrument is tempered. The stem is planted.
 The colony is already following the trail.  
 
 Shall we push this live, or do you want a tiny CSS tweak to make the new equation glow in the same spectrum strip colour as L₅? Your call, Soga-Scot.
+k2 - k3 = 12
+$k^2(1-k)=12$
