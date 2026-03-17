@@ -3,19 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Geopolitical Pentadic Analysis | Ukubona OS</title>
+    <title>Ukubona Geopolitical Analysis | 2026</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600&family=Playfair+Display:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
 
+    <!-- MathJax Configuration -->
     <script>
-        MathJax = {
-            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+        window.MathJax = {
+            tex: {
+                inlineMath: [['$', '$'], ['\\(', '\\)']],
+                displayMath: [['$$', '$$'], ['\\[', '\\]']]
+            },
             svg: { fontCache: 'global' }
         };
     </script>
     <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
+    
+    <!-- Chart.js for the Radar -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
     <style>
         :root {
@@ -39,15 +46,15 @@
 
         h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 400; color: #ffffff; margin-top: 2rem; margin-bottom: 1rem; }
         h2 { font-size: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; color: var(--accent); }
-        h3 { font-size: 1.4rem; margin-top: 1.5rem; }
+        h3 { font-size: 1.4rem; margin-top: 1.5rem; color: var(--accent); text-transform: uppercase; letter-spacing: 2px; }
 
         p { margin-bottom: 1.5rem; color: var(--text-secondary); }
         strong { color: var(--text-primary); font-weight: 600; }
         em { color: var(--accent); font-style: italic; }
 
-        .container { max-width: 800px; margin: 0 auto; padding: 4rem 2rem; }
+        .container { max-width: 850px; margin: 0 auto; padding: 4rem 2rem; }
         .header-block { text-align: center; margin-bottom: 4rem; }
-        .header-block h1 { font-size: 3rem; letter-spacing: -0.02em; margin-bottom: 1rem; }
+        .header-block h1 { font-size: 3.5rem; letter-spacing: -0.02em; margin-bottom: 1rem; }
 
         .video-wrapper {
             position: relative; width: 100%; aspect-ratio: 16 / 9;
@@ -56,6 +63,14 @@
             margin: 3rem 0; border: 1px solid var(--border);
         }
         .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        .radar-container {
+            background: var(--bg-surface);
+            padding: 2.5rem; border-radius: 16px;
+            border: 1px solid var(--border);
+            margin: 3.5rem 0; text-align: center;
+        }
+        #radarChart { max-width: 450px; margin: 0 auto; }
 
         .timestamp {
             color: var(--accent);
@@ -71,19 +86,20 @@
         ul li::before { content: '•'; color: var(--accent); position: absolute; left: 0; font-size: 1.5rem; line-height: 1; top: 2px; }
 
         blockquote {
-            margin: 2rem 0; padding: 2rem;
+            margin: 2rem 0; padding: 2.5rem;
             background: var(--bg-surface);
             border-left: 4px solid var(--accent);
             border-radius: 0 8px 8px 0;
             font-family: 'Playfair Display', serif;
-            font-size: 1.2rem;
+            font-size: 1.35rem;
+            font-style: italic;
             color: var(--text-primary);
         }
 
         .fade-in { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
         .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-        .footer { margin-top: 5rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; font-size: 0.9rem; color: #555; text-transform: uppercase; }
+        .footer { margin-top: 5rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; font-size: 0.9rem; color: #555; text-transform: uppercase; letter-spacing: 2px;}
     </style>
 </head>
 <body>
@@ -96,52 +112,59 @@
         </div>
 
         <div class="video-wrapper fade-in">
-            <iframe id="ukubona-player" src="https://www.youtube.com/embed/mEvVOe6e-lI?enablejsapi=1" title="YouTube video player" allowfullscreen></iframe>
+            <iframe id="ukubona-player" src="https://www.youtube.com/embed/mEvVOe6e-lI?enablejsapi=1" title="Strategic Dataset" allowfullscreen></iframe>
+        </div>
+
+        <div class="radar-container fade-in">
+            <h3>Pentadic Sovereignty Radar</h3>
+            <canvas id="radarChart"></canvas>
+            <p style="margin-top: 1.5rem; font-size: 0.85rem;">Visualizing the <strong>Sovereignty Index</strong> coupling across the High North.</p>
         </div>
 
         <div class="content fade-in">
-            <p>This YouTube video of the Nordic and Canadian leaders discussing global security provides a fascinating, high-fidelity dataset to test the <strong>Ukubona Digital Twin OS Pentadic Stack</strong>.</p>
-            <p>While the Ukubona framework is often grounded in clinical medicine and national planning (e.g., patient consent, Ugandan districts), the architecture is designed to scale to the civilizational level. Here is how the geopolitical realities discussed in the press conference map perfectly onto the math, the five layers, and the epistemology of the Ukubona suite.</p>
+            <p>The YouTube press conference involving Nordic and Canadian leaders provides a fascinating dataset to test the <strong>Ukubona Digital Twin OS Pentadic Stack</strong>. While the framework is often grounded in clinical medicine, the architecture scales directly to the civilizational level.</p>
         </div>
 
         <div class="section fade-in">
-            <h2>1. The Pentadic Stack: Five Scales, One Fugue</h2>
-            <p>The leaders' discussion organically traverses all five layers of the Ukubona nested architecture, proving that the composite loss function ($L_{total}$) couples across every scale:</p>
+            <h2>1. The Pentadic Stack: Five Scales</h2>
+            <p>The discussion traverses all five layers of the Ukubona nested architecture, proving that the composite loss function ($L_{total}$) couples across every scale:</p>
             <ul>
                 <li><strong>Layer 5: Civilizational (The 50-Year Horizon)</strong><br>
-                The Danish Prime Minister explicitly recognizes a shift in the civilizational baseline ($C$), noting that the old world order is gone and will likely not return <span class="timestamp" onclick="seekTo(44)">[00:00:44]</span>. In response, the leaders are actively building a new civilizational architecture: a security umbrella across the Arctic <span class="timestamp" onclick="seekTo(289)">[00:04:49]</span> that seamlessly connects Finland's eastern border all the way to Greenland and Canada <span class="timestamp" onclick="seekTo(365)">[00:06:05]</span>.</li>
+                PM Frederiksen explicitly recognizes a shift in the civilizational baseline ($C$), noting that the old world order is gone <span class="timestamp" onclick="seekTo(44)">[00:00:44]</span>. A new civilizational architecture—the Arctic security umbrella—is being deployed <span class="timestamp" onclick="seekTo(365)">[00:06:05]</span>.</li>
                 
                 <li><strong>Layer 4: Government (The Regulatory Gradient)</strong><br>
-                This layer is about policy gradients and collective security. The leaders emphasize that NATO allies have developed strict plans and strategies to deliver on mutual defense <span class="timestamp" onclick="seekTo(326)">[00:05:26]</span>. It is the structural framework that aligns the actions of sovereign states.</li>
+                This layer involves NATO’s structural frameworks that align the actions of sovereign states to deliver on mutual defense <span class="timestamp" onclick="seekTo(326)">[00:05:26]</span>.</li>
                 
                 <li><strong>Layer 3: Enterprise (Supply Chain & Industry Friction)</strong><br>
-                <strong>Prime Minister Mark Carney</strong> (who assumed office in 2025) explicitly steps into Layer 3 when discussing defense procurement. He points out a systemic loss in Canada's industrial pipeline, noting that historically, over 70 cents on every Canadian defense dollar went to the United States <span class="timestamp" onclick="seekTo(381)">[00:06:21]</span>. By shifting to broader partnerships with the Nordic countries, Canada is optimizing its enterprise-level loss function to better build its own industry.</li>
+                <strong>Prime Minister Mark Carney</strong> highlights a systemic loss where 70% of defense spending historically leaked out of the domestic pipeline <span class="timestamp" onclick="seekTo(381)">[00:06:21]</span>. The shift to Nordic partnerships optimizes this enterprise loss function.</li>
                 
                 <li><strong>Layer 2: Household (Kin-Network Shock Propagation)</strong><br>
-                Global conflicts do not stay at Layer 5; they cascade downward. The Norwegian Prime Minister highlights how the Middle East conflict threatens the global economy through the energy situation in the Gulf <span class="timestamp" onclick="seekTo(188)">[00:03:08]</span>. In the Ukubona model, this is the exact mechanism by which civilizational friction externalizes as a financial shock to the Layer 2 Household.</li>
+                PM Støre highlights how Gulf energy volatility propagates directly to household costs <span class="timestamp" onclick="seekTo(188)">[00:03:08]</span>. In Ukubona, this is civilizational friction ($L_5$) externalizing as a financial shock to Layer 2.</li>
                 
                 <li><strong>Layer 1: Personal (Gradient Sovereignty)</strong><br>
-                At the bedrock of the entire geopolitical stack is the right of the individual—or the localized population. The Danish PM praises the Nordic alliance for standing firmly on the values of respecting a people's right to self-determination <span class="timestamp" onclick="seekTo(85)">[00:01:25]</span>. This is the macro-equivalent of patient sovereignty: ensuring the individual node retains control over its own trajectory.</li>
+                The bedrock is self-determination <span class="timestamp" onclick="seekTo(85)">[00:01:25]</span>. This is the macro-equivalent of patient sovereignty: ensuring the individual node retains control over its own trajectory.</li>
             </ul>
         </div>
 
         <div class="section fade-in">
-            <h2>2. The Epistemology: Signal, Structure, and Noise ($L_{total} = C + \Sigma L_i + \epsilon$)</h2>
-            <p>The mathematics of the Ukubona system are spoken aloud by the leaders, particularly when discussing the nature of war and strategic planning.</p>
+            <h2>2. The Epistemology: Signal, Structure, and Noise</h2>
+            <p>The mathematics of the Ukubona system are spoken aloud by the leaders, specifically the formula for total loss:</p>
+            <div style="text-align: center; margin: 2.5rem 0; font-size: 1.8rem; color: #fff;">
+                $$L_{total} = C + \sum L_i + \epsilon$$
+            </div>
             <ul>
-                <li><strong>The Baseline ($C$):</strong> The established territorial integrity of nations like Denmark and Greenland forms the structural constant. It is the history and the bedrock that the leaders are vowing to protect.</li>
-                <li><strong>The Friction ($\Sigma L_i$):</strong> The "unacceptable pressure" previously placed on Greenland by the US <span class="timestamp" onclick="seekTo(69)">[00:01:09]</span> represents a massive divergence in the loss function. The US was attempting to optimize for its own geopolitical metrics, violently misaligning with the localized values of the Greenlandic people.</li>
-                <li><strong>The Macduff Term ($\epsilon$):</strong> The most profound Ukubona insight in the video comes from the Norwegian Prime Minister regarding the Middle East conflict. He perfectly articulates the danger of the $\epsilon$ term (irreducible contingency/noise). He warns that the trajectory of the conflict is unclear because initiating wars rarely follows a predicted script <span class="timestamp" onclick="seekTo(214)">[00:03:34]</span>. War is the ultimate stochastic shock—a catastrophic release of accumulated $\epsilon$ that defies any predictive model.</li>
+                <li><strong>The Baseline ($C$):</strong> Territorial integrity forms the structural constant.</li>
+                <li><strong>The Friction ($\sum L_i$):</strong> The "unacceptable pressure" on Greenland <span class="timestamp" onclick="seekTo(69)">[00:01:09]</span> represents a divergence where external weights misalign with localized values.</li>
+                <li><strong>The Macduff Term ($\epsilon$):</strong> PM Støre perfectly articulates the irreducible noise. War rarely follows a script <span class="timestamp" onclick="seekTo(214)">[00:03:34]</span>; it is the catastrophic release of accumulated $\epsilon$.</li>
             </ul>
         </div>
 
         <div class="section fade-in">
-            <h2>3. Mis-Specified Consent at the Geopolitical Scale</h2>
+            <h2>3. Mis-Specified Consent at Scale</h2>
             <blockquote>
                 "No irreversible update to the body ($\theta'$) without verified alignment of the composite loss ($L_{total}$)."
             </blockquote>
-            <p>The Ukubona clinical roundtable argues this fundamental law. In this video, we see this exact ethical constraint applied to international law. When a nation initiates an unprovoked war (as referenced with Ukraine) or attempts to bypass a territory's sovereignty (as with Greenland), it is attempting to force an irreversible update ($-\eta\nabla L$) on a sovereign body without shared calibration or consent.</p>
-            <p>The united front presented by these Nordic and Canadian leaders is a geopolitical <strong>Consent Compiler</strong>. They are banding together to ensure that no unilateral, uncalibrated updates can be forced upon the Arctic region, demanding that the "weights" of the local populations dictate the future of the landscape.</p>
+            <p>When a nation bypasses sovereignty, it attempts to force an irreversible update ($-\eta\nabla L$) on a sovereign body without shared calibration. These leaders represent a <strong>Consent Compiler</strong>, ensuring the "weights" of local populations dictate the future.</p>
         </div>
 
         <div class="footer fade-in">
@@ -151,22 +174,48 @@
     </div>
 
     <script>
-        // Interactive Timestamp Logic
         function seekTo(seconds) {
             const iframe = document.getElementById('ukubona-player');
             iframe.src = `https://www.youtube.com/embed/mEvVOe6e-lI?start=${seconds}&autoplay=1&enablejsapi=1`;
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
+        const ctx = document.getElementById('radarChart').getContext('2d');
+        new Chart(ctx, {
+            type: 'radar',
+            data: {
+                labels: ['L5: Civilizational', 'L4: Government', 'L3: Enterprise', 'L2: Household', 'L1: Personal'],
+                datasets: [{
+                    label: 'Sovereignty Index',
+                    data: [95, 88, 65, 42, 90],
+                    backgroundColor: 'rgba(212, 163, 115, 0.2)',
+                    borderColor: '#d4a373',
+                    pointBackgroundColor: '#d4a373',
+                    pointBorderColor: '#fff',
+                    borderWidth: 2
+                }]
+            },
+            options: {
+                scales: {
+                    r: {
+                        angleLines: { color: 'rgba(255, 255, 255, 0.1)' },
+                        grid: { color: 'rgba(255, 255, 255, 0.1)' },
+                        pointLabels: { color: '#a0a0a8', font: { size: 12, family: 'Inter' } },
+                        ticks: { display: false },
+                        suggestedMin: 0,
+                        suggestedMax: 100
+                    }
+                },
+                plugins: { legend: { display: false } }
+            }
+        });
+
         document.addEventListener('DOMContentLoaded', () => {
             const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
-                    if (entry.isIntersecting) {
-                        entry.target.classList.add('visible');
-                    }
+                    if (entry.isIntersecting) entry.target.classList.add('visible');
                 });
             }, { threshold: 0.1 });
-
             document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
         });
     </script>
