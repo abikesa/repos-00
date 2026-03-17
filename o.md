@@ -1,3 +1,5 @@
+- Too valuable to discard: wait for Claude to return to form before discard
+
 create an .html document that transcribes this stuff 95% VERBATIM (allowing 5% liberties), using state-of-the art aesthetics (Claude, don't get stuck reading frontend design skill. If page not accessible, try next..):
 
 Round Table
