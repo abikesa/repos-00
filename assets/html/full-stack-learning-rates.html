@@ -405,11 +405,6 @@
   .code-block {
     background: var(--math-bg);
     color: #ccc;
-    padding: 24px 28px;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 12px;
-    line-height: 1.65;
-    overflow-x: auto;
     margin: 28px 0;
     max-width: 100%;
     border-top: 1px solid #333;
@@ -417,17 +412,29 @@
     position: relative;
   }
   .code-block .lang-badge {
-    position: absolute;
-    top: 8px; right: 12px;
+    display: block;
+    padding: 8px 28px 0;
+    font-family: 'JetBrains Mono', monospace;
     font-size: 9px;
     letter-spacing: 0.1em;
     color: #555;
     text-transform: uppercase;
+    text-align: right;
+  }
+  .code-block pre {
+    margin: 0;
+    padding: 20px 28px 28px;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 12.5px;
+    line-height: 1.72;
+    overflow-x: auto;
+    white-space: pre;
+    tab-size: 4;
   }
   .code-block .kw { color: #c8860a; }
   .code-block .fn { color: #8bbccc; }
   .code-block .st { color: #8aaa78; }
-  .code-block .cm { color: #555; font-style: italic; }
+  .code-block .cm { color: #666; font-style: italic; }
   .code-block .nm { color: #dda; }
 
   /* ── DIALOGUE THREAD ── */
@@ -1013,26 +1020,28 @@
 
   <div class="code-block">
     <span class="lang-badge">Python · NumPy</span>
-<span class="kw">import</span> numpy <span class="kw">as</span> np
+    <pre><span class="kw">import</span> numpy <span class="kw">as</span> np
+
 
 <span class="kw">class</span> <span class="fn">PentadicToy</span>:
+
     <span class="kw">def</span> <span class="fn">__init__</span>(self, dim=<span class="nm">10</span>, coupling=<span class="nm">0.55</span>, noise_scale=<span class="nm">0.07</span>):
-        self.dim = dim
-        self.scales = <span class="nm">5</span>
-        self.coupling = coupling
-        <span class="cm"># increasing curvature per scale (toy: L₄ sharpest)</span>
+        self.dim        = dim
+        self.scales     = <span class="nm">5</span>
+        self.coupling   = coupling
+        <span class="cm"># increasing curvature per scale  (toy: L₄ sharpest)</span>
         self.eigenvalues = [
-            np.sort(np.random.uniform(<span class="nm">0.08</span>, <span class="nm">0.6</span> + <span class="nm">2.8</span>*i/<span class="nm">4</span>, dim))
+            np.sort(np.random.uniform(<span class="nm">0.08</span>, <span class="nm">0.6</span> + <span class="nm">2.8</span> * i / <span class="nm">4</span>, dim))
             <span class="kw">for</span> i <span class="kw">in</span> range(<span class="nm">5</span>)
         ]
-        self.Qs = [np.linalg.qr(np.random.randn(dim, dim))[<span class="nm">0</span>] <span class="kw">for</span> _ <span class="kw">in</span> range(<span class="nm">5</span>)]
-        self.mins = [np.random.randn(dim) * <span class="nm">0.4</span> <span class="kw">for</span> _ <span class="kw">in</span> range(<span class="nm">5</span>)]
-        self.theta = [np.random.randn(dim) * <span class="nm">0.7</span> <span class="kw">for</span> _ <span class="kw">in</span> range(<span class="nm">5</span>)]
+        self.Qs   = [np.linalg.qr(np.random.randn(dim, dim))[<span class="nm">0</span>] <span class="kw">for</span> _ <span class="kw">in</span> range(<span class="nm">5</span>)]
+        self.mins = [np.random.randn(dim) * <span class="nm">0.4</span>                   <span class="kw">for</span> _ <span class="kw">in</span> range(<span class="nm">5</span>)]
+        self.theta = [np.random.randn(dim) * <span class="nm">0.7</span>                  <span class="kw">for</span> _ <span class="kw">in</span> range(<span class="nm">5</span>)]
 
     <span class="kw">def</span> <span class="fn">grad</span>(self, k):
-        diff = self.theta[k] - self.mins[k]
+        diff  = self.theta[k] - self.mins[k]
         local = self.Qs[k] @ (np.diag(self.eigenvalues[k]) @ (self.Qs[k].T @ diff))
-        coup = np.zeros(self.dim)
+        coup  = np.zeros(self.dim)
         <span class="kw">for</span> j <span class="kw">in</span> range(self.scales):
             <span class="kw">if</span> j != k:
                 coup += <span class="nm">2</span> * self.coupling * (self.theta[k] - self.theta[j])
@@ -1042,9 +1051,11 @@
         tot = <span class="nm">0</span>
         <span class="kw">for</span> k <span class="kw">in</span> range(<span class="nm">5</span>):
             diff = self.theta[k] - self.mins[k]
-            loc = <span class="nm">0.5</span> * diff @ (self.Qs[k] @ (np.diag(self.eigenvalues[k]) @ (self.Qs[k].T @ diff)))
+            loc  = <span class="nm">0.5</span> * diff @ (
+                self.Qs[k] @ (np.diag(self.eigenvalues[k]) @ (self.Qs[k].T @ diff))
+            )
             coup = self.coupling * sum(
-                np.sum((self.theta[k] - self.theta[j])**<span class="nm">2</span>)
+                np.sum((self.theta[k] - self.theta[j]) ** <span class="nm">2</span>)
                 <span class="kw">for</span> j <span class="kw">in</span> range(<span class="nm">5</span>) <span class="kw">if</span> j != k
             )
             tot += loc + <span class="nm">0.5</span> * coup
@@ -1059,23 +1070,25 @@
                 update = momentum_bufs[k]
             <span class="kw">else</span>:
                 update = eta_list[k] * g
-            <span class="cm"># rare unlucky event (1.2% prob) — simulates data shock</span>
-            <span class="kw">if</span> np.random.rand() < <span class="nm">0.012</span>:
+            <span class="cm"># rare unlucky event (1.2% prob) — simulates data shock / bad batch</span>
+            <span class="kw">if</span> np.random.rand() &lt; <span class="nm">0.012</span>:
                 update += <span class="nm">2.8</span> * np.random.randn(self.dim)
             self.theta[k] -= update
 
-<span class="cm"># Usage — three regimes</span>
+
+<span class="cm"># ── Usage: three regimes ─────────────────────────────────────────────────</span>
+
 np.random.seed(<span class="nm">42</span>)
 model = <span class="fn">PentadicToy</span>()
-etas = [<span class="nm">0.20</span> * (<span class="nm">0.75</span>)**k <span class="kw">for</span> k <span class="kw">in</span> range(<span class="nm">5</span>)]  <span class="cm"># decreasing with scale</span>
+etas  = [<span class="nm">0.20</span> * (<span class="nm">0.75</span>) ** k <span class="kw">for</span> k <span class="kw">in</span> range(<span class="nm">5</span>)]  <span class="cm"># η decreases with scale</span>
 
 losses = [model.loss()]
 <span class="kw">for</span> t <span class="kw">in</span> range(<span class="nm">1200</span>):
     model.step(etas)
     losses.append(model.loss())
 
-<span class="fn">print</span>(<span class="st">"Final loss:"</span>, losses[-<span class="nm">1</span>])
-<span class="fn">print</span>(<span class="st">"Max / median:"</span>, max(losses), np.median(losses))
+<span class="fn">print</span>(<span class="st">"Final loss :"</span>, losses[<span class="nm">-1</span>])
+<span class="fn">print</span>(<span class="st">"Max / med  :"</span>, <span class="fn">max</span>(losses), np.median(losses))</pre>
   </div>
 </section>
 
@@ -1112,17 +1125,20 @@ losses = [model.loss()]
 
   <div class="code-block">
     <span class="lang-badge">Python · NumPy</span>
-<span class="kw">class</span> <span class="fn">PentadicAdaptiveToy</span>(<span class="fn">PentadicToy</span>):
+    <pre><span class="kw">class</span> <span class="fn">PentadicAdaptiveToy</span>(<span class="fn">PentadicToy</span>):
+
     <span class="kw">def</span> <span class="fn">__init__</span>(self, **kwargs):
         super().__init__(**kwargs)
-        self.eps = <span class="nm">1e-8</span>
-        self.rms_accum = [np.zeros(self.dim) <span class="kw">for</span> _ <span class="kw">in</span> range(<span class="nm">5</span>)]
-        self.scale_accum = np.zeros(<span class="nm">5</span>)
-        self.scale_eta = np.array([<span class="nm">0.20</span> * (<span class="nm">0.75</span>)**k <span class="kw">for</span> k <span class="kw">in</span> range(<span class="nm">5</span>)])
+        self.eps          = <span class="nm">1e-8</span>
+        self.rms_accum    = [np.zeros(self.dim) <span class="kw">for</span> _ <span class="kw">in</span> range(<span class="nm">5</span>)]
+        self.scale_accum  = np.zeros(<span class="nm">5</span>)
+        self.scale_eta    = np.array([<span class="nm">0.20</span> * (<span class="nm">0.75</span>) ** k <span class="kw">for</span> k <span class="kw">in</span> range(<span class="nm">5</span>)])
         self.loss_history = []
 
     <span class="kw">def</span> <span class="fn">rmsprop_update</span>(self, k, g, beta2=<span class="nm">0.99</span>, eta_base=<span class="nm">0.20</span>):
-        self.rms_accum[k] = beta2 * self.rms_accum[k] + (<span class="nm">1</span> - beta2) * g**<span class="nm">2</span>
+        self.rms_accum[k] = (
+            beta2 * self.rms_accum[k] + (<span class="nm">1</span> - beta2) * g ** <span class="nm">2</span>
+        )
         rms = np.sqrt(self.rms_accum[k] + self.eps)
         <span class="kw">return</span> (eta_base / rms) * g
 
@@ -1131,24 +1147,49 @@ losses = [model.loss()]
 
         <span class="kw">for</span> k <span class="kw">in</span> range(<span class="nm">5</span>):
             g = grads[k]
+
             <span class="kw">if</span> mode == <span class="st">'rmsprop'</span>:
                 update = self.rmsprop_update(k, g, eta_base=eta_base)
-            <span class="kw">elif</span> mode == <span class="st">'eos'</span>:
-                <span class="cm"># EoS: shrink if curvature proxy exceeds threshold</span>
-                shrink = <span class="nm">0.4</span> <span class="kw">if</span> (
-                    len(self.loss_history) >= <span class="nm">2</span> <span class="kw">and</span>
-                    self.loss_history[-<span class="nm">1</span>] > <span class="nm">1.12</span> * self.loss_history[-<span class="nm">2</span>]
-                ) <span class="kw">else</span> <span class="nm">1.0</span>
-                update = shrink * eta_base * (<span class="nm">0.75</span>)**k * g
-            <span class="kw">else</span>:
-                update = eta_base * (<span class="nm">0.75</span>)**k * g
 
-            kick = <span class="nm">2.8</span> * np.random.randn(self.dim) <span class="kw">if</span> np.random.rand() < <span class="nm">0.012</span> <span class="kw">else</span> <span class="nm">0</span>
+            <span class="kw">elif</span> mode == <span class="st">'eos'</span>:
+                <span class="cm"># EoS circuit-breaker: shrink η if loss spiked last step</span>
+                spiked = (
+                    len(self.loss_history) >= <span class="nm">2</span>
+                    <span class="kw">and</span> self.loss_history[<span class="nm">-1</span>] &gt; <span class="nm">1.12</span> * self.loss_history[<span class="nm">-2</span>]
+                )
+                shrink = <span class="nm">0.4</span> <span class="kw">if</span> spiked <span class="kw">else</span> <span class="nm">1.0</span>
+                update = shrink * eta_base * (<span class="nm">0.75</span>) ** k * g
+
+            <span class="kw">else</span>:
+                <span class="cm"># fixed aggressive baseline</span>
+                update = eta_base * (<span class="nm">0.75</span>) ** k * g
+
+            <span class="cm"># rare unlucky event (1.2% prob)</span>
+            kick = (
+                <span class="nm">2.8</span> * np.random.randn(self.dim)
+                <span class="kw">if</span> np.random.rand() &lt; <span class="nm">0.012</span>
+                <span class="kw">else</span> <span class="nm">0</span>
+            )
             self.theta[k] -= update + kick
 
         current = self.loss()
         self.loss_history.append(current)
-        <span class="kw">if</span> len(self.loss_history) > <span class="nm">5</span>: self.loss_history.pop(<span class="nm">0</span>)
+        <span class="kw">if</span> len(self.loss_history) &gt; <span class="nm">5</span>:
+            self.loss_history.pop(<span class="nm">0</span>)
+
+
+<span class="cm"># ── Usage ────────────────────────────────────────────────────────────────</span>
+
+np.random.seed(<span class="nm">42</span>)
+model = <span class="fn">PentadicAdaptiveToy</span>()
+
+losses_rms = [model.loss()]
+<span class="kw">for</span> t <span class="kw">in</span> range(<span class="nm">1200</span>):
+    model.adaptive_step(mode=<span class="st">'rmsprop'</span>, eta_base=<span class="nm">0.22</span>)
+    losses_rms.append(model.loss())
+
+<span class="fn">print</span>(<span class="st">"RMSProp  final loss :"</span>, losses_rms[<span class="nm">-1</span>])
+<span class="fn">print</span>(<span class="st">"RMSProp  max loss   :"</span>, <span class="fn">max</span>(losses_rms))</pre>
   </div>
 
   <h3><span class="num">§6.2</span> Comparative Performance</h3>
@@ -1321,13 +1362,6 @@ losses = [model.loss()]
       <h4>Ukubona</h4>
       <a href="https://abikesa.github.io/repos-00/assets/html/landing-page.html">Landing Page →</a><br>
       <a href="https://uuujf.github.io/instability/slides/optimization.pdf">Tutorial PDF →</a><br>
-      <a href="mailto:hello@ukubona.io">hello@ukubona.io</a><br><br>
+      <a href="/cdn-cgi/l/email-protection#a1c9c4cdcdcee1d4cad4c3cecfc08fc8ce"><span class="__cf_email__" data-cfemail="563e333a3a3916233d2334393837783f39">[email&#160;protected]</span></a><br><br>
       Ukubona — to see · Kampala · Baltimore<br>
-      Personal · Household · Enterprise · Government · Civilizational<br>
-      MD · MPH · PhDc · Johns Hopkins · 20 years
-    </div>
-  </div>
-</footer>
-
-</body>
-</html>
+      Personal · Household · Enterprise · Gove
