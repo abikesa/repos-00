@@ -11,17 +11,11 @@
 
     <script>
         MathJax = {
-            tex: {
-                inlineMath: [['$', '$'], ['\\(', '\\)']]
-            },
-            svg: {
-                fontCache: 'global'
-            }
+            tex: { inlineMath: [['$', '$'], ['\\(', '\\)']] },
+            svg: { fontCache: 'global' }
         };
     </script>
-    <script type="text/javascript" id="MathJax-script" async
-      src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js">
-    </script>
+    <script type="text/javascript" id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-svg.js"></script>
 
     <style>
         :root {
@@ -30,13 +24,12 @@
             --bg-surface-hover: #1a1a20;
             --text-primary: #e2e2e6;
             --text-secondary: #a0a0a8;
-            --accent: #d4a373; /* Laterite/gold accent */
+            --accent: #d4a373; 
             --border: #2a2a32;
         }
 
         body {
-            margin: 0;
-            padding: 0;
+            margin: 0; padding: 0;
             background-color: var(--bg-base);
             color: var(--text-primary);
             font-family: 'Inter', sans-serif;
@@ -44,152 +37,53 @@
             overflow-x: hidden;
         }
 
-        h1, h2, h3 {
-            font-family: 'Playfair Display', serif;
-            font-weight: 400;
-            color: #ffffff;
-            margin-top: 2rem;
-            margin-bottom: 1rem;
-        }
+        h1, h2, h3 { font-family: 'Playfair Display', serif; font-weight: 400; color: #ffffff; margin-top: 2rem; margin-bottom: 1rem; }
+        h2 { font-size: 2rem; border-bottom: 1px solid var(--border); padding-bottom: 0.5rem; color: var(--accent); }
+        h3 { font-size: 1.4rem; margin-top: 1.5rem; }
 
-        h2 {
-            font-size: 2rem;
-            border-bottom: 1px solid var(--border);
-            padding-bottom: 0.5rem;
+        p { margin-bottom: 1.5rem; color: var(--text-secondary); }
+        strong { color: var(--text-primary); font-weight: 600; }
+        em { color: var(--accent); font-style: italic; }
+
+        .container { max-width: 800px; margin: 0 auto; padding: 4rem 2rem; }
+        .header-block { text-align: center; margin-bottom: 4rem; }
+        .header-block h1 { font-size: 3rem; letter-spacing: -0.02em; margin-bottom: 1rem; }
+
+        .video-wrapper {
+            position: relative; width: 100%; aspect-ratio: 16 / 9;
+            background-color: #000; border-radius: 12px;
+            overflow: hidden; box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+            margin: 3rem 0; border: 1px solid var(--border);
+        }
+        .video-wrapper iframe { position: absolute; top: 0; left: 0; width: 100%; height: 100%; border: 0; }
+
+        .timestamp {
             color: var(--accent);
-        }
-
-        h3 {
-            font-size: 1.4rem;
-            margin-top: 1.5rem;
-        }
-
-        p {
-            margin-bottom: 1.5rem;
-            color: var(--text-secondary);
-        }
-
-        strong {
-            color: var(--text-primary);
+            cursor: pointer;
+            text-decoration: underline;
+            font-family: monospace;
             font-weight: 600;
         }
+        .timestamp:hover { color: #fff; background: rgba(212, 163, 115, 0.2); }
 
-        em {
-            color: var(--accent);
-            font-style: italic;
-        }
+        ul { list-style: none; padding-left: 0; }
+        ul li { margin-bottom: 1.5rem; padding-left: 1.5rem; position: relative; color: var(--text-secondary); }
+        ul li::before { content: '•'; color: var(--accent); position: absolute; left: 0; font-size: 1.5rem; line-height: 1; top: 2px; }
 
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 4rem 2rem;
-        }
-
-        .header-block {
-            text-align: center;
-            margin-bottom: 4rem;
-        }
-
-        .header-block h1 {
-            font-size: 3rem;
-            letter-spacing: -0.02em;
-            margin-bottom: 1rem;
-        }
-
-        .header-block p {
-            font-size: 1.1rem;
-            max-width: 600px;
-            margin: 0 auto;
-        }
-
-        /* Video Embed */
-        .video-wrapper {
-            position: relative;
-            width: 100%;
-            aspect-ratio: 16 / 9;
-            background-color: #000;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 20px 40px rgba(0,0,0,0.6);
-            margin: 3rem 0;
-            border: 1px solid var(--border);
-            transition: transform 0.3s ease, box-shadow 0.3s ease;
-        }
-
-        .video-wrapper:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 25px 50px rgba(212, 163, 115, 0.1);
-            border-color: #3a3a45;
-        }
-
-        .video-wrapper iframe {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            border: 0;
-        }
-
-        /* List Styling */
-        ul {
-            list-style: none;
-            padding-left: 0;
-        }
-
-        ul li {
-            margin-bottom: 1.5rem;
-            padding-left: 1.5rem;
-            position: relative;
-            color: var(--text-secondary);
-        }
-
-        ul li::before {
-            content: '•';
-            color: var(--accent);
-            position: absolute;
-            left: 0;
-            font-size: 1.5rem;
-            line-height: 1;
-            top: 2px;
-        }
-
-        /* Blockquote Styling */
         blockquote {
-            margin: 2rem 0;
-            padding: 2rem;
+            margin: 2rem 0; padding: 2rem;
             background: var(--bg-surface);
             border-left: 4px solid var(--accent);
             border-radius: 0 8px 8px 0;
             font-family: 'Playfair Display', serif;
             font-size: 1.2rem;
             color: var(--text-primary);
-            box-shadow: inset 0 0 20px rgba(0,0,0,0.2);
         }
 
-        /* Animation Classes */
-        .fade-in {
-            opacity: 0;
-            transform: translateY(30px);
-            transition: opacity 0.8s ease-out, transform 0.8s ease-out;
-        }
+        .fade-in { opacity: 0; transform: translateY(30px); transition: 0.8s ease-out; }
+        .fade-in.visible { opacity: 1; transform: translateY(0); }
 
-        .fade-in.visible {
-            opacity: 1;
-            transform: translateY(0);
-        }
-
-        /* Footer */
-        .footer {
-            margin-top: 5rem;
-            padding-top: 2rem;
-            border-top: 1px solid var(--border);
-            text-align: center;
-            font-size: 0.9rem;
-            color: #555;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-        }
+        .footer { margin-top: 5rem; padding-top: 2rem; border-top: 1px solid var(--border); text-align: center; font-size: 0.9rem; color: #555; text-transform: uppercase; }
     </style>
 </head>
 <body>
@@ -198,11 +92,11 @@
         
         <div class="header-block fade-in">
             <h1>Dancing in Geopolitical Chains</h1>
-            <p>Testing the Ukubona Digital Twin OS Pentadic Stack against high-fidelity global security data.</p>
+            <p>Testing the Ukubona Digital Twin OS Pentadic Stack against high-fidelity global security data (March 2026 Update).</p>
         </div>
 
         <div class="video-wrapper fade-in">
-            <iframe src="https://www.youtube.com/embed/mEvVOe6e-lI" title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+            <iframe id="ukubona-player" src="https://www.youtube.com/embed/mEvVOe6e-lI?enablejsapi=1" title="YouTube video player" allowfullscreen></iframe>
         </div>
 
         <div class="content fade-in">
@@ -215,19 +109,19 @@
             <p>The leaders' discussion organically traverses all five layers of the Ukubona nested architecture, proving that the composite loss function ($L_{total}$) couples across every scale:</p>
             <ul>
                 <li><strong>Layer 5: Civilizational (The 50-Year Horizon)</strong><br>
-                The Danish Prime Minister explicitly recognizes a shift in the civilizational baseline ($C$), noting that the old world order is gone and will likely not return [00:00:44]. In response, the leaders are actively building a new civilizational architecture: a security umbrella across the Arctic [00:04:49] that seamlessly connects Finland's eastern border all the way to Greenland and Canada [00:06:05].</li>
+                The Danish Prime Minister explicitly recognizes a shift in the civilizational baseline ($C$), noting that the old world order is gone and will likely not return <span class="timestamp" onclick="seekTo(44)">[00:00:44]</span>. In response, the leaders are actively building a new civilizational architecture: a security umbrella across the Arctic <span class="timestamp" onclick="seekTo(289)">[00:04:49]</span> that seamlessly connects Finland's eastern border all the way to Greenland and Canada <span class="timestamp" onclick="seekTo(365)">[00:06:05]</span>.</li>
                 
                 <li><strong>Layer 4: Government (The Regulatory Gradient)</strong><br>
-                This layer is about policy gradients and collective security. The leaders emphasize that NATO allies have developed strict plans and strategies to deliver on mutual defense [00:05:26]. It is the structural framework that aligns the actions of sovereign states.</li>
+                This layer is about policy gradients and collective security. The leaders emphasize that NATO allies have developed strict plans and strategies to deliver on mutual defense <span class="timestamp" onclick="seekTo(326)">[00:05:26]</span>. It is the structural framework that aligns the actions of sovereign states.</li>
                 
                 <li><strong>Layer 3: Enterprise (Supply Chain & Industry Friction)</strong><br>
-                Canadian Prime Minister Justin Trudeau explicitly steps into Layer 3 when discussing defense procurement. He points out a systemic loss in Canada's industrial pipeline, noting that historically, over 70 cents on every Canadian defense dollar went to the United States [00:06:21]. By shifting to broader partnerships with the Nordic countries, Canada is optimizing its enterprise-level loss function to better build its own industry.</li>
+                <strong>Prime Minister Mark Carney</strong> (who assumed office in 2025) explicitly steps into Layer 3 when discussing defense procurement. He points out a systemic loss in Canada's industrial pipeline, noting that historically, over 70 cents on every Canadian defense dollar went to the United States <span class="timestamp" onclick="seekTo(381)">[00:06:21]</span>. By shifting to broader partnerships with the Nordic countries, Canada is optimizing its enterprise-level loss function to better build its own industry.</li>
                 
                 <li><strong>Layer 2: Household (Kin-Network Shock Propagation)</strong><br>
-                Global conflicts do not stay at Layer 5; they cascade downward. The Norwegian Prime Minister highlights how the Middle East conflict threatens the global economy through the energy situation in the Gulf [00:03:08]. In the Ukubona model, this is the exact mechanism by which civilizational friction externalizes as a financial shock to the Layer 2 Household.</li>
+                Global conflicts do not stay at Layer 5; they cascade downward. The Norwegian Prime Minister highlights how the Middle East conflict threatens the global economy through the energy situation in the Gulf <span class="timestamp" onclick="seekTo(188)">[00:03:08]</span>. In the Ukubona model, this is the exact mechanism by which civilizational friction externalizes as a financial shock to the Layer 2 Household.</li>
                 
                 <li><strong>Layer 1: Personal (Gradient Sovereignty)</strong><br>
-                At the bedrock of the entire geopolitical stack is the right of the individual—or the localized population. The Danish PM praises the Nordic alliance for standing firmly on the values of respecting a people's right to self-determination [00:01:25]. This is the macro-equivalent of patient sovereignty: ensuring the individual node retains control over its own trajectory.</li>
+                At the bedrock of the entire geopolitical stack is the right of the individual—or the localized population. The Danish PM praises the Nordic alliance for standing firmly on the values of respecting a people's right to self-determination <span class="timestamp" onclick="seekTo(85)">[00:01:25]</span>. This is the macro-equivalent of patient sovereignty: ensuring the individual node retains control over its own trajectory.</li>
             </ul>
         </div>
 
@@ -236,8 +130,8 @@
             <p>The mathematics of the Ukubona system are spoken aloud by the leaders, particularly when discussing the nature of war and strategic planning.</p>
             <ul>
                 <li><strong>The Baseline ($C$):</strong> The established territorial integrity of nations like Denmark and Greenland forms the structural constant. It is the history and the bedrock that the leaders are vowing to protect.</li>
-                <li><strong>The Friction ($\Sigma L_i$):</strong> The "unacceptable pressure" previously placed on Greenland by the US [00:01:09] represents a massive divergence in the loss function. The US was attempting to optimize for its own geopolitical metrics, violently misaligning with the localized values of the Greenlandic people.</li>
-                <li><strong>The Macduff Term ($\epsilon$):</strong> The most profound Ukubona insight in the video comes from the Norwegian Prime Minister regarding the Middle East conflict. He perfectly articulates the danger of the $\epsilon$ term (irreducible contingency/noise). He warns that the trajectory of the conflict is unclear because initiating wars rarely follows a predicted script [00:03:34]. War is the ultimate stochastic shock—a catastrophic release of accumulated $\epsilon$ that defies any predictive model.</li>
+                <li><strong>The Friction ($\Sigma L_i$):</strong> The "unacceptable pressure" previously placed on Greenland by the US <span class="timestamp" onclick="seekTo(69)">[00:01:09]</span> represents a massive divergence in the loss function. The US was attempting to optimize for its own geopolitical metrics, violently misaligning with the localized values of the Greenlandic people.</li>
+                <li><strong>The Macduff Term ($\epsilon$):</strong> The most profound Ukubona insight in the video comes from the Norwegian Prime Minister regarding the Middle East conflict. He perfectly articulates the danger of the $\epsilon$ term (irreducible contingency/noise). He warns that the trajectory of the conflict is unclear because initiating wars rarely follows a predicted script <span class="timestamp" onclick="seekTo(214)">[00:03:34]</span>. War is the ultimate stochastic shock—a catastrophic release of accumulated $\epsilon$ that defies any predictive model.</li>
             </ul>
         </div>
 
@@ -251,31 +145,29 @@
         </div>
 
         <div class="footer fade-in">
-            Ukubona LLC • Signal · Structure · Noise
+            Ukubona LLC • Signal · Structure · Noise • March 2026
         </div>
 
     </div>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            const observerOptions = {
-                root: null,
-                rootMargin: '0px',
-                threshold: 0.15
-            };
+        // Interactive Timestamp Logic
+        function seekTo(seconds) {
+            const iframe = document.getElementById('ukubona-player');
+            iframe.src = `https://www.youtube.com/embed/mEvVOe6e-lI?start=${seconds}&autoplay=1&enablejsapi=1`;
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
 
-            const observer = new IntersectionObserver((entries, observer) => {
+        document.addEventListener('DOMContentLoaded', () => {
+            const observer = new IntersectionObserver((entries) => {
                 entries.forEach(entry => {
                     if (entry.isIntersecting) {
                         entry.target.classList.add('visible');
-                        observer.unobserve(entry.target);
                     }
                 });
-            }, observerOptions);
+            }, { threshold: 0.1 });
 
-            document.querySelectorAll('.fade-in').forEach((element) => {
-                observer.observe(element);
-            });
+            document.querySelectorAll('.fade-in').forEach((el) => observer.observe(el));
         });
     </script>
 </body>
