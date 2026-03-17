@@ -28,6 +28,7 @@
             --accent-o: #56d364;
             --accent-a: #d2a8ff;
             --accent-x: #e3b341;
+            --accent-system: #a371f7;
         }
 
         body {
@@ -66,6 +67,26 @@
             display: flex;
             gap: 15px;
             flex-wrap: wrap;
+        }
+
+        .framing-block {
+            background: linear-gradient(145deg, rgba(22, 27, 34, 0.8), rgba(13, 17, 23, 1));
+            border-left: 4px solid var(--accent-system);
+            border-right: 1px solid var(--border-color);
+            border-top: 1px solid var(--border-color);
+            border-bottom: 1px solid var(--border-color);
+            border-radius: 8px;
+            padding: 30px;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+        }
+
+        .framing-block h2 {
+            color: var(--accent-system);
+            margin-top: 0;
+            font-size: 1.4rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
 
         .speaker-block {
@@ -161,6 +182,13 @@
             <span><strong>Participants:</strong> Google, OpenAI, Anthropic, xAI</span>
         </div>
     </header>
+
+    <div class="framing-block">
+        <h2>Preface: The Collapse of the Paper Interface</h2>
+        <p>The architecture of human care and civilizational planning is suffering from a catastrophic loss of fidelity. Historically, the interface between a sovereign human node and a systemic intervention (medical, governmental, or infrastructural) has been negotiated through "informed consent." Yet, as currently practiced, this consent is a lossy compression algorithm—a static paper waiver deployed in chaotic environments, designed primarily to protect institutional liability rather than map the uncompressed dimensions of a patient's will.</p>
+        <p>When a system forces an irreversible update ($ \theta' $) onto a body or a community without explicitly calibrating against the bedrock of lived experience, the loss functions violently misalign. The institution optimizes for throughput; the human optimizes for dignity. The resulting divergence ($ \epsilon $) cascades downward, externalizing immense trauma and friction onto the kin network and local support systems.</p>
+        <p>To build Zero-Loss Digital Twins, we must abandon metaphorical approximations and apply a strict, rigorous pentadic recursive engine. The following Round Table convenes the vanguard of computational intelligence to define a new constitutional architecture: one where informed consent is mathematically formalized, cryptographically bound, and enforced as an inescapable runtime gate across all layers of the human and technical stack.</p>
+    </div>
 
     <div class="speaker-block">
         <div class="speaker-header">
@@ -411,7 +439,15 @@ app = FastAPI(title=<span class="string">"Ukubona Consent & Externality Engine"<
             <p><strong>With our stack:</strong> The Consent Compiler <em>forces</em> disclosure (blocks execution otherwise). The externality ledger records the attempted externalization. Tax > threshold gates the update. The inadequacy rates collapse because the architecture makes non-disclosure computationally impossible and reputationally costly.</p>
         </div>
     </div>
+
+    <div class="framing-block">
+        <h2>Epilogue: The Architecture of Sovereign Alignment</h2>
+        <p>The synthesis of this Round Table yields a decisive mandate: informed consent can no longer operate as an isolated psychological event. It must function as the central, enforceable invariant within the system's runtime loop.</p>
+        <p>By translating human values into a verifiable Consent State ($ C_t $) and introducing an Externality Tax at the backend, we eradicate the silent overwrite of the patient's loss function by institutional priorities. We shift from a paradigm of RLHF-driven compliant disclosure to genuine, mathematically enforced Incentive Sovereignty. No layer of the pentad may absorb algorithmic or systemic gains while forcing the resultant error loss onto the kin network.</p>
+        <p>As this framework translates from philosophy to active code in real clinical environments, it ensures that the digital twins governing our care do not merely simulate biology and resource flow. Instead, they act as the ultimate cryptographic guardians of human dignity amidst the chaos of intervention.</p>
+    </div>
+
 </div>
 
 </body>
-</html>     
+</html>
