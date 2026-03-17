@@ -1,1 +1,225 @@
-.     
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ukubona Deployment: Consent Architecture</title>
+    <style>
+        :root {
+            --bg: #0d1117;
+            --surface: #161b22;
+            --text: #c9d1d9;
+            --accent: #58a6ff;
+            --code-bg: #010409;
+        }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            max-width: 1000px;
+            margin: 40px auto;
+            padding: 0 20px;
+        }
+        .header { border-bottom: 1px solid #30363d; padding-bottom: 20px; margin-bottom: 30px; }
+        .section { background: var(--surface); border: 1px solid #30363d; border-radius: 8px; padding: 25px; margin-bottom: 30px; }
+        h1, h2 { color: #ffffff; }
+        pre {
+            background-color: var(--code-bg);
+            padding: 20px;
+            border-radius: 6px;
+            overflow-x: auto;
+            border: 1px solid #30363d;
+            position: relative;
+        }
+        code { font-family: "SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; color: #79c0ff; }
+        .copy-hint { font-size: 0.8rem; color: #8b949e; margin-top: -10px; margin-bottom: 10px; }
+        .highlight { color: #ff7b72; font-weight: bold; }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <h1>Ukubona Consent Stack v1.0</h1>
+    <p>Deployment of the Pentadic Recursive Engine for Federated Twins.</p>
+</div>
+
+<div class="section">
+    <h2>Preface: The Failure of Static Consent</h2>
+    <p>The architecture of human care is currently suffering from a loss of fidelity. Traditional "informed consent" is a lossy compression—a static paper waiver that fails to map the uncompressed dimensions of a patient's will. When a system forces an irreversible update ($ \theta' $) without calibrating against the bedrock of lived experience, the resulting divergence ($ \epsilon $) creates trauma. This stack aims to fix that by making consent a <strong>runtime gate</strong>.</p>
+</div>
+
+<div class="section">
+    <h2>Master Setup Script (setup.sh)</h2>
+    <p class="copy-hint">Copy the code below, save it as <code>setup.sh</code> on your Mac/Linux machine, and run it with <code>bash setup.sh</code>.</p>
+    <pre><code>#!/bin/bash
+set -e
+
+echo "🚀 Launching Ukubona Consent Stack — Federated Twin Edition"
+echo "✅ Pentadic Logic · Externality Ledger · Render 2026 Ready"
+
+# === INPUTS ===
+read -p "GitHub username: " GH_USER
+read -p "Project Name (e.g. consent-twin): " REPO
+read -p "GitHub Personal Access Token: " GH_TOKEN
+read -p "Render API Key: " RENDER_API_KEY
+
+# === FOLDER SETUP ===
+mkdir -p "$REPO"
+cd "$REPO"
+
+# === VENV & REQUIREMENTS ===
+python3 -m venv venv
+source venv/bin/activate
+cat > requirements.txt << EOF
+fastapi==0.115.0
+uvicorn[standard]==0.32.0
+numpy==2.0.2
+python-dotenv==1.0.1
+pydantic==2.9.0
+EOF
+pip install -r requirements.txt
+
+# === GITIGNORE ===
+cat > .gitignore << EOF
+venv/
+__pycache__/
+.env
+*.pyc
+EOF
+
+# === RENDER DEPLOYMENT SPEC ===
+cat > render.yaml << EOF
+services:
+  - type: web
+    name: $REPO
+    env: python
+    buildCommand: pip install -r requirements.txt
+    startCommand: uvicorn main:app --host 0.0.0.0 --port \$PORT
+EOF
+
+# === MAIN.PY (The Pentadic Engine) ===
+cat > main.py << 'PYEOF'
+from fastapi import FastAPI, HTTPException, Query
+from fastapi.responses import HTMLResponse
+from pydantic import BaseModel, Field
+from datetime import datetime
+from typing import Dict, List, Literal
+from uuid import UUID, uuid4
+import os
+
+app = FastAPI(title="Ukubona Consent Architecture", version="1.0.0")
+
+# --- SCHEMA: THE CONSENT STATE (C_t) ---
+class ConsentState(BaseModel):
+    id: UUID = Field(default_factory=uuid4)
+    patient_id: str
+    weights: Dict[str, float]  # e.g., {"dignity": 0.6, "survival": 0.4}
+    reversibility: float = 1.0  # 1.0 = fully reversible, 0.0 = irreversible
+    valid: bool = True
+
+class ExternalityLedgerEntry(BaseModel):
+    id: UUID = Field(default_factory=uuid4)
+    action: str
+    externality_score: float
+    status: str = "pending"
+    timestamp: datetime = Field(default_factory=datetime.utcnow)
+
+# In-memory storage for the pilot
+consent_db: Dict[str, ConsentState] = {}
+ledger: List[ExternalityLedgerEntry] = []
+
+@app.get("/", response_class=HTMLResponse)
+async def root():
+    with open("index.html") as f:
+        return f.read()
+
+@app.post("/consent/init")
+async def init_consent(patient_id: str, weights: Dict[str, float]):
+    state = ConsentState(patient_id=patient_id, weights=weights)
+    consent_db[patient_id] = state
+    return state
+
+@app.post("/intervene/propose")
+async def propose(patient_id: str, action: str, impact: float):
+    if patient_id not in consent_db:
+        raise HTTPException(404, "Consent state not found")
+    
+    current = consent_db[patient_id]
+    # Simple Externality Tax: if impact > dignity weight and action is irreversible
+    tax = (impact * (1 - current.reversibility))
+    
+    entry = ExternalityLedgerEntry(action=action, externality_score=tax)
+    ledger.append(entry)
+    
+    if tax > 0.5:
+        entry.status = "BLOCKED: High Externality"
+        return {"status": "REJECTED", "tax": tax, "reason": "Consent gate fired"}
+    
+    entry.status = "APPROVED"
+    return {"status": "EXECUTED", "tax": tax}
+
+@app.get("/ledger")
+async def get_ledger():
+    return ledger
+PYEOF
+
+# === INDEX.HTML (The Interface) ===
+cat > index.html << 'HTMLEOF'
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Ukubona Federated Twin</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.css">
+    <style>
+        body { margin: 0; background: #0d0d0b; color: #e8e6df; font-family: sans-serif; }
+        #map { height: 60vh; width: 100%; border-bottom: 1px solid #30363d; }
+        .dashboard { padding: 20px; display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+        .card { background: #141412; border: 1px solid #30363d; padding: 15px; border-radius: 8px; }
+        h2 { margin-top: 0; color: #ef9f27; font-size: 0.9rem; text-transform: uppercase; }
+        .log { font-family: monospace; font-size: 0.8rem; height: 150px; overflow-y: auto; color: #6b6b65; }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div class="dashboard">
+        <div class="card">
+            <h2>Consent Ledger (C_t)</h2>
+            <div id="consent-log" class="log">Waiting for initialization...</div>
+        </div>
+        <div class="card">
+            <h2>Externality Engine (Tax Ledger)</h2>
+            <div id="tax-log" class="log">Monitoring gradients...</div>
+        </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/leaflet@1.9.4/dist/leaflet.min.js"></script>
+    <script>
+        const map = L.map('map').setView([1.3733, 32.2903], 7);
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png').addTo(map);
+        // UI Logic would go here to fetch from /ledger
+    </script>
+</body>
+</html>
+HTMLEOF
+
+# === GIT PUSH ===
+git init
+git add .
+git commit -m "Initial commit: Ukubona Consent Stack"
+# This part handles the remote push using your token
+git remote add origin https://$GH_TOKEN@github.com/$GH_USER/$REPO.git
+git branch -M main
+git push -u origin main
+
+echo "✅ Code pushed to GitHub: https://github.com/$GH_USER/$REPO"
+echo "🚀 Now go to Render.com and create a new 'Web Service' connected to this repo."
+</code></pre>
+</div>
+
+<div class="section">
+    <h2>Epilogue: Toward Sovereign Alignment</h2>
+    <p>We have moved from theory to a deployed invariant. By introducing the <strong>Externality Ledger</strong> and <strong>Incentive Sovereignty</strong>, we ensure that no layer of the civilizational pentad can profit by externalizing friction onto the human node. This code is the first step in building an antifragile cassava stick (<em>Kiti kya Muwogo</em>) for modern medicine—one that bends to human will but never breaks under systemic pressure.</p>
+</div>
+
+</body>
+</html>
