@@ -339,6 +339,15 @@ footer{background:var(--ink);color:var(--paper);padding:64px;display:grid;grid-t
 .popup-val{font-family:'IBM Plex Mono',monospace;font-size:0.8rem;color:var(--amber);}
 .popup-detail{font-size:0.75rem;color:rgba(247,242,233,0.55);margin-top:4px;line-height:1.5;}
 
+/* ── PENTAD / GROUND SIGNALS ── */
+.pentad-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:1px;background:var(--rule);border:1px solid var(--rule);margin-bottom:48px;}
+.pentad-card{background:var(--paper);padding:32px;transition:background 0.2s;}
+.pentad-card:hover{background:var(--cream);}
+.pentad-stack{font-family:'IBM Plex Mono',monospace;font-size:0.62rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--rust);margin-bottom:8px;}
+.pentad-num{font-family:'Playfair Display',serif;font-size:2.4rem;font-weight:900;line-height:1;margin-bottom:10px;}
+.pentad-body{font-family:'Source Serif 4',serif;font-size:0.88rem;color:var(--slate);line-height:1.65;margin-bottom:10px;}
+.pentad-cite{font-family:'IBM Plex Mono',monospace;font-size:0.52rem;letter-spacing:0.06em;color:var(--muted);opacity:0.65;}
+
 /* ── RESPONSIVE ── */
 @media(max-width:960px){
   .hero{grid-template-columns:1fr;}
@@ -414,6 +423,7 @@ footer{background:var(--ink);color:var(--paper);padding:64px;display:grid;grid-t
   <a class="nav-link" href="#burden">Scale</a>
   <a class="nav-link" href="#case">Patient → System</a>
   <a class="nav-link" href="#risk">Risk</a>
+  <a class="nav-link" href="#pentad">Ground Signals</a>
   <a class="nav-link" href="#map">Map</a>
   <a class="nav-link" href="#transplant">Transplant</a>
   <a class="nav-link" href="#deliverables">Deliverables</a>
@@ -484,21 +494,29 @@ footer{background:var(--ink);color:var(--paper);padding:64px;display:grid;grid-t
     <div class="reveal">
       <div class="section-kicker">From Patient to System</div>
       <h2 class="section-title">The System Announced Itself<br>While This Brief Was Being Written.</h2>
-      <p class="section-intro">While the first version of this document was in preparation, a collaborator shared news of a former medical school classmate who needed USD 55,000 for a kidney transplant abroad — because no domestic programme exists. The macro model and the individual crisis converged in real time. This is not a fundraising appeal. It is infrastructure.</p>
+      <p class="section-intro">While the first version of this document was in preparation, Prof. Basaza forwarded an urgent appeal for Dr. Jamirah Namusoke — the first female orthopaedic surgeon in Uganda, a senior consultant at Jinja National Referral Hospital, and a medical school peer — who needs USD 55,000 for a kidney transplant in India because no domestic programme exists. He forwarded it in the same message in which he corrected the district count and proposed an MOU. The macro research agenda and the individual clinical crisis arrived in the same breath. This is not a fundraising appeal. It is infrastructure.</p>
     </div>
 
     <div class="case-grid reveal">
       <!-- The case -->
       <div>
         <div class="case-card">
-          <div class="case-card-label">Anonymised case · Uganda · March 2026</div>
+          <div class="case-card-label">Live case · Dr. Jamirah Namusoke · Uganda · March 2026</div>
           <div class="case-card-body">
-            A former medical school classmate presented with end-stage renal disease. The family launched a fundraising campaign targeting USD 55,000 for a transplant in India. No domestic option was available. The case arrived via a collaborator's message at the exact moment the cost-of-transplant statistic was being written into this document.
+            Dr. Jamirah Namusoke — the first female orthopaedic surgeon in Uganda and a senior consultant at Jinja National Referral Hospital — is battling kidney failure and requires a transplant. Prof. Basaza forwarded her appeal at 2:02 AM on the same night he responded to this brief with the district count correction. Neither the MoH nor the hospital has a mechanism to fund this. The cost: USD 55,000. Destination: India. The case arrived at the exact moment the cost-of-transplant statistic was being written into this document.
           </div>
           <div class="case-data">
             <div class="case-datum">
+              <div class="case-datum-label">Patient</div>
+              <div class="case-datum-val">Dr. Jamirah Namusoke</div>
+            </div>
+            <div class="case-datum">
+              <div class="case-datum-label">Institution</div>
+              <div class="case-datum-val">Jinja National Referral Hospital</div>
+            </div>
+            <div class="case-datum">
               <div class="case-datum-label">Diagnosis</div>
-              <div class="case-datum-val">End-stage renal disease</div>
+              <div class="case-datum-val">End-stage kidney failure</div>
             </div>
             <div class="case-datum">
               <div class="case-datum-label">Referral destination</div>
@@ -512,16 +530,8 @@ footer{background:var(--ink);color:var(--paper);padding:64px;display:grid;grid-t
               <div class="case-datum-label">Domestic option</div>
               <div class="case-datum-val crisis">None available</div>
             </div>
-            <div class="case-datum">
-              <div class="case-datum-label">Atlas modelled cost</div>
-              <div class="case-datum-val">$25K–$35K (actual: $55K)</div>
-            </div>
-            <div class="case-datum">
-              <div class="case-datum-label">Domestic goal cost</div>
-              <div class="case-datum-val">~$8,000</div>
-            </div>
           </div>
-          <div class="case-anon">Identity withheld. Case documented with permission of referral source and used here as an anonymised data point — not a fundraising appeal. This case will enter the Atlas case registry.</div>
+          <div class="case-anon">Shared publicly by Prof. Basaza as part of his response to this brief. Used here not as a fundraising appeal but as a named, documented case that illustrates the systemic failure this atlas is designed to address. This case will enter the Atlas case registry.</div>
         </div>
 
         <!-- Grok / X reaction -->
@@ -627,6 +637,59 @@ footer{background:var(--ink);color:var(--paper);padding:64px;display:grid;grid-t
     </div>
   </div>
 </div>
+
+<!-- GROUND SIGNALS — FIVE SCALES -->
+<section class="section" id="pentad">
+  <div class="reveal">
+    <div class="section-kicker">Ground Signals · 2025–2026</div>
+    <h2 class="section-title">Five Scales:<br>What the Ground<br>Actually Says</h2>
+    <p class="section-intro">These are the signals academics and funders rarely hear in grant tables — voices and data points from five nested scales: person, household, health system, regulator, and national planner. They turn the atlas from a map into a living instrument of policy. Each scale feeds the next.</p>
+  </div>
+
+  <div class="pentad-grid reveal">
+    <div class="pentad-card">
+      <div class="pentad-stack">Person</div>
+      <div class="pentad-num" style="color:var(--r);">Sudden collapse</div>
+      <div class="pentad-body">"I woke with stomach pain… next day I could not walk. Ulcer they said, then chronic kidney failure." Patient stories documented on X and Monitor 2025–2026: headaches misdiagnosed as pregnancy aftermath; spiritual fog; bone pain; daily fear of missing the next dialysis session. The disease is silent until it is catastrophic.</div>
+      <div class="pentad-cite">Monitor Uganda · Carolyn Atim &amp; Irene Nerima stories · 2025</div>
+    </div>
+
+    <div class="pentad-card">
+      <div class="pentad-stack">Household / Kin Networks</div>
+      <div class="pentad-num" style="color:var(--o);">Land sales</div>
+      <div class="pentad-body">"If any of us got sick, you will sell all your land to maintain this." Families remitting from abroad, grandparents raising grandchildren, children dropping out of school. Depression prevalence in CKD patients is 2× the national average. Out-of-pocket monthly dialysis burden commonly exceeds UGX 4.8–5 million — the cost of a family's harvest.</div>
+      <div class="pentad-cite">Dr. Charles Kabugo, Kiruddu ED to Parliament PAC, 16 Mar 2026 · NPA State of Uganda Population Report 2025</div>
+    </div>
+
+    <div class="pentad-card">
+      <div class="pentad-stack">Health System (Clinics / Hospitals)</div>
+      <div class="pentad-num" style="color:var(--y);">Subsidy cliff</div>
+      <div class="pentad-body">Kiruddu charges UGX 60,000 per session (government subsidised) against a private market rate of UGX 400,000–500,000. Only four centres serve the whole country. Queues, infection risks, and repeated 300-kilometre journeys are routine. Aflatoxin-contaminated groundnuts and beans — flagged by Kiruddu's Executive Director — are emerging as an upstream driver that no clinical guideline currently tracks.</div>
+      <div class="pentad-cite">Dr. Charles Kabugo to Parliament PAC, 16 Mar 2026 · MoH Annual Health Sector Performance Report FY 2023/24</div>
+    </div>
+
+    <div class="pentad-card">
+      <div class="pentad-stack">Regulator (Ministry of Health / GoU)</div>
+      <div class="pentad-num" style="color:var(--g);">Regulatory limbo</div>
+      <div class="pentad-body">MoH Integrated CKD Management Guidelines (January 2024) acknowledge that unexplained cases dominate the caseload. The transplant pilot was suspended in 2024 pending a full regulatory framework. Parliament's Health Committee has demanded an extra UGX 2 billion for dialysis shortfalls. The Auditor General has flagged the long-term fiscal unsustainability of dialysis relative to transplantation. The Ministry needs the evidence the Atlas provides before it can act.</div>
+      <div class="pentad-cite">MoH Integrated CKD Guidelines Jan 2024 · Parliament Hansard PAC 16 Mar 2026</div>
+    </div>
+
+    <div class="pentad-card">
+      <div class="pentad-stack">National Planner (NPA / UCU / Funders)</div>
+      <div class="pentad-num" style="color:var(--b);">Mental-health linkage</div>
+      <div class="pentad-body">The NPA State of Uganda Population Report 2025 declares mental health a "silent emergency" — facility cases up 71% in four years. CKD doubles depression prevalence, meaning the kidney atlas is simultaneously a mental health surveillance instrument. UCU's 2026–2030 research agenda aligns this atlas with NDP IV and national disease intelligence priorities. WHO, ISN, and NIH funding pathways now require district-level evidence of exactly the kind this atlas supplies.</div>
+      <div class="pentad-cite">NPA SUPRE 2025 (launched Feb 2026) · UCU Research Agenda Stakeholder Consultation 2026</div>
+    </div>
+  </div>
+
+  <div class="pull-quote reveal">
+    <p>"Dialysis is very expensive, extremely expensive. It is not sustainable for any one of us. If any of us got sick, you will sell all your land to be able to maintain this."</p>
+    <cite>— Dr. Charles Kabugo, Executive Director Kiruddu National Referral Hospital, before Parliament Public Accounts Committee, 16 March 2026</cite>
+  </div>
+</section>
+
+<div class="section-rule"></div>
 
 <!-- MAP SECTION -->
 <div class="map-section" id="map">
@@ -1031,10 +1094,10 @@ footer{background:var(--ink);color:var(--paper);padding:64px;display:grid;grid-t
       <div class="team-bio">Public health economist and health policy expert with extensive experience in health systems research across East Africa. Prof. Basaza leads Uganda-based research operations, manages the UCU student pipeline, and maintains institutional relationships with the Ministry of Health, the National Planning Authority, and district health offices. His immediate, substantive engagement with this brief — correcting the district count and proposing an MOU — signals the kind of operational collaboration that produces funded research. Co-PI on all grant applications.</div>
     </div>
     <div class="team-card">
-      <div class="team-role">Systems & Platform Strategy</div>
-      <div class="team-name">Paul Luswata</div>
-      <div class="team-affil">Ukubona LLC · Platform Architecture</div>
-      <div class="team-bio">Strategy and systems consultant responsible for the technical architecture of the data platform. Ensures that the multi-disease dropdown structure, district-level data pipelines, and interactive atlas infrastructure are built to scale from the CKD pilot to a full Uganda-wide disease burden platform. Manages the transition from synthetic Phase I data to real Phase II district survey data, and oversees the student contribution tracking and publication pipeline.</div>
+      <div class="team-role">Technical Infrastructure · Pro Bono</div>
+      <div class="team-name">Ukubona LLC</div>
+      <div class="team-affil">Virginia, USA · Operating in Uganda</div>
+      <div class="team-bio">The platform OS underlying this collaboration. Provides the full technical stack — district-level data pipelines, interactive dashboards, geospatial models, and APIs — at zero cost to project partners. The architecture operates across five nested scales: individual patient → household → clinic and health system → ministry and regulator → national planning authority. Each scale feeds the next. The atlas is the output that makes this hierarchy legible to funders, clinicians, and policymakers simultaneously. The invisible hand behind the brief you are reading.</div>
     </div>
   </div>
 </div>
