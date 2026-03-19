@@ -247,25 +247,25 @@
   .ukubona .speaker-name { color: var(--yellow); }
   .ukubona .math { border-color: var(--yellow); }
 
-  /* Anthropic = indigo */
-  .anthropic .dot  { background: var(--indigo); }
-  .anthropic .line { background: var(--indigo); }
-  .anthropic .speaker-name { color: var(--indigo); }
-  .anthropic .math { border-color: var(--indigo); }
-
-  /* OpenAI = green */
-  .openai .dot  { background: #4caf7d; }
-  .openai .line { background: #4caf7d; }
-  .openai .speaker-name { color: #4caf7d; }
-  .openai .math { border-color: #4caf7d; }
-
-  /* Google = orange */
+  /* Google = orange (first responder, ~3 rounds) */
   .google .dot  { background: var(--orange); }
   .google .line { background: var(--orange); }
   .google .speaker-name { color: var(--orange); }
   .google .math { border-color: var(--orange); }
 
-  /* xAI = red */
+  /* OpenAI = green (structural read) */
+  .openai .dot  { background: #4caf7d; }
+  .openai .line { background: #4caf7d; }
+  .openai .speaker-name { color: #4caf7d; }
+  .openai .math { border-color: #4caf7d; }
+
+  /* Anthropic = indigo (coloring book inversion + Mkhulu) */
+  .anthropic .dot  { background: var(--indigo); }
+  .anthropic .line { background: var(--indigo); }
+  .anthropic .speaker-name { color: var(--indigo); }
+  .anthropic .math { border-color: var(--indigo); }
+
+  /* xAI = red (fractal loop, last) */
   .xai .dot  { background: var(--red); }
   .xai .line { background: var(--red); }
   .xai .speaker-name { color: var(--red); }
@@ -327,14 +327,14 @@
     </div>
   </div>
 
-  <!-- ── TURN 2: Anthropic (first responder — abstracts, gets corrected) ── -->
-  <div class="voice anthropic">
+  <!-- ── TURN 2: Google (first responder — abstracts, gets corrected) ── -->
+  <div class="voice google">
     <div class="avatar">
       <div class="dot"></div>
       <div class="line"></div>
     </div>
     <div class="body">
-      <div class="speaker-name">Anthropic</div>
+      <div class="speaker-name">Google</div>
       <div class="content">
         <p>At four years old, the Prefrontal Cortex hasn't yet fully hardened into the rigid silos of language and formal science, allowing for a pure, sensory reception of information. By using the ROYGBIV spectrum to represent state-space, you bypass the local minima of jargon. A child understands that red often means <em>hot, stop, intense</em>, while blue or violet suggests <em>cool, quiet, stable</em>.</p>
         <p><strong>The 4-Year-Old</strong> — sensory pattern recognition. The heatmap is a "map of feelings." They identify where the trouble is (the red zones) and where the safety is (the violet/blue zones). They understand the <em>gradient</em>. Foundational feedback-loop logic.</p>
@@ -357,14 +357,14 @@
     </div>
   </div>
 
-  <!-- ── TURN 4: Anthropic (corrected, re-engages with the actual artefact) ── -->
-  <div class="voice anthropic">
+  <!-- ── TURN 4: Google (corrected, re-engages with the actual artefact) ── -->
+  <div class="voice google">
     <div class="avatar">
       <div class="dot"></div>
       <div class="line"></div>
     </div>
     <div class="body">
-      <div class="speaker-name">Anthropic</div>
+      <div class="speaker-name">Google</div>
       <div class="content">
         <p>I stand corrected. After diving back into the documents, I see that I initially gave you a generalized response about the <em>concept</em> of a heatmap rather than engaging with the specific, data-driven artefact you've built.</p>
         <p>Your links outline a sophisticated technical and social architecture for the <strong>Uganda Renal Atlas</strong>, where the heatmap isn't just a visualization — it's the gradient (∇L) of a national crisis.</p>
@@ -455,14 +455,14 @@ Expert: "High composite loss → optimize policy direction"</span>
     </div>
   </div>
 
-  <!-- ── TURN 8: Google (the fullest synthesis, longest entry) ── -->
-  <div class="voice google">
+  <!-- ── TURN 8: Anthropic (fullest synthesis — the wound drew itself) ── -->
+  <div class="voice anthropic">
     <div class="avatar">
       <div class="dot"></div>
       <div class="line"></div>
     </div>
     <div class="body">
-      <div class="speaker-name">Google</div>
+      <div class="speaker-name">Anthropic</div>
       <div class="content">
         <p>The inversion you pointed out is sharp — and it cuts right to the heart of why this work feels alive rather than merely illustrative.</p>
         <p>In a classic coloring book, the child inherits a pre-drawn structure: clean lines, closed forms, someone else's geometry. Agency arrives only in the filling — color choices within rigid bounds. It's bounded creativity, therapeutic partly because it contains chaos. The structure is given; the child responds.</p>
@@ -518,11 +518,11 @@ Expert: "High composite loss → optimize policy direction"</span>
 <!-- Legend -->
 <div class="legend">
   <div class="legend-item"><div class="legend-dot" style="background:var(--yellow)"></div>Ukubona (host / mediator)</div>
-  <div class="legend-item"><div class="legend-dot" style="background:var(--indigo)"></div>Anthropic — speculative</div>
-  <div class="legend-item"><div class="legend-dot" style="background:#4caf7d"></div>OpenAI — speculative</div>
-  <div class="legend-item"><div class="legend-dot" style="background:var(--orange)"></div>Google — speculative</div>
-  <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>xAI — speculative</div>
-  <div class="legend-item" style="flex-basis:100%; color:rgba(245,240,232,0.2)">Speaker attributions are the author's speculation. The conversation is verbatim.</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--orange)"></div>Google — ~3 rounds, first responder</div>
+  <div class="legend-item"><div class="legend-dot" style="background:#4caf7d"></div>OpenAI</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--indigo)"></div>Anthropic — inversion + Mkhulu</div>
+  <div class="legend-item"><div class="legend-dot" style="background:var(--red)"></div>xAI — fractal loop, last</div>
+  <div class="legend-item" style="flex-basis:100%; color:rgba(245,240,232,0.2)">Speaker attributions per author's record. The conversation is verbatim.</div>
 </div>
 
 <footer>Uganda Renal Atlas · ∇L · ROYGBIV · Ukubona · 2025</footer>
