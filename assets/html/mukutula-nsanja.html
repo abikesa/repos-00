@@ -1200,27 +1200,28 @@
 </section>
 
 
-<!-- ═══════════════════════════════════════
-  LOSS FUNCTION
-═══════════════════════════════════════ -->
+<!-- ═══════════════════════════════════════ LOSS FUNCTION═══════════════════════════════════════ -->
 <section class="formula-section">
   <div class="container">
     <div class="formula-box reveal">
-      <p class="formula-title">The Composite Loss Function — Attention Is All You Need</p>
+      <p class="formula-title">The Composite Loss Function — Attention Is All You Need (Grounded in Buganda Soil)</p>
       <div class="formula-display">
-        L<sub>total</sub> = <span class="var-sum">∑</span><sub>t=1</sub><sup>12</sup>
-        [<span class="var-s">ω<sub>s</sub> · L<sub>sense</sub></span> +
-         <span class="var-e">ω<sub>e</sub> · L<sub>emo</sub></span> +
-         <span class="var-m">ω<sub>m</sub> · L<sub>mem</sub></span> +
-         <span class="var-i">ω<sub>i</sub> · L<sub>intel</sub></span> +
-         <span class="var-d">ω<sub>d</sub> · L<sub>deploy</sub></span>]
+        L<sub>total</sub> = L<sub>0</sub> + <span class="var-sum">∑</span><sub>t=1</sub><sup>12</sup> 
+        [<span class="var-s">ω<sub>s</sub> · L<sub>sense</sub></span> + 
+         <span class="var-e">ω<sub>e</sub> · L<sub>emo</sub></span> + 
+         <span class="var-m">ω<sub>m</sub> · L<sub>mem</sub></span> + 
+         <span class="var-i">ω<sub>i</sub> · L<sub>intel</sub></span> + 
+         <span class="var-d">ω<sub>d</sub> · L<sub>deploy</sub></span> + 
+         <span style="color:#e0e0e0;">ε<sub>t</sub></span>]
       </div>
       <div class="formula-legend">
+        <div class="legend-item"><div class="legend-dot" style="background:var(--clay);"></div><span style="color:var(--clay)">L₀ — Baseline cost of the living soil</span> (the constant respiration of microbes and Ntenvu worms even when nothing is planted — the lake-buffered humidity and thermal mass that never sleeps)</div>
         <div class="legend-item"><div class="legend-dot" style="background:var(--rain)"></div><span style="color:var(--rain)">Sensing</span> — rainfall, canopy thickness, pest density</div>
         <div class="legend-item"><div class="legend-dot" style="background:var(--gold)"></div><span style="color:var(--gold)">Emotion</span> — ecological sovereignty, patient wellbeing</div>
         <div class="legend-item"><div class="legend-dot" style="background:var(--mulch)"></div><span style="color:var(--mulch)">Memory</span> — soil health, Soga traditions, prior cycles</div>
         <div class="legend-item"><div class="legend-dot" style="background:var(--green-bright)"></div><span style="color:var(--green-bright)">Intelligence</span> — SGD through Muwakanya uncertainty</div>
         <div class="legend-item"><div class="legend-dot" style="background:#c084fc"></div><span style="color:#c084fc">Deployment</span> — planting, harvesting, medical intervention</div>
+        <div class="legend-item"><div class="legend-dot" style="background:#e0e0e0;"></div><span style="color:#e0e0e0">εₜ — Irreducible lake noise</span> (convective thunderstorms, sudden Mpawu surges, or Musenene grasshopper invasions — the stochastic friction no calendar can ever fully eliminate)</div>
       </div>
     </div>
   </div>
